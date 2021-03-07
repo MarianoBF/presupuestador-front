@@ -1,5 +1,8 @@
 import './App.css';
 import axios from 'axios'
+import "bootstrap/dist/css/bootstrap.min.css"
+import ListaGastos from "./components/ListaGastos"
+
 
 function App() {
 
@@ -20,6 +23,10 @@ function handler(){
   return (
     <div className="App">
       <button onClick={handler}>Prueba</button>
+      <nav className="navbar navbar-expand">
+      <a href="/gastos">gastos</a>
+      </nav>
+      {/* <ListaGastos /> */}
     </div>
   );
 }
