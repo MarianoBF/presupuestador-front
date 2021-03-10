@@ -1,7 +1,8 @@
 import './App.css';
-import axios from 'axios'
+import axios from 'axios';
 import "bootstrap/dist/css/bootstrap.min.css"
-import ListaGastos from "./components/ListaGastos"
+import ListarGastos from "./components/ListarGastos"
+import AgregarGasto from './components/AgregarGasto';
 
 
 function App() {
@@ -26,7 +27,8 @@ function handler(){
       <nav className="navbar navbar-expand">
       <a href="/gastos">gastos</a>
       </nav>
-      {/* <ListaGastos /> */}
+      {/* <Listarastos /> */}
+      <AgregarGasto />
     </div>
   );
 }

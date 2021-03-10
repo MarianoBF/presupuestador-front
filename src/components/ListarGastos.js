@@ -1,6 +1,6 @@
 import GastoDataService from "../services/tutorial.service"
 
-function ListaGastos() {
+function ListarGastos() {
 
     const Texto = GastoDataService.getAll().then(response => response.map(item => { return <li>{item}</li>}))
 
@@ -11,4 +11,4 @@ function ListaGastos() {
     )
 }
 
-export default ListaGastos;
+export default ListarGastos;
