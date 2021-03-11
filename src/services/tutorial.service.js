@@ -6,7 +6,7 @@ class GastoDataService {
     }
 
     create(data) {
-        return http.post("/gastos", data);
+        return http.post("/gastos/gastos", data);
     }
 }
 
