@@ -1,15 +1,11 @@
 import GastoDataService from "../services/tutorial.service";
 import { useState, useEffect } from "react";
 import Table from 'react-bootstrap/Table';
+import '../App.css';
 
 function ListarGastos() {
 
     const [texto, setTexto] = useState([]);
-
-
-const Texto2 = GastoDataService.getAll().then(response => console.log(response.data))
-
-if (Texto2.length > 1) {setTexto( GastoDataService.getAll().then(response => response.data) ) }
 
 useEffect(() => {
     GastoDataService.getAll()
@@ -18,21 +14,26 @@ useEffect(() => {
     })
 }, []);
 
+    const handleEdit = (id) => {
+        console.log("a",id)
+    }
+
 
   return( 
     <div>
     <h4>Los últimos gastos cargados</h4>
-      <Table>
+      <Table responsive hover striped>
             <thead>
             <tr>
                 <th>#</th>
                 <th>Rubro</th>
                 <th>Descripción</th>
-                <th>Username</th>
+                <th>Editar</th>
+
             </tr>
         </thead>
-        <tbody>
-    {texto && texto.map((item) => { return <tr id={item.id}><td>{item.id}</td><td>{item.descripcion}</td><td>{item.rubro}</td></tr>})}
+        <tbody className="tableText">
+    {texto && texto.map((item) => { return <tr key={item.id}><td>{item.id}</td><td>{item.descripcion}</td><td>{item.rubro}</td><td onClick={()=>handleEdit(item.id)}>Editar</td></tr>})}
     </tbody>
     </Table>
     </div>

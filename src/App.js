@@ -17,19 +17,16 @@ function App() {
         <Navbar.Brand><Link to={"/"}>/Presupuestador/
         </Link></Navbar.Brand>
       <Nav className="mr-auto">
-      <Nav.Link><Link to={"/gastos"} className="nav-link">Listado de Gastos
-      </Link></Nav.Link>
-      <Nav.Link><Link to={"/add"} className="nav-link">Agregar nuevo gasto
-      </Link></Nav.Link>
-      <Nav.Link><Link to={"/gastos/:id"} className="nav-link">Modificar Gasto
-      </Link></Nav.Link>
+      <Link to={"/gastos"} className="nav-link">Listado de Gastos
+      </Link>
+      <Link to={"/add"} className="nav-link">Agregar nuevo gasto
+      </Link>
+      <Link to={"/gastos/:id"} className="nav-link">Modificar Presupuesto
+      </Link>
       </Nav>
        <Navbar.Brand>Una herramienta para tu presupuesto personal
         </Navbar.Brand>
       </Navbar>
-
-      
-      <Presupuesto />
  
 
 <div>

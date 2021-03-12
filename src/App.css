@@ -19,3 +19,8 @@ nav a:visited {
 nav a:hover {
   color: #000;
 }
+
+.tableText {
+  font-weight: 300;
+  font-size: 14px;
+}

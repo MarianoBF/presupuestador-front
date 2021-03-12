@@ -1,4 +1,8 @@
 import React, {useState} from "react";
+import Form from "react-bootstrap/Form";
+import Button from "react-bootstrap/Button";
+import Container from 'react-bootstrap/Container';
+import Col from 'react-bootstrap/Col';
 import GastoDataService from "../services/tutorial.service"
 
 const AgregarGasto = () => {
@@ -6,13 +10,13 @@ const AgregarGasto = () => {
         id: null,
         rubro: "",
         descripcion: "",
-        published: false
+        monto: 0,
     };
 
     const [gasto, setGasto] = useState(initialGastoState);
     const [enviado, setEnviado] = useState(false);
 
-    const handlerInput = event => {
+    const handleInput = event => {
         const { name, value } = event.target;
         setGasto({...gasto, [name]: value})
     };
@@ -20,17 +24,19 @@ const AgregarGasto = () => {
     const guardarGasto = () => {
         let data = {
             rubro: gasto.rubro,
-            descripcion: gasto.descripcion
+            descripcion: gasto.descripcion,
+            monto: gasto.monto,
+
         };
 
         GastoDataService.create(data)
         .then(response => {
-            setGasto({
-                id: response.data.id,
-                rubro: response.data.rubro,
-                descripcion: response.data.description,
-                pagado: response.data.pagado
-            });
+            // setGasto({
+            //     id: response.data.id,
+            //     rubro: response.data.rubro,
+            //     descripcion: response.data.description,
+            //     monto: response.data.monto
+            // });
             setEnviado(true);
             console.log(response.data)
             })
@@ -52,12 +58,24 @@ const AgregarGasto = () => {
             <button onClick={nuevoGasto}>Mandar otro</button>
             </div>
             ) : (
-                <div>
-                <label></label>
-                <input type="text" value={gasto.rubro} onChange={handlerInput} name="rubro"/>
-                <input type="text" value={gasto.descripcion} onChange={handlerInput} name="descripcion" />
-                <button onClick={guardarGasto}>Guardar</button>
-                </div>
+                <Container fluid="true">
+                <Form>
+                <Form.Row className="justify-content-md-center">
+                    <Col md={6}>
+                <Form.Group>
+                <Form.Label>Rubro del gasto: </Form.Label>
+                <Form.Control type="text" value={gasto.rubro} onChange={handleInput} name="rubro"></Form.Control>
+                <Form.Label>Descripción del gasto: </Form.Label>
+                <Form.Control type="text" value={gasto.descripcion} onChange={handleInput} name="descripcion"></Form.Control>
+                <Form.Label>Monto del gasto: </Form.Label>
+                <Form.Control type="number" value={gasto.monto} onChange={handleInput} name="monto"></Form.Control>
+                </Form.Group>
+                    </Col>
+                </Form.Row>
+                <Button onClick={guardarGasto}>Guardar</Button>
+                </Form>
+
+                </Container>
             )
         }
         </div>
