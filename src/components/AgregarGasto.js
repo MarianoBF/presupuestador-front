@@ -53,6 +53,7 @@ const AgregarGasto = () => {
             </div>
             ) : (
                 <div>
+                <label></label>
                 <input type="text" value={gasto.rubro} onChange={handlerInput} name="rubro"/>
                 <input type="text" value={gasto.descripcion} onChange={handlerInput} name="descripcion" />
                 <button onClick={guardarGasto}>Guardar</button>

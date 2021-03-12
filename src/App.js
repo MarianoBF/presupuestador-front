@@ -1,29 +1,37 @@
 import './App.css';
-import "bootstrap/dist/css/bootstrap.min.css"
-import ListarGastos from "./components/ListarGastos"
+import "bootstrap/dist/css/bootstrap.min.css";
+import ListarGastos from "./components/ListarGastos";
 import AgregarGasto from './components/AgregarGasto';
-import Gasto from "./components/Gasto"
-import { Switch, Route, Link } from "react-router-dom"
+import Gasto from "./components/Gasto";
+import Presupuesto from "./components/Presupuesto";
+import { Switch, Route, Link } from "react-router-dom";
+import Navbar from "react-bootstrap/Navbar"
+import Nav from "react-bootstrap/Nav"
+
 
 function App() {
 
-function handler(){
-  console.log(("a"))
-}
-
   return (
     <div className="App">
-      <button onClick={handler}>Prueba</button>
-      <nav className="navbar navbar-expand">
-      <Link to={"/gastos"} className="nav-link">Gastos
-      </Link>
-      <Link to={"/add"} className="nav-link">Agregar
-      </Link>
+      <Navbar bg="primary" >
+        <Navbar.Brand><Link to={"/"}>/Presupuestador/
+        </Link></Navbar.Brand>
+      <Nav className="mr-auto">
+      <Nav.Link><Link to={"/gastos"} className="nav-link">Listado de Gastos
+      </Link></Nav.Link>
+      <Nav.Link><Link to={"/add"} className="nav-link">Agregar nuevo gasto
+      </Link></Nav.Link>
+      <Nav.Link><Link to={"/gastos/:id"} className="nav-link">Modificar Gasto
+      </Link></Nav.Link>
+      </Nav>
+       <Navbar.Brand>Una herramienta para tu presupuesto personal
+        </Navbar.Brand>
+      </Navbar>
 
-      </nav>
-      {/* <ListarGastos /> 
-      <AgregarGasto />
-      <Gasto /> */}
+      
+      <Presupuesto />
+ 
+
 <div>
 <Switch>
   <Route exact path="/gastos" component={ListarGastos} />
