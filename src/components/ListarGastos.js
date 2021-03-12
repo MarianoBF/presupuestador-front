@@ -26,14 +26,14 @@ useEffect(() => {
             <thead>
             <tr>
                 <th>#</th>
-                <th>Rubro</th>
                 <th>Descripción</th>
+                <th>Rubro al que corresponde</th>
                 <th>Editar</th>
 
             </tr>
         </thead>
         <tbody className="tableText">
-    {texto && texto.map((item) => { return <tr key={item.id}><td>{item.id}</td><td>{item.descripcion}</td><td>{item.rubro}</td><td onClick={()=>handleEdit(item.id)}>Editar</td></tr>})}
+    {texto && texto.map((item) => { return <tr key={item.id}><td>{item.id}</td><td>{item.descripcionGasto}</td><td>{item.rubroGasto}</td><td onClick={()=>handleEdit(item.id)}>Editar</td></tr>})}
     </tbody>
     </Table>
     </div>

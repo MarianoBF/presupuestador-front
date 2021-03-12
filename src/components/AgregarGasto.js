@@ -8,8 +8,8 @@ import GastoDataService from "../services/gasto.service"
 const AgregarGasto = () => {
     const initialGastoState = {
         id: null,
-        rubro: "",
-        descripcion: "",
+        rubroGasto: "",
+        descripcionGasto: "",
         monto: 0,
     };
 
@@ -23,8 +23,8 @@ const AgregarGasto = () => {
 
     const guardarGasto = () => {
         let data = {
-            rubro: gasto.rubro,
-            descripcion: gasto.descripcion,
+            rubroGasto: gasto.rubroGasto,
+            descripcionGasto: gasto.descripcionGasto,
             monto: gasto.monto,
 
         };
@@ -58,9 +58,9 @@ const AgregarGasto = () => {
                     <Col md={6}>
                 <Form.Group>
                 <Form.Label>Rubro del gasto: </Form.Label>
-                <Form.Control type="text" value={gasto.rubro} onChange={handleInput} name="rubro"></Form.Control>
+                <Form.Control type="text" value={gasto.rubroGasto} onChange={handleInput} name="rubroGasto"></Form.Control>
                 <Form.Label>Descripción del gasto: </Form.Label>
-                <Form.Control type="text" value={gasto.descripcion} onChange={handleInput} name="descripcion"></Form.Control>
+                <Form.Control type="text" value={gasto.descripcionGasto} onChange={handleInput} name="descripcionGasto"></Form.Control>
                 <Form.Label>Monto del gasto: </Form.Label>
                 <Form.Control type="number" value={gasto.monto} onChange={handleInput} name="monto"></Form.Control>
                 </Form.Group>

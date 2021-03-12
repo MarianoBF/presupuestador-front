@@ -8,17 +8,6 @@ nav a {
   color: #000;
 }
 
-nav a:link {
-  color: #000;
-}
-
-nav a:visited {
-  color: #000;
-}
-
-nav a:hover {
-  color: #000;
-}
 
 .tableText {
   font-weight: 300;
