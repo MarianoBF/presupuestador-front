@@ -3,7 +3,7 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Container from 'react-bootstrap/Container';
 import Col from 'react-bootstrap/Col';
-import GastoDataService from "../services/tutorial.service"
+import GastoDataService from "../services/gasto.service"
 
 const AgregarGasto = () => {
     const initialGastoState = {
@@ -31,12 +31,6 @@ const AgregarGasto = () => {
 
         GastoDataService.create(data)
         .then(response => {
-            // setGasto({
-            //     id: response.data.id,
-            //     rubro: response.data.rubro,
-            //     descripcion: response.data.description,
-            //     monto: response.data.monto
-            // });
             setEnviado(true);
             console.log(response.data)
             })

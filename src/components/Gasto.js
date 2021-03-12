@@ -1,8 +1,7 @@
-import GastoDataService from "../services/tutorial.service"
-
 function Gasto() {
     return(
-        <>Prueba
+        <>
+        <h3>Acá se editaría un gasto?</h3>
         </>
     )
 }

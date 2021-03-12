@@ -1,4 +1,4 @@
-import GastoDataService from "../services/tutorial.service";
+import GastoDataService from "../services/gasto.service";
 import { useState, useEffect } from "react";
 import Table from 'react-bootstrap/Table';
 import '../App.css';
