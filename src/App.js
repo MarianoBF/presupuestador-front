@@ -5,9 +5,11 @@ import AgregarGasto from './components/AgregarGasto';
 import Gasto from "./components/Gasto";
 import AgregarPresupuesto from "./components/AgregarPresupuesto";
 import ListarPresupuesto from "./components/ListarPresupuesto";
+import Presupuesto from "./components/Presupuesto";
 import { Switch, Route, Link } from "react-router-dom";
-import Navbar from "react-bootstrap/Navbar"
-import Nav from "react-bootstrap/Nav"
+import Navbar from "react-bootstrap/Navbar";
+import Nav from "react-bootstrap/Nav";
+
 
 
 function App() {
@@ -24,23 +26,26 @@ function App() {
       </Link>
       <Link to={"/agregarPres"} className="nav-link">Agregar nuevo rubro para presupuesto
       </Link>
-      <Link to={"/listarPres"} className="nav-link">Listar Presupuesto
+      <Link to={"/listarPres"} className="nav-link">Presupuesto planificado
       </Link>
-      </Nav>
+      <Link to={"/"} className="nav-link">Presupuesto vigente
+      </Link>
+        </Nav>
       </Navbar>
  
+      <div>
+      <Switch>
+        <Route exact path="/" component={Presupuesto} />
+        <Route exact path="/gastos" component={ListarGastos} />
+        <Route exact path="/add" component={AgregarGasto} />
+        <Route exact path="/gastos/:id" component={Gasto} />
+        <Route exact path="/agregarPres" component={AgregarPresupuesto} />
+        <Route exact path="/listarPres" component={ListarPresupuesto} />
+      </Switch>
+      </div>
 
-<div>
-<Switch>
-  <Route exact path="/gastos" component={ListarGastos} />
-  <Route exact path="/add" component={AgregarGasto} />
-  <Route exact path="/gastos/:id" component={Gasto} />
-  <Route exact path="/agregarPres" component={AgregarPresupuesto} />
-  <Route exact path="/listarPres" component={ListarPresupuesto} />
-</Switch>
-</div>
 
-    </div>
+   </div>
   );
 }
 

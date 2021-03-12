@@ -21,8 +21,8 @@ useEffect(() => {
             <thead>
             <tr>
                 <th>#</th>
-                <th>Descripción</th>
                 <th>Rubro</th>
+                <th>Descripción</th>
                 <th>Monto Mensual</th>
 
             </tr>
