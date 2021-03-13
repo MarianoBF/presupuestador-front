@@ -8,6 +8,9 @@ class PresupuestoDataService {
     create(data) {
         return http.post("/presupuesto/presupuesto", data);
     }
+    deleteAll() {
+        return http.delete("/presupuesto")
+    }
 }
 
 export default new PresupuestoDataService();

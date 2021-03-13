@@ -1,4 +1,4 @@
-import GastoDataService from "../services/gasto.service";
+import EntryDataService from "../services/entry.service";
 import { useState, useEffect } from "react";
 import Table from 'react-bootstrap/Table';
 import '../App.css';
@@ -8,7 +8,7 @@ function ListarGastos() {
     const [texto, setTexto] = useState([]);
 
 useEffect(() => {
-    GastoDataService.getAll()
+    EntryDataService.getAll()
     .then(({data: gastos}) => {
         setTexto(gastos)
     })

@@ -1,7 +1,7 @@
 import './App.css';
 import "bootstrap/dist/css/bootstrap.min.css";
 import ListarGastos from "./components/ListarGastos";
-import AgregarGasto from './components/AgregarGasto';
+import AddEntry from './components/AddEntry';
 import Gasto from "./components/Gasto";
 import AgregarPresupuesto from "./components/AgregarPresupuesto";
 import ListarPresupuesto from "./components/ListarPresupuesto";
@@ -22,7 +22,7 @@ function App() {
       <Nav className="mr-auto">
       <Link to={"/gastos"} className="nav-link">Listado de Gastos
       </Link>
-      <Link to={"/add"} className="nav-link">Agregar nuevo gasto
+      <Link to={"/add"} className="nav-link">Agregar nuevo movimiento
       </Link>
       <Link to={"/agregarPres"} className="nav-link">Agregar nuevo rubro para presupuesto
       </Link>
@@ -37,7 +37,7 @@ function App() {
       <Switch>
         <Route exact path="/" component={Presupuesto} />
         <Route exact path="/gastos" component={ListarGastos} />
-        <Route exact path="/add" component={AgregarGasto} />
+        <Route exact path="/add" component={AddEntry} />
         <Route exact path="/gastos/:id" component={Gasto} />
         <Route exact path="/agregarPres" component={AgregarPresupuesto} />
         <Route exact path="/listarPres" component={ListarPresupuesto} />

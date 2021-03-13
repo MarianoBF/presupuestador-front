@@ -1,6 +1,6 @@
 import http from "../http-common";
 
-class GastoDataService {
+class EntryDataService {
     getAll() {
         return http.get("/gastos");
     }
@@ -8,6 +8,10 @@ class GastoDataService {
     create(data) {
         return http.post("/gastos/gastos", data);
     }
+
+    deleteAll() {
+        return http.delete("/gastos")
+    }
 }
 
-export default new GastoDataService();
+export default new EntryDataService();
