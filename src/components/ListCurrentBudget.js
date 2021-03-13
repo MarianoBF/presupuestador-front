@@ -2,8 +2,7 @@ import Table from 'react-bootstrap/Table';
 import { useState, useEffect } from "react";
 import EntryDataService from "../services/entry.service";
 import BudgetDataService from "../services/budget.service";
-import Button from 'react-bootstrap/Button';
-import { SAMPLEENTRIES, SAMPLEBUDGET } from './SampleData';
+
 
 
 
@@ -42,65 +41,14 @@ function ListCurrentBudget() {
     if (ready === 2) {
     for (let cat of categories) {
       let belongs = entries.filter((item)=>item.category === cat)
-      console.log(belongs)
       let sum = belongs.reduce((pre, act)=>{return pre + act.amount}, 0)
       setTotals(totals=> [...totals, sum])
     }
-    console.log(totals)
   }
   // eslint-disable-next-line
 }, [ready]);
 
-const loadSampleData = () => {
 
-  for (let i of SAMPLEENTRIES) {
-
-  let data = {
-    date: i.date,
-    category: i.category,
-    description: i.description,
-    amount: i.amount,
-    kind: i.kind,
-    };
-
-    EntryDataService.create(data)
-    .then(response => {
-        console.log(response.data)
-        })
-    .catch(error => {
-        console.log(error);
-    });
-    };
-
-  for (let i of SAMPLEBUDGET) {
-
-    let data = {
-      category: i.category,
-      description: i.description,
-      monthlyLimit: i.monthlyLimit,
-      };
-  
-      BudgetDataService.create(data)
-      .then(response => {
-          console.log(response.data)
-          })
-      .catch(error => {
-          console.log(error);
-      });
-      };
-
-      // window.location.reload();
-
-  }
-
-  const deleteData = () => {
-    let checkDelete = window.confirm("Esto es irreversible, vas a borrar todos los datos y no se puede recuperar, ¿estás seguro?");
-    if (checkDelete === true) {
-    BudgetDataService.deleteAll();
-    EntryDataService.deleteAll();
-    window.location.reload();
-  }
-  }
 
 
 return (
@@ -131,8 +79,6 @@ return (
     </tbody>
     </Table>
 
-    <Button onClick={loadSampleData} variant="secondary">Cargar datos de prueba</Button>{' '}
-    <Button onClick={deleteData} variant="danger">Borrar todos los datos</Button>
 
 </>
 )

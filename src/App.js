@@ -5,6 +5,7 @@ import AddBudgetLine from "./components/AddBudgetLine";
 import ListEntries from "./components/ListEntries";
 import ListPlannedBudget from "./components/ListPlannedBudget";
 import ListCurrentBudget from "./components/ListCurrentBudget";
+import Configuration from "./components/Configuration";
 import { Switch, Route, Link } from "react-router-dom";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
@@ -19,7 +20,7 @@ function App() {
         <Navbar.Brand><Link to={"/"}>/Presupuestaré/
         </Link></Navbar.Brand>
       <Nav className="mr-auto">
-      <Link to={"/gastos"} className="nav-link">Listado de Gastos
+      <Link to={"/gastos"} className="nav-link">Listado de movimientos
       </Link>
       <Link to={"/add"} className="nav-link">Agregar nuevo movimiento
       </Link>
@@ -28,6 +29,8 @@ function App() {
       <Link to={"/listarPres"} className="nav-link">Presupuesto planificado
       </Link>
       <Link to={"/"} className="nav-link">Presupuesto vigente
+      </Link>
+      <Link to={"/config"} className="nav-link">Configuración
       </Link>
         </Nav>
       </Navbar>
@@ -39,6 +42,8 @@ function App() {
         <Route exact path="/add" component={AddEntry} />
         <Route exact path="/agregarPres" component={AddBudgetLine} />
         <Route exact path="/listarPres" component={ListPlannedBudget} />
+        <Route exact path="/config" component={Configuration} />
+
       </Switch>
       </div>
 
