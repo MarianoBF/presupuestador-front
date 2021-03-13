@@ -1,16 +1,16 @@
-import PresupuestoDataService from "../services/presupuesto.service";
+import BudgetDataService from "../services/budget.service";
 import { useState, useEffect } from "react";
 import Table from 'react-bootstrap/Table';
 import '../App.css';
 
-function ListarGastos() {
+function ListPlannedBudget() {
 
-    const [texto, setTexto] = useState([]);
+    const [budget, setBudget] = useState([]);
 
 useEffect(() => {
-    PresupuestoDataService.getAll()
-    .then(({data: presupuesto}) => {
-        setTexto(presupuesto)
+    BudgetDataService.getAll()
+    .then(({data: budget}) => {
+        setBudget(budget)
     })
 }, []);
 
@@ -20,7 +20,6 @@ useEffect(() => {
       <Table responsive hover striped>
             <thead>
             <tr>
-                <th>#</th>
                 <th>Rubro</th>
                 <th>Descripción</th>
                 <th>Monto Mensual</th>
@@ -28,12 +27,11 @@ useEffect(() => {
             </tr>
         </thead>
         <tbody className="tableText">
-    {texto && texto.map((item) => { return <tr key={item.id}><td>{item.id}</td><td>{item.rubro}</td><td>{item.descripcion}</td><td>{item.monto_mensual}</td></tr>})}
+    {budget && budget.map((item) => { return <tr key={item.id}><td>{item.category}</td><td>{item.description}</td><td>{item.monthlyLimit}</td></tr>})}
     <tr>
                 <th>Total:</th>
                 <th></th>
-                <th></th>
-                <th>{texto.reduce(function(ant, act){return ant + act.monto_mensual;}, 0)}</th>
+                <th>{budget.reduce(function(pre, act){return pre + act.monthlyLimit;}, 0)}</th>
 
             </tr>
     
@@ -44,4 +42,4 @@ useEffect(() => {
     )
 }
 
-export default ListarGastos;
+export default ListPlannedBudget;

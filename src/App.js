@@ -1,11 +1,10 @@
 import './App.css';
 import "bootstrap/dist/css/bootstrap.min.css";
-import ListarGastos from "./components/ListarGastos";
 import AddEntry from './components/AddEntry';
-import Gasto from "./components/Gasto";
-import AgregarPresupuesto from "./components/AgregarPresupuesto";
-import ListarPresupuesto from "./components/ListarPresupuesto";
-import Presupuesto from "./components/Presupuesto";
+import AddBudgetLine from "./components/AddBudgetLine";
+import ListEntries from "./components/ListEntries";
+import ListPlannedBudget from "./components/ListPlannedBudget";
+import ListCurrentBudget from "./components/ListCurrentBudget";
 import { Switch, Route, Link } from "react-router-dom";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
@@ -35,12 +34,11 @@ function App() {
  
       <div>
       <Switch>
-        <Route exact path="/" component={Presupuesto} />
-        <Route exact path="/gastos" component={ListarGastos} />
+        <Route exact path="/" component={ListCurrentBudget} />
+        <Route exact path="/gastos" component={ListEntries} />
         <Route exact path="/add" component={AddEntry} />
-        <Route exact path="/gastos/:id" component={Gasto} />
-        <Route exact path="/agregarPres" component={AgregarPresupuesto} />
-        <Route exact path="/listarPres" component={ListarPresupuesto} />
+        <Route exact path="/agregarPres" component={AddBudgetLine} />
+        <Route exact path="/listarPres" component={ListPlannedBudget} />
       </Switch>
       </div>
 

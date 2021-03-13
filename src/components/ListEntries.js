@@ -5,12 +5,12 @@ import '../App.css';
 
 function ListarGastos() {
 
-    const [texto, setTexto] = useState([]);
+    const [entries, setEntry] = useState([]);
 
 useEffect(() => {
     EntryDataService.getAll()
-    .then(({data: gastos}) => {
-        setTexto(gastos)
+    .then(({data: entryList}) => {
+        setEntry(entryList)
     })
 }, []);
 
@@ -25,16 +25,17 @@ useEffect(() => {
       <Table responsive hover striped>
             <thead>
             <tr>
-                <th>#</th>
-                <th>Descripción</th>
+                <th>Fecha</th>
                 <th>Rubro al que corresponde</th>
+                <th>Descripción del gasto</th>
                 <th>Monto</th>
+                <th>Tipo (ingreso/egreso)</th>
                 <th>Editar</th>
 
             </tr>
         </thead>
         <tbody className="tableText">
-    {texto && texto.map((item) => { return <tr key={item.id}><td>{item.id}</td><td>{item.descripcionGasto}</td><td>{item.rubroGasto}</td><td>{item.monto}</td><td onClick={()=>handleEdit(item.id)}>Editar</td></tr>})}
+    {entries && entries.map((item) => { return <tr key={item.id}><td>{item.date}</td><td>{item.category}</td><td>{item.description}</td><td>{item.amount}</td><td>{item.kind}</td><td onClick={()=>handleEdit(item.id)}>Editar</td></tr>})}
     </tbody>
     </Table>
     </div>
