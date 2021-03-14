@@ -43,7 +43,7 @@ function Configuration() {
             });
             };
       
-            // window.location.reload();
+            window.location.reload();
       
         }
       

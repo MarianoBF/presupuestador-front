@@ -12,6 +12,10 @@ class EntryDataService {
     deleteAll() {
         return http.delete("/entry")
     }
+
+    update(id, data) {
+        return http.put(`/entry/${id}`, data)
+    }
 }
 
 export default new EntryDataService();
