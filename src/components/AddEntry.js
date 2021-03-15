@@ -11,7 +11,7 @@ const AddEntry = () => {
         date: "",
         category: "",
         description: "",
-        amount: 0,
+        amount: "",
         kind: "",
     };
 
@@ -79,7 +79,7 @@ const AddEntry = () => {
                 <Form.Label>Observaciones del movimiento: </Form.Label>
                 <Form.Control type="text" value={entry.description} onChange={handleInput} name="description"></Form.Control>
                 <Form.Label>Monto del movimiento: </Form.Label>
-                <Form.Control type="number" value={entry.amount} onChange={handleInput} name="amount"></Form.Control>
+                <Form.Control type="number" value={entry.amount} onChange={handleInput} name="amount" max="1000000" min="0"></Form.Control>
                 <Form.Label>Tipo de movimiento (egreso/ingreso): </Form.Label>
                 <Form.Control as="select" value={entry.kind} onChange={handleInput} name="kind">
                     <option value="Egreso">Egreso</option>
