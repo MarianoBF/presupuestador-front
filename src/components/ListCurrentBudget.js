@@ -41,7 +41,7 @@ function ListCurrentBudget() {
     if (ready === 2) {
     for (let cat of categories) {
       let belongs = entries.filter((item)=>item.category === cat)
-      let sum = belongs.reduce((pre, act)=>{return pre + act.amount}, 0)
+      let sum = belongs.reduce((pre, cur)=>{return pre + cur.amount}, 0)
       setTotals(totals=> [...totals, sum])
     }
   }

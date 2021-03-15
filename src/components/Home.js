@@ -6,21 +6,31 @@ import '../App.css';
 function Home() {
 
     const [entries, setEntries] = useState([]);
+    const [totalExpenses, setTotalExpenses] = useState(0);
+    const [totalIncome, setTotalIncome] = useState(0);
+
 
 useEffect(() => {
     EntryDataService.getAll()
     .then(({data: entryList}) => {
-        setEntries(entryList.filter((item)=>item.kind === "Egreso"))
+        setEntries(entryList)
+        setTotalExpenses(entryList.filter((item)=>item.kind==="Egreso").reduce((pre, cur) => {return pre + cur.amount}, 0))
+        setTotalIncome(entryList.filter((item)=>item.kind==="Ingreso").reduce((pre, cur) => {return pre + cur.amount}, 0))
     })
 }, []);
-
 
   return( 
     <div>
     <header>
-        <h4>Listado de los 10 últimos movimientos cargados</h4>
-       
+        <h3>Tu saldo actual y 10 últimos movimientos cargados</h3>
     </header>
+
+    <p>Total de gastos: {totalExpenses}</p>
+    <p>Total de ingresos: {totalIncome}</p>
+    <p>Saldo actual: {totalIncome-totalExpenses}</p>
+
+    <h4>Últimos movimientos</h4>
+
    <Table responsive hover striped>
             <thead>
             <tr>

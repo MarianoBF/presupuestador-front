@@ -31,7 +31,7 @@ useEffect(() => {
     <tr>
                 <th>Total:</th>
                 <th></th>
-                <th>{budget.reduce(function(pre, act){return pre + act.monthlyLimit;}, 0)}</th>
+                <th>{budget.reduce(function(pre, cur){return pre + cur.monthlyLimit;}, 0)}</th>
 
             </tr>
     
