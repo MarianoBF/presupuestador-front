@@ -18,3 +18,8 @@ nav a {
   cursor: pointer;
   color: orange;
 }
+
+.deleteCell {
+  cursor: pointer;
+  color: red;
+}

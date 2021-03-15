@@ -22,6 +22,18 @@ useEffect(() => {
     })
 }, []);
 
+
+    const handleDeleteClick = (id) => {
+        EntryDataService.delete(id)
+        .then(response => {
+            console.log(response.data)
+            })
+        .catch(error => {
+            console.log(error);
+        });
+           window.location.reload()
+    }
+
     const [entry, setEntry] = useState();
 
     const handleEditClick = (id) => {
@@ -131,18 +143,19 @@ useEffect(() => {
                 <th>Descripción del gasto</th>
                 <th>Monto</th>
                 <th>Editar</th>
+                <th>Borrar</th>
 
             </tr>
         </thead>
         <tbody className="tableText">
         {activeFilter === true ? 
         showIncome ?
-        incomes.filter((itemF)=>itemF.category===selectedCategory).map((item) => { return <tr key={item.id}><td>{item.date}</td><td>{item.category}</td><td>{item.description}</td><td>{item.amount}</td><td className="editCell" onClick={()=>handleEditClick(item.id)}>Editar</td></tr>}) :
-        expenses.filter((itemF)=>itemF.category===selectedCategory).map((item) => { return <tr key={item.id}><td>{item.date}</td><td>{item.category}</td><td>{item.description}</td><td>{item.amount}</td><td className="editCell" onClick={()=>handleEditClick(item.id)}>Editar</td></tr>})
+        incomes.filter((itemF)=>itemF.category===selectedCategory).map((item) => { return <tr key={item.id}><td>{item.date}</td><td>{item.category}</td><td>{item.description}</td><td>{item.amount}</td><td className="editCell" onClick={()=>handleEditClick(item.id)}>Editar</td><td className="deleteCell" onClick={()=>handleDeleteClick(item.id)}>Borrar</td></tr>}) :
+        expenses.filter((itemF)=>itemF.category===selectedCategory).map((item) => { return <tr key={item.id}><td>{item.date}</td><td>{item.category}</td><td>{item.description}</td><td>{item.amount}</td><td className="editCell" onClick={()=>handleEditClick(item.id)}>Editar</td><td className="deleteCell" onClick={()=>handleDeleteClick(item.id)}>Borrar</td></tr>})
         : 
         showIncome ?
-        incomes.map((item) => { return <tr key={item.id}><td>{item.date}</td><td>{item.category}</td><td>{item.description}</td><td>{item.amount}</td><td className="editCell" onClick={()=>handleEditClick(item.id)}>Editar</td></tr>}) :
-        expenses.map((item) => { return <tr key={item.id}><td>{item.date}</td><td>{item.category}</td><td>{item.description}</td><td>{item.amount}</td><td className="editCell" onClick={()=>handleEditClick(item.id)}>Editar</td></tr>})
+        incomes.map((item) => { return <tr key={item.id}><td>{item.date}</td><td>{item.category}</td><td>{item.description}</td><td>{item.amount}</td><td className="editCell" onClick={()=>handleEditClick(item.id)}>Editar</td><td className="deleteCell" onClick={()=>handleDeleteClick(item.id)}>Borrar</td></tr>}) :
+        expenses.map((item) => { return <tr key={item.id}><td>{item.date}</td><td>{item.category}</td><td>{item.description}</td><td>{item.amount}</td><td className="editCell" onClick={()=>handleEditClick(item.id)}>Editar</td><td className="deleteCell" onClick={()=>handleDeleteClick(item.id)}>Borrar</td></tr>})
         }
     </tbody>
     </Table>

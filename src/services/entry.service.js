@@ -9,6 +9,10 @@ class EntryDataService {
         return http.post("/entry", data);
     }
 
+    delete(id) {
+        return http.delete(`/entry/${id}`)
+    }
+
     deleteAll() {
         return http.delete("/entry")
     }
