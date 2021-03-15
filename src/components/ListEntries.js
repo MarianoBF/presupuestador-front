@@ -53,7 +53,7 @@ useEffect(() => {
         finally {
             setEditing(false);
             setEntry();
-            // window.location.reload()
+            window.location.reload()
         }
     };
 
@@ -69,7 +69,7 @@ useEffect(() => {
   return( 
     <div>
     {!editing?<header>
-        <h4>Los últimos {showIncome?"ingresos":"gastos"} cargados</h4>
+        <h4>Listado de {showIncome?"ingresos":"gastos"} cargados</h4>
         <Button onClick={changeKind} variant="primary"> Mejor mostrame los {showIncome?"Gastos":"Ingresos"}</Button>
        
     </header> : null}

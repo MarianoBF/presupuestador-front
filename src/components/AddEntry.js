@@ -1,9 +1,10 @@
-import React, {useState} from "react";
+import React, { useState, useEffect } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Container from 'react-bootstrap/Container';
 import Col from 'react-bootstrap/Col';
 import EntryDataService from "../services/entry.service"
+import BudgetDataService from "../services/budget.service"
 
 const AddEntry = () => {
     const initialEntryState = {
@@ -21,6 +22,16 @@ const AddEntry = () => {
         const { name, value } = event.target;
         setEntry({...entry, [name]: value})
     };
+
+    const [categories, setCategories] = useState([]);
+
+    useEffect(() => {
+        BudgetDataService.getAll()
+          .then(({data: budget}) => {
+            setCategories(budget.map(item => item.category));
+          })     
+      }, []);
+
 
     const saveEntry = () => {
         let data = {
@@ -62,15 +73,17 @@ const AddEntry = () => {
                 <Form.Label>Fecha del movimiento: </Form.Label>
                 <Form.Control type="date" value={entry.date} onChange={handleInput} name="date"></Form.Control>
                 <Form.Label>Concepto del movimiento: </Form.Label>
-                <Form.Control type="text" value={entry.category} onChange={handleInput} name="category"></Form.Control>
+                <Form.Control as="select" value={entry.category} onChange={handleInput} name="category">
+                {categories.map((item) => { return <option key={item}>{item}</option>})}                
+                </Form.Control>
                 <Form.Label>Observaciones del movimiento: </Form.Label>
                 <Form.Control type="text" value={entry.description} onChange={handleInput} name="description"></Form.Control>
                 <Form.Label>Monto del movimiento: </Form.Label>
                 <Form.Control type="number" value={entry.amount} onChange={handleInput} name="amount"></Form.Control>
                 <Form.Label>Tipo de movimiento (egreso/ingreso): </Form.Label>
                 <Form.Control as="select" value={entry.kind} onChange={handleInput} name="kind">
-                    <option value="Ingreso">Ingreso</option>
                     <option value="Egreso">Egreso</option>
+                    <option value="Ingreso">Ingreso</option>
                 </Form.Control>
                 </Form.Group>
                     </Col>
