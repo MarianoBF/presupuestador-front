@@ -6,7 +6,7 @@ import BudgetDataService from "../services/budget.service";
 
 
 
-function ListCurrentBudget() {
+function ListBudget() {
 
 
   const [ready, setReady] = useState(0);
@@ -59,18 +59,21 @@ return (
             <thead>
             <tr>
                 <th>Rubro</th>
-                <th>Monto Mensual</th>
-                <th>Gasto Mensual</th>
+                <th>Descripción</th>
+                <th>Monto Mensual Previsto</th>
+                <th>Movimiento Mensual Registrado</th>
                 <th>Saldo</th>
             </tr>
         </thead>
         <tbody className="tableText">
-    {budget && budget.map((item, index) => { return <tr key={item.id}><td>{item.category}</td><td>{item.monthlyLimit}</td><td>{totals[index]}</td><td>{item.monthlyLimit-totals[index]}</td></tr>})}
+    {budget && budget.map((item, index) => { return <tr key={item.id}><td>{item.category}</td><td>{item.description}</td><td>{item.monthlyLimit}</td><td>{totals[index]}</td><td className={item.monthlyLimit-totals[index]>0?"":"resultCell"}>{item.monthlyLimit-totals[index]}</td></tr>})}
     <tr>
-                <th>Total:</th>
+                <th>Totales:</th>
+                <th></th>
+                <th>{budget.reduce(function(pre, cur){return pre + cur.monthlyLimit;}, 0)}</th>
                 <th></th>
                 <th></th>
-                <th></th>
+
 
 
             </tr>
@@ -84,4 +87,4 @@ return (
 )
 }
 
-    export default ListCurrentBudget;
+    export default ListBudget;

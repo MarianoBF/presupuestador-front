@@ -27,9 +27,9 @@ useEffect(() => {
 
     <p>Total de gastos: {totalExpenses}</p>
     <p>Total de ingresos: {totalIncome}</p>
-    <p>Saldo actual: {totalIncome-totalExpenses}</p>
+    <p className={totalIncome-totalExpenses>0?"":"resultCell"}>Saldo actual: {totalIncome-totalExpenses}</p>
 
-    <h4>Últimos movimientos</h4>
+    <h4>Últimos movimientos cargados</h4>
 
    <Table responsive hover striped>
             <thead>
@@ -38,13 +38,11 @@ useEffect(() => {
                 <th>Rubro al que corresponde</th>
                 <th>Descripción del gasto</th>
                 <th>Monto</th>
-                <th>Editar</th>
-
             </tr>
         </thead>
         <tbody className="tableText">
     
-        {entries.slice(0,10).map((item) => { return <tr key={item.id}><td>{item.date}</td><td>{item.category}</td><td>{item.description}</td><td>{item.amount}</td><td className="editCell">Editar</td></tr>})}
+        {entries.sort((a,b)=>a.createdAt<b.createdAt?1:-1).slice(0,10).map((item) => { return <tr key={item.id}><td>{item.date.slice(0,10)}</td><td>{item.category}</td><td>{item.description}</td><td>{item.amount}</td></tr>})}
     </tbody>
     </Table>
     </div>

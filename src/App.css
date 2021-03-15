@@ -1,11 +1,10 @@
 .App {
   text-align: center;
   color: #000;
-
 }
 
 nav a {
-  color: #000;
+  color: orange;
 }
 
 
@@ -21,5 +20,9 @@ nav a {
 
 .deleteCell {
   cursor: pointer;
+  color: red;
+}
+
+.resultCell {
   color: red;
 }

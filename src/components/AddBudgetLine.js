@@ -9,7 +9,7 @@ function AddBudgetLine() {
     const initialBudgetState = {
         category: "",
         description: "",
-        monthlyLimit: 0,
+        monthlyLimit: "",
     };
 
     const [budget, setBudget] = useState(initialBudgetState);
@@ -45,6 +45,8 @@ function AddBudgetLine() {
 
     return (
         <div>
+        <h4>Desde esta sección podés cargar nuevos rubros / categorías para ordenar tus movimientos.</h4>
+
         {sent ? (
             <div>
             <h3>Enviado con éxito</h3>
@@ -56,9 +58,9 @@ function AddBudgetLine() {
                 <Form.Row className="justify-content-md-center">
                     <Col md={6}>
                 <Form.Group>
-                <Form.Label>Nombre para el rubro, al que luego referirán los gastos: </Form.Label>
+                <Form.Label>Nombre para el rubro / concepto: </Form.Label>
                 <Form.Control type="text" value={budget.category} onChange={handleInput} name="category"></Form.Control>
-                <Form.Label>Descripción extensa de qué incluye el rubro: </Form.Label>
+                <Form.Label>Descripción extensa sobre qué incluye el rubro: </Form.Label>
                 <Form.Control type="text" value={budget.description} onChange={handleInput} name="description"></Form.Control>
                 <Form.Label>Monto mensual objetivo para el rubro: </Form.Label>
                 <Form.Control type="number" value={budget.monthlyLimit} onChange={handleInput} name="monthlyLimit"></Form.Control>
