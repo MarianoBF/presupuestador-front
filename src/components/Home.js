@@ -20,16 +20,18 @@ useEffect(() => {
 }, []);
 
   return( 
-    <div>
-    <header>
-        <h3>Tu saldo actual y 10 últimos movimientos cargados</h3>
-    </header>
+    <div className="centeredContainer">
+    <h1>Posición consolidada</h1>
 
-    <p>Total de gastos: {totalExpenses}</p>
+
+    <div className="budgetSummary">
     <p>Total de ingresos: {totalIncome}</p>
-    <p className={totalIncome-totalExpenses>0?"":"resultCell"}>Saldo actual: {totalIncome-totalExpenses}</p>
+    <p className="redText">Total de gastos: {totalExpenses}</p>
+    <p className={totalIncome-totalExpenses>0?"budgetSummaryResult":"budgetSummaryResult redText"}>Saldo actual: {totalIncome-totalExpenses}</p>
 
-    <h4>Últimos movimientos cargados</h4>
+    </div>
+
+    <h2>Últimos 10 movimientos cargados</h2>
 
    <Table responsive hover striped>
             <thead>

@@ -10,8 +10,10 @@ function ListEntries() {
 
     const [expenses, setExpenses] = useState([]);
     const [incomes, setIncomes] = useState([]);
-    const [showIncome, setShowIncome] = useState(false);
+    const [showIncome, setShowIncome] = useState(JSON.parse(localStorage.getItem('showIncome'))?JSON.parse(localStorage.getItem('showIncome')):false);
     const [editing, setEditing] = useState(false);
+    const [done, setDone] = useState(false);
+
 
 
 useEffect(() => {
@@ -20,7 +22,7 @@ useEffect(() => {
         setExpenses(entryList.filter((item)=>item.kind === "Egreso"))
         setIncomes(entryList.filter((item)=>item.kind === "Ingreso"))
     })
-}, []);
+}, [done]);
 
 
     const handleDeleteClick = (id) => {
@@ -31,8 +33,13 @@ useEffect(() => {
         .catch(error => {
             console.log(error);
         });
-           window.location.reload()
-    }
+        localStorage.setItem('selectedCategory', JSON.stringify(selectedCategory));
+        localStorage.setItem('activeFilter', JSON.stringify(activeFilter)); // ajustar
+        localStorage.setItem('showIncome', JSON.stringify(showIncome)); // ajustar
+
+
+        window.location.reload()
+   }
 
     const [entry, setEntry] = useState();
 
@@ -68,7 +75,7 @@ useEffect(() => {
         finally {
             setEditing(false);
             setEntry(undefined);
-            window.location.reload()
+            setDone(!done)
         }
     };
 
@@ -81,7 +88,11 @@ useEffect(() => {
         setShowIncome(!showIncome);
     }
     
+    
+    
     const [categories, setCategories] = useState([]);
+
+
 
     useEffect(() => {
         BudgetDataService.getAll()
@@ -90,8 +101,8 @@ useEffect(() => {
           })     
       }, []);
 
-    const [selectedCategory, setSelectedCategory] = useState();
-    const [activeFilter, setActiveFilter] = useState(false);
+    const [selectedCategory, setSelectedCategory] = useState(JSON.parse(localStorage.getItem('selectedCategory'))?JSON.parse(localStorage.getItem('selectedCategory')):'');
+    const [activeFilter, setActiveFilter] = useState(JSON.parse(localStorage.getItem('activeFilter'))?JSON.parse(localStorage.getItem('activeFilter')):false);
 
     const handleCategorySelection = (event) => {
         setActiveFilter(true)
@@ -101,22 +112,22 @@ useEffect(() => {
     const cancelFilter = () => {
         setActiveFilter(false)
         setSelectedCategory("")
-        window.location.reload()
+        setDone(!done)
     }
 
   return( 
     <div>
-    {!editing?<header>
-        <h4>Listado de {showIncome?"ingresos":"gastos"} cargados</h4>
-        <Button onClick={changeKind} variant="primary"> Mejor mostrame los {showIncome?"Gastos":"Ingresos"}</Button>
+    {!editing?<header className="centeredHeader">
+        <h1>Listado de {showIncome?"ingresos":"gastos"} cargados</h1>
+        <Button className="spacedButton" onClick={changeKind} variant="primary"> Mejor mostrame los {showIncome?"Gastos":"Ingresos"}</Button>
        
         <Form>
             <Form.Label>Filtrame por el siguiente Rubro: </Form.Label>
-            <Form.Control as="select" value={selectedCategory} onChange={handleCategorySelection} name="category">
+            <Form.Control className="civilizedDropdown" as="select" value={selectedCategory} onChange={handleCategorySelection} name="category">
             <option></option>
                 {categories.map((item) => { return <option key={item}>{item}</option>})}                
             </Form.Control>
-         <Button onClick={cancelFilter} variant="secondary"> Resetear Filtro</Button> 
+         <Button className="spacedButton" onClick={cancelFilter} variant="secondary"> Resetear Filtro</Button> 
         </Form>
 
     </header> : null}
@@ -150,16 +161,17 @@ useEffect(() => {
         <tbody className="tableText">
         {activeFilter === true ? 
         showIncome ?
-        incomes.filter((itemF)=>itemF.category===selectedCategory).map((item) => { return <tr key={item.id}><td>{item.date}</td><td>{item.category}</td><td>{item.description}</td><td>{item.amount}</td><td className="editCell" onClick={()=>handleEditClick(item.id)}>Editar</td><td className="deleteCell" onClick={()=>handleDeleteClick(item.id)}>Borrar</td></tr>}) :
-        expenses.filter((itemF)=>itemF.category===selectedCategory).map((item) => { return <tr key={item.id}><td>{item.date}</td><td>{item.category}</td><td>{item.description}</td><td>{item.amount}</td><td className="editCell" onClick={()=>handleEditClick(item.id)}>Editar</td><td className="deleteCell" onClick={()=>handleDeleteClick(item.id)}>Borrar</td></tr>})
+        incomes.filter((itemF)=>itemF.category===selectedCategory).map((item) => { return <tr key={item.id}><td>{item.date.slice(0,10)}</td><td>{item.category}</td><td>{item.description}</td><td>{+item.amount.toFixed(2)}</td><td className="editCell" onClick={()=>handleEditClick(item.id)}>Editar</td><td className="deleteCell" onClick={()=>handleDeleteClick(item.id)}>Borrar</td></tr>}) :
+        expenses.filter((itemF)=>itemF.category===selectedCategory).map((item) => { return <tr key={item.id}><td>{item.date.slice(0,10)}</td><td>{item.category}</td><td>{item.description}</td><td>{+item.amount.toFixed(2)}</td><td className="editCell" onClick={()=>handleEditClick(item.id)}>Editar</td><td className="deleteCell" onClick={()=>handleDeleteClick(item.id)}>Borrar</td></tr>})
         : 
         showIncome ?
-        incomes.map((item) => { return <tr key={item.id}><td>{item.date}</td><td>{item.category}</td><td>{item.description}</td><td>{item.amount}</td><td className="editCell" onClick={()=>handleEditClick(item.id)}>Editar</td><td className="deleteCell" onClick={()=>handleDeleteClick(item.id)}>Borrar</td></tr>}) :
-        expenses.map((item) => { return <tr key={item.id}><td>{item.date}</td><td>{item.category}</td><td>{item.description}</td><td>{item.amount}</td><td className="editCell" onClick={()=>handleEditClick(item.id)}>Editar</td><td className="deleteCell" onClick={()=>handleDeleteClick(item.id)}>Borrar</td></tr>})
+        incomes.map((item) => { return <tr key={item.id}><td>{item.date.slice(0,10)}</td><td>{item.category}</td><td>{item.description}</td><td>{parseFloat(item.amount).toFixed(2)}</td><td className="editCell" onClick={()=>handleEditClick(item.id)}>Editar</td><td className="deleteCell" onClick={()=>handleDeleteClick(item.id)}>Borrar</td></tr>}) :
+        expenses.map((item) => { return <tr key={item.id}><td>{item.date.slice(0,10)}</td><td>{item.category}</td><td>{item.description}</td><td>{parseFloat(item.amount).toFixed(2)}</td><td className="editCell" onClick={()=>handleEditClick(item.id)}>Editar</td><td className="deleteCell" onClick={()=>handleDeleteClick(item.id)}>Borrar</td></tr>})
         }
     </tbody>
     </Table>
         </>:null}
+
     </div>
     )
 }

@@ -1,3 +1,10 @@
+/*#FF9B00 orange
+#343A40 darkgrey
+#808080 lightgrey
+#B1CD75 light brown-green
+#C4C390 light green
+*/
+
 .App {
   text-align: center;
   color: #000;
@@ -13,6 +20,10 @@ nav a {
   font-size: 14px;
 }
 
+thead {
+  background: #C4C390;
+}
+
 .editCell {
   cursor: pointer;
   color: orange;
@@ -23,6 +34,36 @@ nav a {
   color: red;
 }
 
-.resultCell {
+.redText {
   color: red;
+}
+
+.civilizedDropdown {
+  max-width: 300px;
+  margin: .5rem auto;
+}
+
+.centeredHeader {
+  text-align: center;
+}
+
+.spacedButton {
+  margin: .5rem auto;
+}
+
+.centeredContainer {
+  margin: 0 auto;
+  text-align: center;
+}
+
+.budgetSummary {
+  border: 5px solid #B1CD75;
+  width: 50%;
+  min-width: 400px;
+  margin: 1rem auto;
+  font-size: 1rem;
+}
+
+.budgetSummaryResult {
+  font-size: 2rem;
 }

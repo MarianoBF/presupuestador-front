@@ -44,12 +44,13 @@ function AddBudgetLine() {
     }
 
     return (
-        <div>
-        <h4>Desde esta sección podés cargar nuevos rubros / categorías para ordenar tus movimientos.</h4>
+        <div className="centeredContainer">
+        <h1>Desde esta sección podés cargar nuevos rubros / categorías para ordenar tus movimientos.</h1>
+        <p>Todos los campos son obligatorios</p>
 
         {sent ? (
             <div>
-            <h3>Enviado con éxito</h3>
+            <h1>Enviado con éxito</h1>
             <button onClick={newBudgetLine}>Mandar otro</button>
             </div>
             ) : (
@@ -59,15 +60,15 @@ function AddBudgetLine() {
                     <Col md={6}>
                 <Form.Group>
                 <Form.Label>Nombre para el rubro / concepto: </Form.Label>
-                <Form.Control type="text" value={budget.category} onChange={handleInput} name="category"></Form.Control>
+                <Form.Control type="text" value={budget.category} onChange={handleInput} name="category" required></Form.Control>
                 <Form.Label>Descripción extensa sobre qué incluye el rubro: </Form.Label>
-                <Form.Control type="text" value={budget.description} onChange={handleInput} name="description"></Form.Control>
+                <Form.Control type="text" value={budget.description} onChange={handleInput} name="description" required></Form.Control>
                 <Form.Label>Monto mensual objetivo para el rubro: </Form.Label>
-                <Form.Control type="number" value={budget.monthlyLimit} onChange={handleInput} name="monthlyLimit"></Form.Control>
+                <Form.Control type="number" value={budget.monthlyLimit} onChange={handleInput} name="monthlyLimit" max="10000000" min="0" required></Form.Control>
                 </Form.Group>
                     </Col>
                 </Form.Row>
-                <Button onClick={saveBudget}>Guardar</Button>
+                <Button type="submit" onClick={saveBudget} className="spacedButton">Guardar</Button>
                 </Form>
 
                 </Container>

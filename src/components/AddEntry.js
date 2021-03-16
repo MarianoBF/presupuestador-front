@@ -34,6 +34,7 @@ const AddEntry = () => {
 
 
     const saveEntry = () => {
+        
         let data = {
             date: entry.date,
             category: entry.category,
@@ -41,7 +42,7 @@ const AddEntry = () => {
             amount: entry.amount,
             kind: entry.kind,
         };
-
+        console.log(data)
         EntryDataService.create(data)
         .then(response => {
             setSent(true);
@@ -58,10 +59,12 @@ const AddEntry = () => {
     }
 
     return (
-        <div>
+        <div className="centeredContainer">
+        <h1>Desde esta sección podes cargar los nuevos movimientos</h1>
+        <p>Todos los campos son obligatorios</p>
         {sent ? (
             <div>
-            <h3>Enviado con éxito</h3>
+            <h1>Enviado con éxito</h1>
             <button onClick={newEntry}>Mandar otro</button>
             </div>
             ) : (
@@ -71,24 +74,25 @@ const AddEntry = () => {
                     <Col md={6}>
                 <Form.Group>
                 <Form.Label>Fecha del movimiento: </Form.Label>
-                <Form.Control type="date" value={entry.date} onChange={handleInput} name="date"></Form.Control>
+                <Form.Control type="date" value={entry.date} onChange={handleInput} name="date" required></Form.Control>
                 <Form.Label>Concepto del movimiento: </Form.Label>
-                <Form.Control as="select" value={entry.category} onChange={handleInput} name="category">
+                <Form.Control as="select" value={entry.category} onChange={handleInput} name="category" required>
                 {categories.map((item) => { return <option key={item}>{item}</option>})}                
                 </Form.Control>
                 <Form.Label>Observaciones del movimiento: </Form.Label>
-                <Form.Control type="text" value={entry.description} onChange={handleInput} name="description"></Form.Control>
+                <Form.Control type="text" value={entry.description} onChange={handleInput} name="description" required></Form.Control>
                 <Form.Label>Monto del movimiento: </Form.Label>
-                <Form.Control type="number" value={entry.amount} onChange={handleInput} name="amount" max="1000000" min="0"></Form.Control>
+                <Form.Control type="number" value={entry.amount} onChange={handleInput} name="amount" max="1000000" min="0" required></Form.Control>
                 <Form.Label>Tipo de movimiento (egreso/ingreso): </Form.Label>
-                <Form.Control as="select" value={entry.kind} onChange={handleInput} name="kind">
+                <Form.Control as="select" value={entry.kind} onChange={handleInput} name="kind" required>
+                    <option></option>
                     <option value="Egreso">Egreso</option>
                     <option value="Ingreso">Ingreso</option>
                 </Form.Control>
                 </Form.Group>
                     </Col>
                 </Form.Row>
-                <Button onClick={saveEntry}>Guardar</Button>
+                <Button type="submit" className="spacedButton" onClick={saveEntry}>Guardar</Button>
                 </Form>
 
                 </Container>

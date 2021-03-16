@@ -41,7 +41,9 @@ function ListBudget() {
     if (ready === 2) {
     for (let cat of categories) {
       let belongs = entries.filter((item)=>item.category === cat)
-      let sum = belongs.reduce((pre, cur)=>{return pre + cur.amount}, 0)
+      let sumInc = belongs.filter((item)=>item.kind==="Ingreso").reduce((pre, cur)=>{return pre + cur.amount}, 0)
+      let sumExp = belongs.filter((item)=>item.kind==="Egreso").reduce((pre, cur)=>{return pre + cur.amount}, 0)
+      let sum = sumInc - sumExp
       setTotals(totals=> [...totals, sum])
     }
   }
@@ -53,20 +55,20 @@ function ListBudget() {
 
 return (
     <>
-      <h4>Presupuesto actual</h4>
+      <h1>Presupuesto actual</h1>
  
       <Table responsive hover striped>
             <thead>
             <tr>
                 <th>Rubro</th>
                 <th>Descripción</th>
-                <th>Monto Mensual Previsto</th>
-                <th>Movimiento Mensual Registrado</th>
+                <th>Monto Previsto</th>
+                <th>Movimiento Mensual Registrado (Neto ingreso-egreso)</th>
                 <th>Saldo</th>
             </tr>
         </thead>
         <tbody className="tableText">
-    {budget && budget.map((item, index) => { return <tr key={item.id}><td>{item.category}</td><td>{item.description}</td><td>{item.monthlyLimit}</td><td>{totals[index]}</td><td className={item.monthlyLimit-totals[index]>0?"":"resultCell"}>{item.monthlyLimit-totals[index]}</td></tr>})}
+    {budget && budget.map((item, index) => { return <tr key={item.id}><td>{item.category}</td><td>{item.description}</td><td>{item.monthlyLimit}</td><td>{totals[index]}</td><td className={item.monthlyLimit-totals[index]>0?"":"redText"}>{item.monthlyLimit-totals[index]}</td></tr>})}
     <tr>
                 <th>Totales:</th>
                 <th></th>

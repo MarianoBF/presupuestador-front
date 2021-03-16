@@ -58,17 +58,14 @@ function Configuration() {
 
 
     return(
-        <div>
+        <div className="centeredContainer">
 
-    <h4>Opciones de configuración</h4>
+    <h1>Opciones de configuración</h1>
 
-    <Button onClick={loadSampleData} variant="secondary">Cargar datos de prueba</Button>{' '}
+    <Button className="spacedButton" onClick={loadSampleData} variant="secondary">Cargar datos de prueba</Button>{' '}
     
-    <br />
-    <br />
-
     
-    <Button onClick={deleteData} variant="danger">Borrar todos los datos</Button>
+    <Button className="spacedButton" onClick={deleteData} variant="danger">Borrar todos los datos</Button>
         </div>
     )
 }
