@@ -2,30 +2,15 @@ import Button from 'react-bootstrap/Button';
 import { SAMPLEENTRIES, SAMPLEBUDGET } from './SampleData';
 import EntryDataService from "../services/entry.service";
 import BudgetDataService from "../services/budget.service";
+import { useState } from "react";
 
 
 function Configuration() {
-    const loadSampleData = () => {
 
-        for (let i of SAMPLEENTRIES) {
-      
-        let data = {
-          date: i.date,
-          category: i.category,
-          description: i.description,
-          amount: i.amount,
-          kind: i.kind,
-          };
-      
-          EntryDataService.create(data)
-          .then(response => {
-              console.log(response.data)
-              })
-          .catch(error => {
-              console.log(error);
-          });
-          };
-      
+const [loaded, setLoaded] = useState(true)
+
+    const loadSampleData = () => {
+ 
         for (let i of SAMPLEBUDGET) {
       
           let data = {
@@ -37,14 +22,37 @@ function Configuration() {
             BudgetDataService.create(data)
             .then(response => {
                 console.log(response.data)
+
+                for (let i of SAMPLEENTRIES) {
+      
+                    let data = {
+                      date: i.date,
+                      category: i.category,
+                      description: i.description,
+                      amount: i.amount,
+                      kind: i.kind,
+                      };
+                  
+                      EntryDataService.create(data)
+                      .then(response => {
+                          console.log(response.data)
+                          setLoaded(true)
+                          })
+                      .catch(error => {
+                          console.log(error);
+                      });
+                      };
+
                 })
             .catch(error => {
                 console.log(error);
             });
             };
-      
-            window.location.reload();
-      
+
+
+
+                 
+                  
         }
       
         const deleteData = () => {
@@ -66,6 +74,9 @@ function Configuration() {
     
     
     <Button className="spacedButton" onClick={deleteData} variant="danger">Borrar todos los datos</Button>
+     
+     {loaded && <p>"Datos cargados exitosamente"</p>}
+     
         </div>
     )
 }

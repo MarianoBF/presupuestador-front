@@ -2,8 +2,12 @@ import EntryDataService from "../services/entry.service";
 import React, { useState, useEffect } from "react";
 import Table from 'react-bootstrap/Table';
 import '../App.css';
+import numeral from "numeral"
 
 function Home() {
+
+    numeral.locale("es");
+    numeral.defaultFormat('$0,0.00');
 
     const [entries, setEntries] = useState([]);
     const [totalExpenses, setTotalExpenses] = useState(0);
@@ -25,13 +29,13 @@ useEffect(() => {
 
 
     <div className="budgetSummary">
-    <p>Total de ingresos: {totalIncome}</p>
-    <p className="redText">Total de gastos: {totalExpenses}</p>
-    <p className={totalIncome-totalExpenses>0?"budgetSummaryResult":"budgetSummaryResult redText"}>Saldo actual: {totalIncome-totalExpenses}</p>
+    <p>Total de ingresos: {numeral(totalIncome).format()}</p>
+    <p className="redText">Total de gastos: {numeral(totalExpenses).format()}</p>
+    <p className={totalIncome-totalExpenses>0?"budgetSummaryResult":"budgetSummaryResult redText"}>Saldo actual: {numeral(totalIncome-totalExpenses).format()}</p>
 
     </div>
 
-    <h2>Últimos 10 movimientos cargados</h2>
+    <h2 className="secondaryTitle">Últimos 10 movimientos cargados</h2>
 
    <Table responsive hover striped>
             <thead>
@@ -44,7 +48,7 @@ useEffect(() => {
         </thead>
         <tbody className="tableText">
     
-        {entries.sort((a,b)=>a.createdAt<b.createdAt?1:-1).slice(0,10).map((item) => { return <tr key={item.id}><td>{item.date.slice(0,10)}</td><td>{item.category}</td><td>{item.description}</td><td>{item.amount}</td></tr>})}
+        {entries.sort((a,b)=>a.createdAt<b.createdAt?1:-1).slice(0,10).map((item) => { return <tr key={item.id}><td>{item.date.slice(0,10)}</td><td>{item.category}</td><td>{item.description}</td><td>{numeral(item.amount).format()}</td></tr>})}
     </tbody>
     </Table>
     </div>

@@ -67,3 +67,9 @@ thead {
 .budgetSummaryResult {
   font-size: 2rem;
 }
+
+.secondaryTitle {
+  font-size: 1.2rem;
+  line-height: 1.2rem;
+  margin: 2rem auto;
+}
