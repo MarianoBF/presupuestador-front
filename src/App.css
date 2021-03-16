@@ -38,6 +38,10 @@ thead {
   color: red;
 }
 
+.blueText {
+  color: blue;
+}
+
 .civilizedDropdown {
   max-width: 300px;
   margin: .5rem auto;

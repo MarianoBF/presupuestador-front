@@ -34,8 +34,8 @@ useEffect(() => {
             console.log(error);
         });
         localStorage.setItem('selectedCategory', JSON.stringify(selectedCategory));
-        localStorage.setItem('activeFilter', JSON.stringify(activeFilter)); // ajustar
-        localStorage.setItem('showIncome', JSON.stringify(showIncome)); // ajustar
+        localStorage.setItem('activeFilter', JSON.stringify(activeFilter));
+        localStorage.setItem('showIncome', JSON.stringify(showIncome)); 
 
 
         window.location.reload()
@@ -113,6 +113,8 @@ useEffect(() => {
         setActiveFilter(false)
         setSelectedCategory("")
         setDone(!done)
+        localStorage.setItem('selectedCategory', JSON.stringify(""));
+        localStorage.setItem('activeFilter', JSON.stringify(false));
     }
 
   return( 

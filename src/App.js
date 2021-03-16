@@ -16,7 +16,7 @@ function App() {
 
   return (
     <div className="App">
-      <Navbar bg="dark" variant="dark" fixed expand="md">
+      <Navbar bg="dark" variant="dark" sticky="top" expand="md">
         <Navbar.Brand><Link to={"/"}>/Presupuestaré/
         </Link></Navbar.Brand>
       <Nav className="mr-auto">

@@ -46,7 +46,7 @@ function AddBudgetLine() {
     return (
         <div className="centeredContainer">
         <h1>Desde esta sección podés cargar nuevos rubros / categorías para ordenar tus movimientos.</h1>
-        <p>Todos los campos son obligatorios</p>
+        <p>(Todos los campos son obligatorios)</p>
 
         {sent ? (
             <div>

@@ -61,7 +61,7 @@ const AddEntry = () => {
     return (
         <div className="centeredContainer">
         <h1>Desde esta sección podes cargar los nuevos movimientos</h1>
-        <p>Todos los campos son obligatorios</p>
+        <p>(Todos los campos son obligatorios)</p>
         {sent ? (
             <div>
             <h1>Enviado con éxito</h1>

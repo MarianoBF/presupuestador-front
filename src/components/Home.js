@@ -3,6 +3,8 @@ import React, { useState, useEffect } from "react";
 import Table from 'react-bootstrap/Table';
 import '../App.css';
 import numeral from "numeral"
+// eslint-disable-next-line
+import es from "numeral/locales/es"
 
 function Home() {
 

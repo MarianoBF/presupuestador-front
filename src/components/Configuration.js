@@ -7,10 +7,12 @@ import { useState } from "react";
 
 function Configuration() {
 
-const [loaded, setLoaded] = useState(true)
+const [loaded, setLoaded] = useState(false)
+const [notLoaded, setNotLoaded] = useState(false)
+
 
     const loadSampleData = () => {
- 
+        let entryFlag = true;
         for (let i of SAMPLEBUDGET) {
       
           let data = {
@@ -20,11 +22,12 @@ const [loaded, setLoaded] = useState(true)
             };
         
             BudgetDataService.create(data)
-            .then(response => {
-                console.log(response.data)
-
+            // eslint-disable-next-line no-loop-func
+            .then(res => {
+                console.log("OK")
+                if (entryFlag === true) {
                 for (let i of SAMPLEENTRIES) {
-      
+                    
                     let data = {
                       date: i.date,
                       category: i.category,
@@ -34,21 +37,24 @@ const [loaded, setLoaded] = useState(true)
                       };
                   
                       EntryDataService.create(data)
-                      .then(response => {
-                          console.log(response.data)
+                      .then(res => {
+                          console.log("OK")
                           setLoaded(true)
                           })
                       .catch(error => {
                           console.log(error);
+                          setNotLoaded(true)
                       });
                       };
-
+                      entryFlag = false;
+                    }
                 })
             .catch(error => {
                 console.log(error);
+                setNotLoaded(true)
             });
             };
-
+            
 
 
                  
@@ -75,7 +81,9 @@ const [loaded, setLoaded] = useState(true)
     
     <Button className="spacedButton" onClick={deleteData} variant="danger">Borrar todos los datos</Button>
      
-     {loaded && <p>"Datos cargados exitosamente"</p>}
+     {loaded && <p className="blueText">Datos de prueba cargados exitosamente.</p>}
+     {notLoaded && <p className="redText">No se han podido cargar datos de prueba, ya están cargados o se ha producido un error.</p>}
+
      
         </div>
     )

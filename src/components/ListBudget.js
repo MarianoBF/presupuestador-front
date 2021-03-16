@@ -45,6 +45,7 @@ function ListBudget() {
       let sumExp = belongs.filter((item)=>item.kind==="Egreso").reduce((pre, cur)=>{return pre + cur.amount}, 0)
       let sum = sumInc - sumExp
       setTotals(totals=> [...totals, sum])
+      setReady(true)
     }
   }
   // eslint-disable-next-line
@@ -63,18 +64,18 @@ return (
                 <th>Rubro</th>
                 <th>Descripción</th>
                 <th>Monto Previsto</th>
-                <th>Movimiento Mensual Registrado (Neto ingreso-egreso)</th>
+                <th>Movimientos Registrados (ingresos-egreso)</th>
                 <th>Saldo</th>
             </tr>
         </thead>
         <tbody className="tableText">
-    {budget && budget.map((item, index) => { return <tr key={item.id}><td>{item.category}</td><td>{item.description}</td><td>{item.monthlyLimit}</td><td>{totals[index]}</td><td className={item.monthlyLimit-totals[index]>0?"":"redText"}>{item.monthlyLimit-totals[index]}</td></tr>})}
+    {ready===true && budget.map((item, index) => { return <tr key={item.id}><td>{item.category}</td><td>{item.description}</td><td>{item.monthlyLimit}</td><td>{totals[index]}</td><td className={item.monthlyLimit-totals[index]<0?"redText":""}>{item.monthlyLimit,totals[index]}</td></tr>})}
     <tr>
                 <th>Totales:</th>
                 <th></th>
-                <th>{budget.reduce(function(pre, cur){return pre + cur.monthlyLimit;}, 0)}</th>
-                <th></th>
-                <th></th>
+                <th>{budget.reduce((pre, cur)=> pre + cur.monthlyLimit, 0)}</th>
+                <th>{totals.reduce((pre, cur)=> pre + cur, 0)}</th>
+                <th>{budget.reduce((pre, cur)=> pre + cur.monthlyLimit, 0)-totals.reduce((pre, cur)=> pre + cur, 0)}</th>
 
 
 
