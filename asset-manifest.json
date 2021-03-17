@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/presupuestador-front/static/css/main.6209b6a3.chunk.css",
-    "main.js": "/presupuestador-front/static/js/main.e1fd8f02.chunk.js",
-    "main.js.map": "/presupuestador-front/static/js/main.e1fd8f02.chunk.js.map",
+    "main.js": "/presupuestador-front/static/js/main.2729a2cf.chunk.js",
+    "main.js.map": "/presupuestador-front/static/js/main.2729a2cf.chunk.js.map",
     "runtime-main.js": "/presupuestador-front/static/js/runtime-main.98aefce3.js",
     "runtime-main.js.map": "/presupuestador-front/static/js/runtime-main.98aefce3.js.map",
     "static/css/2.150d169a.chunk.css": "/presupuestador-front/static/css/2.150d169a.chunk.css",
@@ -20,6 +20,6 @@
     "static/css/2.150d169a.chunk.css",
     "static/js/2.f7d706dd.chunk.js",
     "static/css/main.6209b6a3.chunk.css",
-    "static/js/main.e1fd8f02.chunk.js"
+    "static/js/main.2729a2cf.chunk.js"
   ]
 }
