@@ -5,6 +5,13 @@ import Table from 'react-bootstrap/Table';
 import Button from 'react-bootstrap/Button';
 import Form from "react-bootstrap/Form";
 import '../App.css';
+import numeral from "numeral";
+// eslint-disable-next-line
+import es from "numeral/locales/es";
+
+numeral.locale("es");
+numeral.defaultFormat('$0,0.00');
+
 
 function ListEntries() {
 
@@ -167,8 +174,8 @@ useEffect(() => {
         expenses.filter((itemF)=>itemF.category===selectedCategory).map((item) => { return <tr key={item.id}><td>{item.date.slice(0,10)}</td><td>{item.category}</td><td>{item.description}</td><td>{+item.amount.toFixed(2)}</td><td className="editCell" onClick={()=>handleEditClick(item.id)}>Editar</td><td className="deleteCell" onClick={()=>handleDeleteClick(item.id)}>Borrar</td></tr>})
         : 
         showIncome ?
-        incomes.map((item) => { return <tr key={item.id}><td>{item.date.slice(0,10)}</td><td>{item.category}</td><td>{item.description}</td><td>{parseFloat(item.amount).toFixed(2)}</td><td className="editCell" onClick={()=>handleEditClick(item.id)}>Editar</td><td className="deleteCell" onClick={()=>handleDeleteClick(item.id)}>Borrar</td></tr>}) :
-        expenses.map((item) => { return <tr key={item.id}><td>{item.date.slice(0,10)}</td><td>{item.category}</td><td>{item.description}</td><td>{parseFloat(item.amount).toFixed(2)}</td><td className="editCell" onClick={()=>handleEditClick(item.id)}>Editar</td><td className="deleteCell" onClick={()=>handleDeleteClick(item.id)}>Borrar</td></tr>})
+        incomes.map((item) => { return <tr key={item.id}><td>{item.date.slice(0,10)}</td><td>{item.category}</td><td>{item.description}</td><td>{numeral(item.amount).format()}</td><td className="editCell" onClick={()=>handleEditClick(item.id)}>Editar</td><td className="deleteCell" onClick={()=>handleDeleteClick(item.id)}>Borrar</td></tr>}) :
+        expenses.map((item) => { return <tr key={item.id}><td>{item.date.slice(0,10)}</td><td>{item.category}</td><td>{item.description}</td><td>{numeral(item.amount).format()}</td><td className="editCell" onClick={()=>handleEditClick(item.id)}>Editar</td><td className="deleteCell" onClick={()=>handleDeleteClick(item.id)}>Borrar</td></tr>})
         }
     </tbody>
     </Table>

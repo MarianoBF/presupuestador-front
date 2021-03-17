@@ -3,8 +3,8 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Container from 'react-bootstrap/Container';
 import Col from 'react-bootstrap/Col';
-import EntryDataService from "../services/entry.service"
-import BudgetDataService from "../services/budget.service"
+import EntryDataService from "../services/entry.service";
+import BudgetDataService from "../services/budget.service";
 
 const AddEntry = () => {
     const initialEntryState = {
