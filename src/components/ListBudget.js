@@ -75,13 +75,13 @@ return (
             </tr>
         </thead>
         <tbody className="tableText">
-    {ready===true && budget.map((item, index) => { return <tr key={item.id}><td>{item.category}</td><td>{item.description}</td><td>{numeral(item.monthlyLimit).format()}</td><td>{numeral(totals[index]).format()}</td><td className={item.monthlyLimit-totals[index]<0?"redText":""}>{numeral(item.monthlyLimit-totals[index]).format()}</td></tr>})}
+    {ready===true && budget.map((item, index) => { return <tr key={item.id}><td>{item.category}</td><td>{item.description}</td><td>{numeral(item.limit).format()}</td><td>{numeral(totals[index]).format()}</td><td className={item.limit-totals[index]<0?"redText":""}>{numeral(item.limit-totals[index]).format()}</td></tr>})}
     <tr>
                 <th>Totales:</th>
                 <th></th>
-                <th>{numeral(budget.reduce((pre, cur)=> pre + cur.monthlyLimit, 0)).format()}</th>
+                <th>{numeral(budget.reduce((pre, cur)=> pre + cur.limit, 0)).format()}</th>
                 <th>{numeral(totals.reduce((pre, cur)=> pre + cur, 0)).format()}</th>
-                <th>{numeral(budget.reduce((pre, cur)=> pre + cur.monthlyLimit, 0)-totals.reduce((pre, cur)=> pre + cur, 0)).format()}</th>
+                <th>{numeral(budget.reduce((pre, cur)=> pre + cur.limit, 0)-totals.reduce((pre, cur)=> pre + cur, 0)).format()}</th>
 
 
 

@@ -62,7 +62,7 @@ const AddEntry = () => {
         <h1>Desde esta sección podes cargar los nuevos movimientos</h1>
         {sent ? (
             <div>
-            <h1 className="secondaryTitle">Movimientoa agregado con éxito</h1>
+            <h1 className="secondaryTitle">Movimiento agregado con éxito</h1>
             <button onClick={newEntry}>Mandar otro</button>
             </div>
             ) : (

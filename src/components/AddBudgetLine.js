@@ -9,7 +9,7 @@ function AddBudgetLine() {
     const initialBudgetState = {
         category: "",
         description: "",
-        monthlyLimit: "",
+        limit: "",
     };
 
     const [budget, setBudget] = useState(initialBudgetState);
@@ -24,7 +24,7 @@ function AddBudgetLine() {
         let data = {
             category: budget.category,
             description: budget.description,
-            monthlyLimit: budget.monthlyLimit,
+            limit: budget.limit,
         };
 
         BudgetDataService.create(data)
@@ -62,7 +62,7 @@ function AddBudgetLine() {
                 <Form.Label>Descripción extensa sobre qué incluye el rubro: </Form.Label>
                 <Form.Control type="text" value={budget.description} onChange={handleInput} name="description" required></Form.Control>
                 <Form.Label>Monto mensual objetivo para el rubro: </Form.Label>
-                <Form.Control type="number" value={budget.monthlyLimit} onChange={handleInput} name="monthlyLimit" max="10000000" min="0" required></Form.Control>
+                <Form.Control type="number" value={budget.limit} onChange={handleInput} name="limit" max="10000000" min="0" required></Form.Control>
                 </Form.Group>
                     </Col>
                 </Form.Row>

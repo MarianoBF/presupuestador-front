@@ -18,7 +18,7 @@ const [notLoaded, setNotLoaded] = useState(false)
           let data = {
             category: i.category,
             description: i.description,
-            monthlyLimit: i.monthlyLimit,
+            limit: i.limit,
             };
         
             BudgetDataService.create(data)

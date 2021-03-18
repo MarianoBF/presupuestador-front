@@ -159,21 +159,21 @@ export const SAMPLEBUDGET = [
 {
     category: "Comidas",
     description: "Gastos en comer en la calle",
-    monthlyLimit: 10000
+    limit: 10000
 },
 {
     category: "Mercado",
     description: "Compras en el mercado",
-    monthlyLimit: 10000
+    limit: 10000
 },
 {
     category: "Servicios",
     description: "Pagos de servicios públicos",
-    monthlyLimit: 5000
+    limit: 5000
 },
 {
     category: "Trabajos",
     description: "Ingresos por trabajos",
-    monthlyLimit: 30000
+    limit: 30000
 },
 ]
