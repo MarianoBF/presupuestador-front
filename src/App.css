@@ -10,8 +10,13 @@
   color: #000;
 }
 
+nav {
+  margin-top: 5px
+}
+
 nav a {
   color: orange;
+  padding: .5rem;
 }
 
 nav a:hover {
@@ -21,7 +26,8 @@ nav a:hover {
 
 .tableText {
   font-weight: 300;
-  font-size: 14px;
+  font-size: 12px;
+  font-family: 'Ubuntu', 'Roboto', 'Droid Sans', 'Helvetica Neue', 'Segoe UI', 'sans-serif';
 }
 
 thead {
@@ -65,10 +71,11 @@ thead {
 }
 
 .budgetSummary {
+  width: fit-content;
+  height: fit-content;
   border: 5px solid #B1CD75;
-  width: 50%;
-  min-width: 400px;
   margin: 1rem auto;
+  padding: 10px;
   font-size: 1rem;
 }
 
@@ -80,4 +87,10 @@ thead {
   font-size: 1.2rem;
   line-height: 1.2rem;
   margin: 2rem auto;
+}
+
+@media (min-width: 768px) {
+  nav {
+    margin-top: 10px;
+  }
 }

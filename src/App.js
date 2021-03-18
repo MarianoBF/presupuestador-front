@@ -19,6 +19,8 @@ function App() {
       <Navbar bg="dark" variant="dark" sticky="top" expand="md">
         <Navbar.Brand><Link to={"/"}>/Presupuestaré/
         </Link></Navbar.Brand>
+        <Navbar.Toggle />
+        <Navbar.Collapse>
       <Nav className="mr-auto">
       <Link to={"/entries"} className="nav-link">Listar movimientos
       </Link>
@@ -31,6 +33,7 @@ function App() {
       <Link to={"/config"} className="nav-link">Configuración
       </Link>
         </Nav>
+      </Navbar.Collapse>
       </Navbar>
  
       <div>

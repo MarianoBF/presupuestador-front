@@ -61,14 +61,14 @@ const AddEntry = () => {
     return (
         <div className="centeredContainer">
         <h1>Desde esta sección podes cargar los nuevos movimientos</h1>
-        <p>(Todos los campos son obligatorios)</p>
         {sent ? (
             <div>
-            <h1>Enviado con éxito</h1>
+            <h1 className="secondaryTitle">Movimientoa agregado con éxito</h1>
             <button onClick={newEntry}>Mandar otro</button>
             </div>
             ) : (
                 <Container fluid="true">
+                <p>(Todos los campos son obligatorios)</p>
                 <Form>
                 <Form.Row className="justify-content-md-center">
                     <Col md={6}>

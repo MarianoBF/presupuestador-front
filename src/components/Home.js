@@ -39,7 +39,7 @@ useEffect(() => {
 
     <h2 className="secondaryTitle">Últimos 10 movimientos cargados</h2>
 
-   <Table responsive hover striped>
+   <Table responsive="md" hover striped size="sm">
             <thead>
             <tr>
                 <th>Fecha</th>

@@ -46,15 +46,15 @@ function AddBudgetLine() {
     return (
         <div className="centeredContainer">
         <h1>Desde esta sección podés cargar nuevos rubros / categorías para ordenar tus movimientos.</h1>
-        <p>(Todos los campos son obligatorios)</p>
 
         {sent ? (
             <div>
-            <h1>Enviado con éxito</h1>
-            <button onClick={newBudgetLine}>Mandar otro</button>
+            <h1 className="successMessage">Categoría agregada con éxito</h1>
+            <button onClick={newBudgetLine}>Agregar otra</button>
             </div>
             ) : (
                 <Container fluid="true">
+                <p>(Todos los campos son obligatorios)</p>
                 <Form>
                 <Form.Row className="justify-content-md-center">
                     <Col md={6}>

@@ -62,7 +62,7 @@ return (
     <>
       <h1>Presupuesto actual</h1>
  
-      <Table responsive hover striped>
+      <Table responsive="md" hover striped size="sm">
             <thead>
             <tr>
                 <th>Rubro</th>

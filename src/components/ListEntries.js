@@ -155,7 +155,7 @@ useEffect(() => {
     :null}
 
     {(editing === false) ? <>
-      <Table responsive hover striped>
+      <Table responsive="md" hover striped size="sm">
             <thead>
             <tr>
                 <th>Fecha</th>
