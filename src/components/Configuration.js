@@ -64,10 +64,14 @@ const [notLoaded, setNotLoaded] = useState(false)
         const deleteData = () => {
           let checkDelete = window.confirm("Esto es irreversible, vas a borrar todos los datos y no se puede recuperar, ¿estás seguro?");
           if (checkDelete === true) {
-          BudgetDataService.deleteAll();
-          EntryDataService.deleteAll();
+          try {
+            BudgetDataService.deleteAll();
+            EntryDataService.deleteAll(); 
+          } catch {
+              console.log("No se pudieron borrar los datos")
+          } finally {
           window.location.reload();
-        }
+        }}
         }
 
 

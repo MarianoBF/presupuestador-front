@@ -33,9 +33,7 @@ function AddBudgetLine() {
             setSent(true);
             console.log(response.data)
             })
-        .catch(error => {
-            console.log(error);
-        });
+        .catch(console.log("No se pudo sumar la nueva categoría"));
     };
 
     const newBudgetLine = () => {

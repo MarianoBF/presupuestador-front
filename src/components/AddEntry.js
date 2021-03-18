@@ -29,7 +29,8 @@ const AddEntry = () => {
         BudgetDataService.getAll()
           .then(({data: budget}) => {
             setCategories(budget.map(item => item.category));
-          })     
+          })   
+          .catch(console.log("No se pudo recuperar el listado de categorías"))  
       }, []);
 
 
@@ -48,9 +49,7 @@ const AddEntry = () => {
             setSent(true);
             console.log(response.data)
             })
-        .catch(error => {
-            console.log(error);
-        });
+        .catch(console.log("No se pudo agregar el nuevo movimiento"));
     };
 
     const newEntry = () => {
