@@ -11,7 +11,7 @@
 }
 
 nav {
-  margin-top: 5px
+  margin-top: 5px;
 }
 
 nav a {
@@ -27,7 +27,7 @@ nav a:hover {
 .tableText {
   font-weight: 300;
   font-size: 12px;
-  font-family: 'Ubuntu', 'Roboto', 'Droid Sans', 'Helvetica Neue', 'Segoe UI', 'sans-serif';
+  font-family: 'Ubuntu', 'Roboto', 'Droid Sans', 'Helvetica Neue', 'Segoe UI', 'Calibri', 'sans-serif';
 }
 
 thead {
@@ -93,4 +93,9 @@ thead {
   nav {
     margin-top: 10px;
   }
+
+  .tableText {
+    font-size: 14px;
+  }
+
 }

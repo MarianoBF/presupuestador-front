@@ -30,7 +30,7 @@ const AddEntry = () => {
           .then(({data: budget}) => {
             setCategories(budget.map(item => item.category));
           })   
-          .catch(console.log("No se pudo recuperar el listado de categorías"))  
+          .catch(()=>console.log("No se pudo recuperar el listado de categorías"))  
       }, []);
 
 
@@ -49,7 +49,7 @@ const AddEntry = () => {
             setSent(true);
             console.log(response.data)
             })
-        .catch(console.log("No se pudo agregar el nuevo movimiento"));
+        .catch(()=>console.log("No se pudo agregar el nuevo movimiento"));
     };
 
     const newEntry = () => {
@@ -76,6 +76,7 @@ const AddEntry = () => {
                 <Form.Control type="date" value={entry.date} onChange={handleInput} name="date" required></Form.Control>
                 <Form.Label>Concepto del movimiento: </Form.Label>
                 <Form.Control as="select" value={entry.category} onChange={handleInput} name="category" required>
+                <option></option>
                 {categories.map((item) => { return <option key={item}>{item}</option>})}                
                 </Form.Control>
                 <Form.Label>Observaciones del movimiento: </Form.Label>

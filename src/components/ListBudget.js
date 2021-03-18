@@ -24,7 +24,7 @@ function ListBudget() {
         setReady(ready=>ready+1)
 
       })
-      .catch(console.log("No se ha podido conectar al servidor"))
+      .catch(()=>console.log("No se ha podido conectar al servidor"))
   }, []);
   
   const [budget, setBudget] = useState([]);
@@ -37,7 +37,7 @@ function ListBudget() {
         setCategories(budget.map(item => item.category));
         setReady(ready=>ready+1)
       })
-      .catch(console.log("No se ha podido conectar al servidor"))
+      .catch(()=>console.log("No se ha podido conectar al servidor"))
       
   }, []);
 

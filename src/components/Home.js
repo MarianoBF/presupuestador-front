@@ -23,7 +23,7 @@ useEffect(() => {
         setTotalExpenses(entryList.filter((item)=>item.kind==="Egreso").reduce((pre, cur) => {return pre + cur.amount}, 0))
         setTotalIncome(entryList.filter((item)=>item.kind==="Ingreso").reduce((pre, cur) => {return pre + cur.amount}, 0))
     })
-    .catch(console.log("No se pudo cargar la información de los movimientos"))
+    .catch((error) => console.log("No se pudo cargar la información de los movimientos", error))
 }, []);
 
   return( 

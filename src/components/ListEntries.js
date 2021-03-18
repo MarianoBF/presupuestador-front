@@ -29,7 +29,7 @@ useEffect(() => {
         setExpenses(entryList.filter((item)=>item.kind === "Egreso"))
         setIncomes(entryList.filter((item)=>item.kind === "Ingreso"))
     })
-    .catch(console.log("No se han podido recuperar los movimientos del servidor"))
+    .catch(()=>console.log("No se han podido recuperar los movimientos del servidor"))
 }, [done]);
 
 
@@ -38,7 +38,7 @@ useEffect(() => {
         .then(response => {
             console.log(response.data)
             })
-        .catch(console.log("No se ha podido borrar el movimiento"));
+        .catch(()=>console.log("No se ha podido borrar el movimiento"));
         localStorage.setItem('selectedCategory', JSON.stringify(selectedCategory));
         localStorage.setItem('activeFilter', JSON.stringify(activeFilter));
         localStorage.setItem('showIncome', JSON.stringify(showIncome)); 
@@ -75,7 +75,7 @@ useEffect(() => {
             setEditing(false);
             console.log(response.data)
             })
-        .catch(console.log("No se ha podido editar el movimiento"));
+        .catch(()=>console.log("No se ha podido editar el movimiento"));
         }
         finally {
             setEditing(false);
@@ -104,7 +104,7 @@ useEffect(() => {
           .then(({data: budget}) => {
             setCategories(budget.map(item => item.category));
           })     
-          .catch(console.log("No se han podido recuperar los datos del servidor"))
+          .catch(()=>console.log("No se han podido recuperar los datos del servidor"))
 
       }, []);
 
