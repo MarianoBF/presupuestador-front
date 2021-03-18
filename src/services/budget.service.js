@@ -8,6 +8,11 @@ class BudgetDataService {
     create(data) {
         return http.post("/budget", data);
     }
+
+    delete(id) {
+        return http.delete(`/budget/${id}`)
+    }
+
     deleteAll() {
         return http.delete("/budget")
     }

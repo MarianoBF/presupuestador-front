@@ -57,7 +57,21 @@ function ListBudget() {
   // eslint-disable-next-line
 }, [ready]);
 
+const handleDeleteClick = (id, category) => {
+  let hasItems = entries.filter((item)=>item.category === category)
+  if (hasItems.length === 0) {
+  BudgetDataService.delete(id)
+  .then(response => {
+      console.log(response.data)
+      })
+  .catch(()=>console.log("No se ha podido borrar la categoría"));
 
+  window.location.reload()
+} else {
+  window.alert("Esta categoría aún tiene movimientos. Se deben borrar todos los movimientos de la categoría para poder borrarla.")
+}
+
+}
 
 
 return (
@@ -72,16 +86,19 @@ return (
                 <th>Monto Previsto</th>
                 <th>Movimientos Registrados (ingresos-egreso)</th>
                 <th>Saldo</th>
+                <th>Borrar</th>
             </tr>
         </thead>
         <tbody className="tableText">
-    {ready===true && budget.map((item, index) => { return <tr key={item.id}><td>{item.category}</td><td>{item.description}</td><td>{numeral(item.limit).format()}</td><td>{numeral(totals[index]).format()}</td><td className={item.limit-totals[index]<0?"redText":""}>{numeral(item.limit-totals[index]).format()}</td></tr>})}
+    {ready===true && budget.map((item, index) => { return <tr key={item.id}><td>{item.category}</td><td>{item.description}</td><td>{numeral(item.limit).format()}</td><td>{numeral(totals[index]).format()}</td><td className={item.limit-totals[index]<0?"redText":""}>{numeral(item.limit-totals[index]).format()}</td><td className="deleteCell" onClick={()=>handleDeleteClick(item.id, item.category)}>Borrar</td></tr>})}
     <tr>
                 <th>Totales:</th>
                 <th></th>
                 <th>{numeral(budget.reduce((pre, cur)=> pre + cur.limit, 0)).format()}</th>
                 <th>{numeral(totals.reduce((pre, cur)=> pre + cur, 0)).format()}</th>
                 <th>{numeral(budget.reduce((pre, cur)=> pre + cur.limit, 0)-totals.reduce((pre, cur)=> pre + cur, 0)).format()}</th>
+                <th></th>
+
 
 
 
