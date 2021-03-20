@@ -10,25 +10,24 @@ function Configuration() {
 
   const loadSampleData = () => {
     let entryFlag = true;
-    for (let samplecategory of SAMPLEBUDGETCATEGORIES) {
+    SAMPLEBUDGETCATEGORIES.forEach((samplecategory)=> {
       const category = {
         category: samplecategory.category,
         description: samplecategory.description,
         limit: samplecategory.limit,
-      };
-
+      };    
       BudgetDataService.create(category)
         // eslint-disable-next-line no-loop-func
         .then((res) => {
           console.log("OK");
           if (entryFlag === true) {
-            for (let sampleentry of SAMPLEENTRIES) {
+           SAMPLEENTRIES.forEach((sampleEntry)=> {
               const entry = {
-                date: sampleentry.date,
-                category: sampleentry.category,
-                description: sampleentry.description,
-                amount: sampleentry.amount,
-                kind: sampleentry.kind,
+                date: sampleEntry.date,
+                category: sampleEntry.category,
+                description: sampleEntry.description,
+                amount: sampleEntry.amount,
+                kind: sampleEntry.kind,
               };
 
               EntryDataService.create(entry)
@@ -40,7 +39,7 @@ function Configuration() {
                   console.log(error);
                   setNotLoaded(true);
                 });
-            }
+            })
             entryFlag = false;
           }
         })
@@ -48,8 +47,8 @@ function Configuration() {
           console.log(error);
           setNotLoaded(true);
         });
-    }
-  };
+  })
+}
 
   const deleteData = () => {
     let checkDelete = window.confirm(

@@ -1,5 +1,5 @@
 import Table from "react-bootstrap/Table";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import EntryDataService from "../services/entry.service";
 import BudgetDataService from "../services/budget.service";
 import numeral from "numeral";
@@ -77,6 +77,39 @@ function ListBudget() {
     }
   };
 
+  const budgetListing = useMemo(()=>budget.map((item, index) => {
+    return (
+      <tr key={item.id}>
+        <td>{item.category}</td>
+        <td>{item.description}</td>
+        <td>{numeral(item.limit).format()}</td>
+        <td>{numeral(totals[index]).format()}</td>
+        <td className={item.limit - totals[index] < 0 ? "redText" : ""}>
+          {numeral(item.limit - totals[index]).format()}
+        </td>
+        <td
+          className="deleteCell"
+          onClick={() => handleDeleteClick(item.id, item.category)}
+        >
+          Borrar
+        </td>
+      </tr>
+    );
+  }),[budget, totals]);
+
+  const totalBudgeted = numeral(
+    budget.reduce((pre, cur) => pre + cur.limit, 0)
+  ).format();
+
+  const totalEntriesResult = numeral(
+    totals.reduce((pre, cur) => pre + cur, 0)
+  ).format();
+
+  const totalResultsDifference = numeral(
+    budget.reduce((pre, cur) => pre + cur.limit, 0) -
+      totals.reduce((pre, cur) => pre + cur, 0)
+  ).format();
+
   return (
     <>
       <h1>Presupuesto actual</h1>
@@ -93,45 +126,13 @@ function ListBudget() {
           </tr>
         </thead>
         <tbody className="tableText">
-          {ready === true &&
-            budget.map((item, index) => {
-              return (
-                <tr key={item.id}>
-                  <td>{item.category}</td>
-                  <td>{item.description}</td>
-                  <td>{numeral(item.limit).format()}</td>
-                  <td>{numeral(totals[index]).format()}</td>
-                  <td
-                    className={item.limit - totals[index] < 0 ? "redText" : ""}
-                  >
-                    {numeral(item.limit - totals[index]).format()}
-                  </td>
-                  <td
-                    className="deleteCell"
-                    onClick={() => handleDeleteClick(item.id, item.category)}
-                  >
-                    Borrar
-                  </td>
-                </tr>
-              );
-            })}
+          {ready === true && budgetListing}
           <tr>
             <th>Totales:</th>
             <th></th>
-            <th>
-              {numeral(
-                budget.reduce((pre, cur) => pre + cur.limit, 0)
-              ).format()}
-            </th>
-            <th>
-              {numeral(totals.reduce((pre, cur) => pre + cur, 0)).format()}
-            </th>
-            <th>
-              {numeral(
-                budget.reduce((pre, cur) => pre + cur.limit, 0) -
-                  totals.reduce((pre, cur) => pre + cur, 0)
-              ).format()}
-            </th>
+            <th>{totalBudgeted}</th>
+            <th>{totalEntriesResult}</th>
+            <th>{totalResultsDifference}</th>
             <th></th>
           </tr>
         </tbody>

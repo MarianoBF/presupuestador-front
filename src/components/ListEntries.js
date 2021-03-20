@@ -135,6 +135,78 @@ function ListEntries() {
     localStorage.setItem("activeFilter", JSON.stringify(false));
   };
 
+  const filteredIncomes = incomes
+    .filter((itemF) => itemF.category === selectedCategory)
+    .map((item) => {
+      return (
+        <tr key={item.id}>
+          <td>{item.date.slice(0, 10)}</td>
+          <td>{item.category}</td>
+          <td>{item.description}</td>
+          <td>{+item.amount.toFixed(2)}</td>
+          <td className="editCell" onClick={() => handleEditClick(item.id)}>
+            Editar
+          </td>
+          <td className="deleteCell" onClick={() => handleDeleteClick(item.id)}>
+            Borrar
+          </td>
+        </tr>
+      );
+    });
+
+  const unfilteredIncomes = incomes.map((item) => {
+    return (
+      <tr key={item.id}>
+        <td>{item.date.slice(0, 10)}</td>
+        <td>{item.category}</td>
+        <td>{item.description}</td>
+        <td>{numeral(item.amount).format()}</td>
+        <td className="editCell" onClick={() => handleEditClick(item.id)}>
+          Editar
+        </td>
+        <td className="deleteCell" onClick={() => handleDeleteClick(item.id)}>
+          Borrar
+        </td>
+      </tr>
+    );
+  });
+
+  const filteredExpenses = expenses
+    .filter((itemF) => itemF.category === selectedCategory)
+    .map((item) => {
+      return (
+        <tr key={item.id}>
+          <td>{item.date.slice(0, 10)}</td>
+          <td>{item.category}</td>
+          <td>{item.description}</td>
+          <td>{+item.amount.toFixed(2)}</td>
+          <td className="editCell" onClick={() => handleEditClick(item.id)}>
+            Editar
+          </td>
+          <td className="deleteCell" onClick={() => handleDeleteClick(item.id)}>
+            Borrar
+          </td>
+        </tr>
+      );
+    });
+
+  const unfilteredExpenses = expenses.map((item) => {
+    return (
+      <tr key={item.id}>
+        <td>{item.date.slice(0, 10)}</td>
+        <td>{item.category}</td>
+        <td>{item.description}</td>
+        <td>{numeral(item.amount).format()}</td>
+        <td className="editCell" onClick={() => handleEditClick(item.id)}>
+          Editar
+        </td>
+        <td className="deleteCell" onClick={() => handleDeleteClick(item.id)}>
+          Borrar
+        </td>
+      </tr>
+    );
+  });
+
   return (
     <div>
       {!editing ? (
@@ -234,99 +306,11 @@ function ListEntries() {
             <tbody className="tableText">
               {activeFilter === true
                 ? showIncome
-                  ? incomes
-                      .filter((itemF) => itemF.category === selectedCategory)
-                      .map((item) => {
-                        return (
-                          <tr key={item.id}>
-                            <td>{item.date.slice(0, 10)}</td>
-                            <td>{item.category}</td>
-                            <td>{item.description}</td>
-                            <td>{+item.amount.toFixed(2)}</td>
-                            <td
-                              className="editCell"
-                              onClick={() => handleEditClick(item.id)}
-                            >
-                              Editar
-                            </td>
-                            <td
-                              className="deleteCell"
-                              onClick={() => handleDeleteClick(item.id)}
-                            >
-                              Borrar
-                            </td>
-                          </tr>
-                        );
-                      })
-                  : expenses
-                      .filter((itemF) => itemF.category === selectedCategory)
-                      .map((item) => {
-                        return (
-                          <tr key={item.id}>
-                            <td>{item.date.slice(0, 10)}</td>
-                            <td>{item.category}</td>
-                            <td>{item.description}</td>
-                            <td>{+item.amount.toFixed(2)}</td>
-                            <td
-                              className="editCell"
-                              onClick={() => handleEditClick(item.id)}
-                            >
-                              Editar
-                            </td>
-                            <td
-                              className="deleteCell"
-                              onClick={() => handleDeleteClick(item.id)}
-                            >
-                              Borrar
-                            </td>
-                          </tr>
-                        );
-                      })
+                  ? filteredIncomes
+                  : filteredExpenses
                 : showIncome
-                ? incomes.map((item) => {
-                    return (
-                      <tr key={item.id}>
-                        <td>{item.date.slice(0, 10)}</td>
-                        <td>{item.category}</td>
-                        <td>{item.description}</td>
-                        <td>{numeral(item.amount).format()}</td>
-                        <td
-                          className="editCell"
-                          onClick={() => handleEditClick(item.id)}
-                        >
-                          Editar
-                        </td>
-                        <td
-                          className="deleteCell"
-                          onClick={() => handleDeleteClick(item.id)}
-                        >
-                          Borrar
-                        </td>
-                      </tr>
-                    );
-                  })
-                : expenses.map((item) => {
-                    return (
-                      <tr key={item.id}>
-                        <td>{item.date.slice(0, 10)}</td>
-                        <td>{item.category}</td>
-                        <td>{item.description}</td>
-                        <td>{numeral(item.amount).format()}</td>
-                        <td
-                          className="editCell"
-                          onClick={() => handleEditClick(item.id)}
-                        >
-                          Editar
-                        </td>
-                        <td
-                          className="deleteCell"
-                          onClick={() => handleDeleteClick(item.id)}
-                        >
-                          Borrar
-                        </td>
-                      </tr>
-                    );
-                  })}
+                ? unfilteredIncomes
+                : unfilteredExpenses}
             </tbody>
           </Table>
         </>
