@@ -1,7 +1,6 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-import Container from "react-bootstrap/Container";
 import Col from "react-bootstrap/Col";
 import BudgetDataService from "../services/budget.service.js";
 
@@ -53,11 +52,10 @@ function AddBudgetLine() {
           <button onClick={newBudgetLine}>Agregar otra</button>
         </div>
       ) : (
-        <Container fluid="true">
+        <div>
           <p>(Todos los campos son obligatorios)</p>
           <Form>
-            <Form.Row className="justify-content-md-center">
-              <Col md={6}>
+              <Col md={6} className="centeredContainer">
                 <Form.Group>
                   <Form.Label>Nombre para el rubro / concepto: </Form.Label>
                   <Form.Control
@@ -91,12 +89,11 @@ function AddBudgetLine() {
                   ></Form.Control>
                 </Form.Group>
               </Col>
-            </Form.Row>
             <Button type="submit" onClick={saveBudget} className="spacedButton">
               Guardar
             </Button>
           </Form>
-        </Container>
+        </div>
       )}
     </div>
   );

@@ -1,5 +1,5 @@
 import EntryDataService from "../services/entry.service";
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import Table from "react-bootstrap/Table";
 import "../App.css";
 import numeral from "numeral";

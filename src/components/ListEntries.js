@@ -1,9 +1,10 @@
 import EntryDataService from "../services/entry.service";
 import BudgetDataService from "../services/budget.service";
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
+import Col from "react-bootstrap/Col";
 import "../App.css";
 import numeral from "numeral";
 // eslint-disable-next-line
@@ -248,45 +249,46 @@ function ListEntries() {
       ) : null}
       {editing ? (
         <div>
-          {" "}
-          {}
-          Fecha:{" "}
-          <input
-            value={entry.date.slice(0, 10)}
-            onChange={handleInput}
-            type="date"
-            name="date"
+        <h1 class="secondaryTitle">Editando movimiento:</h1>
+        
+        <Form>
+        <Col md={6} className="centeredContainer">
+            <Form.Label>Fecha:</Form.Label>
+            <Form.Control
+              value={entry.date.slice(0, 10)}
+              onChange={handleInput}
+              type="date"
+              name="date"
           />
-          Rubro:{" "}
-          <input
+            <Form.Label>Categoría:</Form.Label>
+            <Form.Control
             value={entry.category}
             onChange={handleInput}
             type="text"
             name="category"
           />
-          Descripción:{" "}
-          <input
+          <Form.Label>Descripción:</Form.Label>
+            <Form.Control
             value={entry.description}
             onChange={handleInput}
             type="text"
             name="description"
           />
-          Monto:{" "}
-          <input
+        <Form.Label>Monto:</Form.Label>
+            <Form.Control
             value={entry.amount}
             onChange={handleInput}
             type="number"
             name="amount"
-          />
-          <br />
+          />              
           <Button onClick={saveEdit} variant="primary">
-            {" "}
             Guardar Edición
           </Button>{" "}
           <Button onClick={cancelEdit} variant="secondary">
-            {" "}
             Cancelar Edición
           </Button>
+          </Col>
+          </Form>
         </div>
       ) : null}
 

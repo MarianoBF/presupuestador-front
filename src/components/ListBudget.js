@@ -1,5 +1,5 @@
 import Table from "react-bootstrap/Table";
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect } from "react";
 import EntryDataService from "../services/entry.service";
 import BudgetDataService from "../services/budget.service";
 import numeral from "numeral";
@@ -77,7 +77,7 @@ function ListBudget() {
     }
   };
 
-  const budgetListing = useMemo(()=>budget.map((item, index) => {
+  const budgetListing = budget.map((item, index) => {
     return (
       <tr key={item.id}>
         <td>{item.category}</td>
@@ -95,7 +95,7 @@ function ListBudget() {
         </td>
       </tr>
     );
-  }),[budget, totals]);
+  });
 
   const totalBudgeted = numeral(
     budget.reduce((pre, cur) => pre + cur.limit, 0)

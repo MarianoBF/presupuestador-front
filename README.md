@@ -6,4 +6,4 @@
 
 1. npm start
 
-1. Load sample data from "Configuración"
+1. Load sample data from "Configuración" section 

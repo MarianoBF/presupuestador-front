@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-import Container from "react-bootstrap/Container";
 import Col from "react-bootstrap/Col";
 import EntryDataService from "../services/entry.service";
 import BudgetDataService from "../services/budget.service";
@@ -66,71 +65,69 @@ const AddEntry = () => {
           <button onClick={newEntry}>Agregar otro</button>
         </div>
       ) : (
-        <Container fluid="true">
+        <div>
           <p>(Todos los campos son obligatorios)</p>
           <Form>
-            <Form.Row className="justify-content-md-center">
-              <Col md={6}>
-                <Form.Group>
-                  <Form.Label>Fecha del movimiento: </Form.Label>
-                  <Form.Control
-                    type="date"
-                    value={entry.date}
-                    onChange={handleInput}
-                    name="date"
-                    required
-                  ></Form.Control>
-                  <Form.Label>Concepto del movimiento: </Form.Label>
-                  <Form.Control
-                    as="select"
-                    value={entry.category}
-                    onChange={handleInput}
-                    name="category"
-                    required
-                  >
-                    <option></option>
-                    {categories.map((item) => {
-                      return <option key={item}>{item}</option>;
-                    })}
-                  </Form.Control>
-                  <Form.Label>Observaciones del movimiento: </Form.Label>
-                  <Form.Control
-                    type="text"
-                    value={entry.description}
-                    onChange={handleInput}
-                    name="description"
-                    required
-                  ></Form.Control>
-                  <Form.Label>Monto del movimiento: </Form.Label>
-                  <Form.Control
-                    type="number"
-                    value={entry.amount}
-                    onChange={handleInput}
-                    name="amount"
-                    max="1000000"
-                    min="0"
-                    required
-                  ></Form.Control>
-                  <Form.Label>Tipo de movimiento (egreso/ingreso): </Form.Label>
-                  <Form.Control
-                    as="select"
-                    value={entry.kind}
-                    onChange={handleInput}
-                    name="kind"
-                    required
-                  >
-                    <option></option>
-                    <option value="Egreso">Egreso</option>
-                    <option value="Ingreso">Ingreso</option>
-                  </Form.Control>
-                </Form.Group>
-              </Col>
-            </Form.Row>
+            <Col md={6} className="centeredContainer">
+              <Form.Group>
+                <Form.Label>Fecha del movimiento: </Form.Label>
+                <Form.Control
+                  type="date"
+                  value={entry.date}
+                  onChange={handleInput}
+                  name="date"
+                  required
+                ></Form.Control>
+                <Form.Label>Concepto del movimiento: </Form.Label>
+                <Form.Control
+                  as="select"
+                  value={entry.category}
+                  onChange={handleInput}
+                  name="category"
+                  required
+                >
+                  <option></option>
+                  {categories.map((item) => {
+                    return <option key={item}>{item}</option>;
+                  })}
+                </Form.Control>
+                <Form.Label>Observaciones del movimiento: </Form.Label>
+                <Form.Control
+                  type="text"
+                  value={entry.description}
+                  onChange={handleInput}
+                  name="description"
+                  required
+                ></Form.Control>
+                <Form.Label>Monto del movimiento: </Form.Label>
+                <Form.Control
+                  type="number"
+                  value={entry.amount}
+                  onChange={handleInput}
+                  name="amount"
+                  max="1000000"
+                  min="0"
+                  required
+                ></Form.Control>
+                <Form.Label>Tipo de movimiento (egreso/ingreso): </Form.Label>
+                <Form.Control
+                  as="select"
+                  value={entry.kind}
+                  onChange={handleInput}
+                  name="kind"
+                  required
+                >
+                  <option></option>
+                  <option value="Egreso">Egreso</option>
+                  <option value="Ingreso">Ingreso</option>
+                </Form.Control>
+              </Form.Group>
+            </Col>
             <Button type="submit" className="spacedButton" onClick={saveEntry}>
               Guardar
             </Button>
           </Form>
-        </Container>
+        </div>
       )}
     </div>
   );
