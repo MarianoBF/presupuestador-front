@@ -63,7 +63,7 @@ const AddEntry = () => {
         {sent ? (
             <div>
             <h1 className="secondaryTitle">Movimiento agregado con éxito</h1>
-            <button onClick={newEntry}>Mandar otro</button>
+            <button onClick={newEntry}>Agregar otro</button>
             </div>
             ) : (
                 <Container fluid="true">

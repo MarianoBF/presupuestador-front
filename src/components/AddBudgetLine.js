@@ -47,7 +47,7 @@ function AddBudgetLine() {
 
         {sent ? (
             <div>
-            <h1 className="successMessage">Categoría agregada con éxito</h1>
+            <h1 className="secondaryTitle">Categoría agregada con éxito</h1>
             <button onClick={newBudgetLine}>Agregar otra</button>
             </div>
             ) : (

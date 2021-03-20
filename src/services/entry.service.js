@@ -14,7 +14,7 @@ class EntryDataService {
     }
 
     deleteAll() {
-        return http.delete("/entry")
+        return http.delete("/entries")
     }
 
     update(id, data) {

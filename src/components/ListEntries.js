@@ -30,7 +30,7 @@ useEffect(() => {
         setIncomes(entryList.filter((item)=>item.kind === "Ingreso"))
     })
     .catch(()=>console.log("No se han podido recuperar los movimientos del servidor"))
-}, [done]);
+    }, [done]);
 
 
     const handleDeleteClick = (id) => {
@@ -91,6 +91,7 @@ useEffect(() => {
 
     const changeKind = () => {
         setShowIncome(!showIncome);
+        localStorage.setItem('showIncome', JSON.stringify(!showIncome)); 
     }
     
     
@@ -112,8 +113,10 @@ useEffect(() => {
     const [activeFilter, setActiveFilter] = useState(JSON.parse(localStorage.getItem('activeFilter'))?JSON.parse(localStorage.getItem('activeFilter')):false);
 
     const handleCategorySelection = (event) => {
-        setActiveFilter(true)
-        setSelectedCategory(event.target.value)
+        setActiveFilter(true);
+        setSelectedCategory(event.target.value);
+        localStorage.setItem('selectedCategory', JSON.stringify(event.target.value));
+        localStorage.setItem('activeFilter', JSON.stringify(true));
     }
 
     const cancelFilter = () => {

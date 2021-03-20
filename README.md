@@ -1,5 +1,7 @@
-Presupuestador / registro de gastos.
+## Front end for personal budget app
 
-npm install
+**Instructions:**
 
-npm start
+1. npm install
+
+1. npm start
