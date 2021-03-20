@@ -174,6 +174,6 @@ export const SAMPLEBUDGET = [
 {
     category: "Trabajos",
     description: "Ingresos por trabajos",
-    limit: 30000
+    limit: 80000
 },
 ]

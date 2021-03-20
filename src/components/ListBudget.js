@@ -85,7 +85,7 @@ return (
                 <th>Descripción</th>
                 <th>Monto Previsto</th>
                 <th>Movimientos Registrados (ingresos-egreso)</th>
-                <th>Saldo</th>
+                <th>Diferencia</th>
                 <th>Borrar</th>
             </tr>
         </thead>
