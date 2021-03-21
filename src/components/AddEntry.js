@@ -71,7 +71,7 @@ const AddEntry = () => {
       ) : (
         <div>
           <p>(Todos los campos son obligatorios)</p>
-          <Form>
+          <Form onSubmit={saveEntry}>
             <Col md={6} className="centeredContainer">
               <Form.Group>
                 <Form.Label>Fecha del movimiento: </Form.Label>
@@ -125,7 +125,7 @@ const AddEntry = () => {
                 </Form.Control>
               </Form.Group>
             </Col>
-            <Button type="submit" className="spacedButton" onClick={saveEntry}>
+            <Button type="submit" className="spacedButton">
               Guardar
             </Button>
           </Form>

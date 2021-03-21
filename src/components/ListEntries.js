@@ -22,7 +22,6 @@ function ListEntries() {
       : false
   );
   const [editing, setEditing] = useState(false);
-  const [done, setDone] = useState(false);
 
   useEffect(() => {
     EntryDataService.getAll()
@@ -33,7 +32,7 @@ function ListEntries() {
       .catch(() =>
         console.log("No se han podido recuperar los movimientos del servidor")
       );
-  }, [done]);
+  }, []);
 
   const handleDeleteClick = (id) => {
     EntryDataService.delete(id)
@@ -63,7 +62,7 @@ function ListEntries() {
   };
 
   const saveEdit = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     try {
       const data = {
         id: entry.id,
@@ -81,8 +80,8 @@ function ListEntries() {
         .catch(() => console.log("No se ha podido editar el movimiento"));
     } finally {
       setEditing(false);
-      setEntry(undefined);
-      setDone(!done);
+      setEntry("");
+      window.location.reload();
     }
   };
 
@@ -132,7 +131,6 @@ function ListEntries() {
   const cancelFilter = () => {
     setActiveFilter(false);
     setSelectedCategory("");
-    setDone(!done);
     localStorage.setItem("selectedCategory", JSON.stringify(""));
     localStorage.setItem("activeFilter", JSON.stringify(false));
   };
@@ -254,7 +252,7 @@ function ListEntries() {
         <div>
           <h1 className="secondaryTitle">Editando movimiento:</h1>
 
-          <Form>
+          <Form onSubmit={saveEdit}>
             <Col md={6} className="centeredContainer">
               <Form.Label>Fecha:</Form.Label>
               <Form.Control
@@ -262,20 +260,26 @@ function ListEntries() {
                 onChange={handleInput}
                 type="date"
                 name="date"
+                required
               />
               <Form.Label>Categoría:</Form.Label>
               <Form.Control
+                as="select"
                 value={entry.category}
                 onChange={handleInput}
-                type="text"
                 name="category"
-              />
+                required
+              >
+              <option></option>
+              {categoryList}
+              </Form.Control>
               <Form.Label>Descripción:</Form.Label>
               <Form.Control
                 value={entry.description}
                 onChange={handleInput}
                 type="text"
                 name="description"
+                required
               />
               <Form.Label>Monto:</Form.Label>
               <Form.Control
@@ -283,11 +287,18 @@ function ListEntries() {
                 onChange={handleInput}
                 type="number"
                 name="amount"
+                max="1000000"
+                min="0"
+                required
               />
-              <Button onClick={saveEdit} variant="primary">
+              <Button className="spacedButton" type="submit" variant="primary">
                 Guardar Edición
               </Button>{" "}
-              <Button onClick={cancelEdit} variant="secondary">
+              <Button
+                className="spacedButton"
+                onClick={cancelEdit}
+                variant="secondary"
+              >
                 Cancelar Edición
               </Button>
             </Col>

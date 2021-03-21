@@ -20,7 +20,7 @@ function AddBudgetLine() {
   };
 
   const saveBudget = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     const data = {
       category: budget.category,
       description: budget.description,
@@ -55,7 +55,7 @@ function AddBudgetLine() {
       ) : (
         <div>
           <p>(Todos los campos son obligatorios)</p>
-          <Form>
+          <Form onSubmit={saveBudget}>
             <Col md={6} className="centeredContainer">
               <Form.Group>
                 <Form.Label>Nombre para el rubro / concepto: </Form.Label>
@@ -88,7 +88,7 @@ function AddBudgetLine() {
                 ></Form.Control>
               </Form.Group>
             </Col>
-            <Button type="submit" onClick={saveBudget} className="spacedButton">
+            <Button type="submit" className="spacedButton">
               Guardar
             </Button>
           </Form>
