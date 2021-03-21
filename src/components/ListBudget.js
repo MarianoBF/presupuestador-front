@@ -85,7 +85,9 @@ function ListBudget() {
         <td>{numeral(item.limit).format()}</td>
         <td>{numeral(totals[index]).format()}</td>
         <td className={item.limit - totals[index] < 0 ? "redText" : ""}>
-          {numeral(item.limit - totals[index]).format()}
+          {totals[index] > 0
+            ? numeral(item.limit - totals[index]).format()
+            : numeral(item.limit + totals[index]).format()}
         </td>
         <td
           className="deleteCell"
@@ -101,13 +103,9 @@ function ListBudget() {
     budget.reduce((pre, cur) => pre + cur.limit, 0)
   ).format();
 
-  const totalEntriesResult = numeral(
-    totals.reduce((pre, cur) => pre + cur, 0)
-  ).format();
-
   const totalResultsDifference = numeral(
     budget.reduce((pre, cur) => pre + cur.limit, 0) -
-      totals.reduce((pre, cur) => pre + cur, 0)
+      totals.reduce((pre, cur) => (cur > 0 ? pre + cur : pre - cur), 0)
   ).format();
 
   return (
@@ -131,7 +129,7 @@ function ListBudget() {
             <th>Totales:</th>
             <th></th>
             <th>{totalBudgeted}</th>
-            <th>{totalEntriesResult}</th>
+            <th></th>
             <th>{totalResultsDifference}</th>
             <th></th>
           </tr>
