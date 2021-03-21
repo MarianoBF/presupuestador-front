@@ -41,6 +41,21 @@ function Home() {
       );
   }, []);
 
+  const lastEntriesList = entries
+    .sort((a, b) => (a.createdAt < b.createdAt ? 1 : -1))
+    .slice(0, 10)
+    .map((item) => {
+      return (
+        <tr key={item.id}>
+          <td>{item.date.slice(0, 10)}</td>
+          <td>{item.category}</td>
+          <td>{item.description}</td>
+          <td>{numeral(item.amount).format()}</td>
+          <td>{item.kind}</td>
+        </tr>
+      );
+    });
+
   return (
     <div className="centeredContainer">
       <h1>Posición consolidada</h1>
@@ -68,25 +83,12 @@ function Home() {
           <tr>
             <th>Fecha</th>
             <th>Rubro al que corresponde</th>
-            <th>Descripción del gasto</th>
+            <th>Descripción del movimiento</th>
             <th>Monto</th>
+            <th>Tipo</th>
           </tr>
         </thead>
-        <tbody className="tableText">
-          {entries
-            .sort((a, b) => (a.createdAt < b.createdAt ? 1 : -1))
-            .slice(0, 10)
-            .map((item) => {
-              return (
-                <tr key={item.id}>
-                  <td>{item.date.slice(0, 10)}</td>
-                  <td>{item.category}</td>
-                  <td>{item.description}</td>
-                  <td>{numeral(item.amount).format()}</td>
-                </tr>
-              );
-            })}
-        </tbody>
+        <tbody className="tableText">{lastEntriesList}</tbody>
       </Table>
     </div>
   );

@@ -34,15 +34,15 @@ const AddEntry = () => {
       );
   }, []);
 
-  const saveEntry = () => {
-    let data = {
+  const saveEntry = (e) => {
+    e.preventDefault();
+    const data = {
       date: entry.date,
       category: entry.category,
       description: entry.description,
       amount: entry.amount,
       kind: entry.kind,
     };
-    console.log(data);
     EntryDataService.create(data)
       .then((response) => {
         setSent(true);
@@ -55,6 +55,10 @@ const AddEntry = () => {
     setEntry(initialEntryState);
     setSent(false);
   };
+
+  const categoryList = categories.map((item) => (
+    <option key={item}>{item}</option>
+  ));
 
   return (
     <div className="centeredContainer">
@@ -87,9 +91,7 @@ const AddEntry = () => {
                   required
                 >
                   <option></option>
-                  {categories.map((item) => {
-                    return <option key={item}>{item}</option>;
-                  })}
+                  {categoryList}
                 </Form.Control>
                 <Form.Label>Observaciones del movimiento: </Form.Label>
                 <Form.Control

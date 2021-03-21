@@ -19,8 +19,9 @@ function AddBudgetLine() {
     setBudget({ ...budget, [name]: value });
   };
 
-  const saveBudget = () => {
-    let data = {
+  const saveBudget = (e) => {
+    e.preventDefault()
+    const data = {
       category: budget.category,
       description: budget.description,
       limit: budget.limit,
@@ -55,40 +56,38 @@ function AddBudgetLine() {
         <div>
           <p>(Todos los campos son obligatorios)</p>
           <Form>
-              <Col md={6} className="centeredContainer">
-                <Form.Group>
-                  <Form.Label>Nombre para el rubro / concepto: </Form.Label>
-                  <Form.Control
-                    type="text"
-                    value={budget.category}
-                    onChange={handleInput}
-                    name="category"
-                    required
-                  ></Form.Control>
-                  <Form.Label>
-                    Descripción extensa sobre qué incluye el rubro:{" "}
-                  </Form.Label>
-                  <Form.Control
-                    type="text"
-                    value={budget.description}
-                    onChange={handleInput}
-                    name="description"
-                    required
-                  ></Form.Control>
-                  <Form.Label>
-                    Monto mensual objetivo para el rubro:{" "}
-                  </Form.Label>
-                  <Form.Control
-                    type="number"
-                    value={budget.limit}
-                    onChange={handleInput}
-                    name="limit"
-                    max="10000000"
-                    min="0"
-                    required
-                  ></Form.Control>
-                </Form.Group>
-              </Col>
+            <Col md={6} className="centeredContainer">
+              <Form.Group>
+                <Form.Label>Nombre para el rubro / concepto: </Form.Label>
+                <Form.Control
+                  type="text"
+                  value={budget.category}
+                  onChange={handleInput}
+                  name="category"
+                  required
+                ></Form.Control>
+                <Form.Label>
+                  Descripción extensa sobre qué incluye el rubro:{" "}
+                </Form.Label>
+                <Form.Control
+                  type="text"
+                  value={budget.description}
+                  onChange={handleInput}
+                  name="description"
+                  required
+                ></Form.Control>
+                <Form.Label>Monto mensual objetivo para el rubro: </Form.Label>
+                <Form.Control
+                  type="number"
+                  value={budget.limit}
+                  onChange={handleInput}
+                  name="limit"
+                  max="10000000"
+                  min="0"
+                  required
+                ></Form.Control>
+              </Form.Group>
+            </Col>
             <Button type="submit" onClick={saveBudget} className="spacedButton">
               Guardar
             </Button>

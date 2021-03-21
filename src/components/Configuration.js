@@ -51,7 +51,7 @@ function Configuration() {
 }
 
   const deleteData = () => {
-    let checkDelete = window.confirm(
+    const checkDelete = window.confirm(
       "Esto es irreversible, vas a borrar todos los datos y no se puede recuperar, ¿estás seguro?"
     );
     if (checkDelete === true) {

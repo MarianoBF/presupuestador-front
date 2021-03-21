@@ -62,9 +62,10 @@ function ListEntries() {
     setEntry({ ...entry, [name]: value });
   };
 
-  const saveEdit = () => {
+  const saveEdit = (e) => {
+    e.preventDefault()
     try {
-      let data = {
+      const data = {
         id: entry.id,
         date: entry.date,
         category: entry.category,
@@ -208,6 +209,10 @@ function ListEntries() {
     );
   });
 
+  const categoryList = categories.map((item) => {
+    return <option key={item}>{item}</option>;
+  });
+
   return (
     <div>
       {!editing ? (
@@ -232,9 +237,7 @@ function ListEntries() {
               name="category"
             >
               <option></option>
-              {categories.map((item) => {
-                return <option key={item}>{item}</option>;
-              })}
+              {categoryList}
             </Form.Control>
             <Button
               className="spacedButton"
@@ -249,45 +252,45 @@ function ListEntries() {
       ) : null}
       {editing ? (
         <div>
-        <h1 class="secondaryTitle">Editando movimiento:</h1>
-        
-        <Form>
-        <Col md={6} className="centeredContainer">
-            <Form.Label>Fecha:</Form.Label>
-            <Form.Control
-              value={entry.date.slice(0, 10)}
-              onChange={handleInput}
-              type="date"
-              name="date"
-          />
-            <Form.Label>Categoría:</Form.Label>
-            <Form.Control
-            value={entry.category}
-            onChange={handleInput}
-            type="text"
-            name="category"
-          />
-          <Form.Label>Descripción:</Form.Label>
-            <Form.Control
-            value={entry.description}
-            onChange={handleInput}
-            type="text"
-            name="description"
-          />
-        <Form.Label>Monto:</Form.Label>
-            <Form.Control
-            value={entry.amount}
-            onChange={handleInput}
-            type="number"
-            name="amount"
-          />              
-          <Button onClick={saveEdit} variant="primary">
-            Guardar Edición
-          </Button>{" "}
-          <Button onClick={cancelEdit} variant="secondary">
-            Cancelar Edición
-          </Button>
-          </Col>
+          <h1 className="secondaryTitle">Editando movimiento:</h1>
+
+          <Form>
+            <Col md={6} className="centeredContainer">
+              <Form.Label>Fecha:</Form.Label>
+              <Form.Control
+                value={entry.date.slice(0, 10)}
+                onChange={handleInput}
+                type="date"
+                name="date"
+              />
+              <Form.Label>Categoría:</Form.Label>
+              <Form.Control
+                value={entry.category}
+                onChange={handleInput}
+                type="text"
+                name="category"
+              />
+              <Form.Label>Descripción:</Form.Label>
+              <Form.Control
+                value={entry.description}
+                onChange={handleInput}
+                type="text"
+                name="description"
+              />
+              <Form.Label>Monto:</Form.Label>
+              <Form.Control
+                value={entry.amount}
+                onChange={handleInput}
+                type="number"
+                name="amount"
+              />
+              <Button onClick={saveEdit} variant="primary">
+                Guardar Edición
+              </Button>{" "}
+              <Button onClick={cancelEdit} variant="secondary">
+                Cancelar Edición
+              </Button>
+            </Col>
           </Form>
         </div>
       ) : null}

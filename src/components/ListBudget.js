@@ -40,8 +40,8 @@ function ListBudget() {
 
   useEffect(() => {
     if (ready === 2) {
-      for (let cat of categories) {
-        let belongs = entries.filter((item) => item.category === cat);
+      for (let category of categories) {
+        let belongs = entries.filter((item) => item.category === category);
         let sumInc = belongs
           .filter((item) => item.kind === "Ingreso")
           .reduce((pre, cur) => {
