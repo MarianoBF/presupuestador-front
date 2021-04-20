@@ -1,4 +1,4 @@
-## Front end for personal budget app
+## Front end for personal budget app with entry listing and categories.
 
 **Instructions:**
 
