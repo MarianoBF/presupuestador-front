@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export default axios.create({
-    baseURL: "http://presupuestador.herokuapp.com/api/",
+    baseURL: "https://presupuestador.herokuapp.com/api/",
     headers: {
         "Content-type": "application/json"
     }
