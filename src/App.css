@@ -89,6 +89,10 @@ thead {
   margin: 2rem auto;
 }
 
+.loading {
+  margin-top: 25vh;
+}
+
 @media (min-width: 768px) {
   nav {
     margin-top: 10px;

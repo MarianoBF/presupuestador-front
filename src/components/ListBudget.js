@@ -5,6 +5,7 @@ import BudgetDataService from "../services/budget.service";
 import numeral from "numeral";
 // eslint-disable-next-line
 import es from "numeral/locales/es";
+import Spinner from "react-bootstrap/Spinner";
 
 function ListBudget() {
   numeral.locale("es");
@@ -108,6 +109,14 @@ function ListBudget() {
       totals.reduce((pre, cur) => (cur > 0 ? pre + cur : pre - cur), 0)
   ).format();
 
+  if (!ready || ready === 1) {
+    return (
+      <div className="loading">
+        <Spinner animation="grow" variant="success" />
+      </div>
+    );
+  }
+
   return (
     <>
       <h1>Presupuesto actual</h1>
@@ -124,7 +133,7 @@ function ListBudget() {
           </tr>
         </thead>
         <tbody className="tableText">
-          {ready === true && budgetListing}
+          {ready && budgetListing}
           <tr>
             <th>Totales:</th>
             <th></th>

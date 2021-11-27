@@ -10,11 +10,13 @@ import numeral from "numeral";
 // eslint-disable-next-line
 import es from "numeral/locales/es";
 import { Link } from "react-router-dom";
+import Spinner from "react-bootstrap/Spinner";
 
 numeral.locale("es");
 numeral.defaultFormat("$0,0.00");
 
 function ListEntries() {
+  const [loading, setLoading] = useState(true);
   const [expenses, setExpenses] = useState([]);
   const [incomes, setIncomes] = useState([]);
   const [showIncome, setShowIncome] = useState(
@@ -29,6 +31,7 @@ function ListEntries() {
       .then(({ data: entryList }) => {
         setExpenses(entryList.filter((item) => item.kind === "Egreso"));
         setIncomes(entryList.filter((item) => item.kind === "Ingreso"));
+        setLoading(false);
       })
       .catch(() =>
         console.log("No se han podido recuperar los movimientos del servidor")
@@ -212,12 +215,22 @@ function ListEntries() {
     return <option key={item}>{item}</option>;
   });
 
+  if (loading) {
+    return (
+      <div className="loading">
+        <Spinner animation="grow" variant="success" />
+      </div>
+    );
+  }
+
   if (expenses.length === 0 && incomes.length === 0) {
     return (
       <div>
         <h1>Aún no tenés movimientos cargados</h1>
 
-        <Link to="/add"><button> Sumar movimiento </button></Link>
+        <Link to="/add">
+          <button> Sumar movimiento </button>
+        </Link>
       </div>
     );
   }
