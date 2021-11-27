@@ -9,6 +9,7 @@ import "../App.css";
 import numeral from "numeral";
 // eslint-disable-next-line
 import es from "numeral/locales/es";
+import { Link } from "react-router-dom";
 
 numeral.locale("es");
 numeral.defaultFormat("$0,0.00");
@@ -211,6 +212,16 @@ function ListEntries() {
     return <option key={item}>{item}</option>;
   });
 
+  if (expenses.length === 0 && incomes.length === 0) {
+    return (
+      <div>
+        <h1>Aún no tenés movimientos cargados</h1>
+
+        <Link to="/add"><button> Sumar movimiento </button></Link>
+      </div>
+    );
+  }
+
   return (
     <div>
       {!editing ? (
@@ -270,8 +281,8 @@ function ListEntries() {
                 name="category"
                 required
               >
-              <option></option>
-              {categoryList}
+                <option></option>
+                {categoryList}
               </Form.Control>
               <Form.Label>Descripción:</Form.Label>
               <Form.Control

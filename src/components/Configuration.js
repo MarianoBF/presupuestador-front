@@ -3,6 +3,7 @@ import { SAMPLEENTRIES, SAMPLEBUDGETCATEGORIES } from "./SampleData";
 import EntryDataService from "../services/entry.service";
 import BudgetDataService from "../services/budget.service";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 function Configuration() {
   const [loaded, setLoaded] = useState(false);
@@ -80,7 +81,10 @@ function Configuration() {
         Borrar todos los datos
       </Button>
       {loaded && (
+        <div>
         <p className="blueText">Datos de prueba cargados exitosamente.</p>
+        <Link to="/entries"><button> Ir al listado </button></Link>
+        </div>
       )}
       {notLoaded && (
         <p className="redText">
