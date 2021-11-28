@@ -2,7 +2,7 @@ import { useState } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
-import Alert from 'react-bootstrap/Alert'
+import Alert from "react-bootstrap/Alert";
 import BudgetDataService from "../services/budget.service.js";
 
 function AddBudgetLine() {
@@ -14,6 +14,7 @@ function AddBudgetLine() {
 
   const [budget, setBudget] = useState(initialBudgetState);
   const [sent, setSent] = useState(false);
+  const [error, setError] = useState(false);
 
   const handleInput = (event) => {
     const { name, value } = event.target;
@@ -29,12 +30,14 @@ function AddBudgetLine() {
     };
 
     BudgetDataService.create(data)
-      .then((response) => {
+      .then(() => {
         setSent(true);
-        setTimeout(()=>setSent(false),4000)
-        console.log(response.data);
+        setTimeout(() => setSent(false), 4000);
       })
-      .catch(() => console.log("No se pudo sumar la nueva categoría"));
+      .catch(() => {
+        setError(true);
+        setTimeout(() => setError(false), 4000);
+      });
   };
 
   // const newBudgetLine = () => {
@@ -49,13 +52,22 @@ function AddBudgetLine() {
         tus movimientos.
       </h1>
 
-      {sent &&
+      {sent && (
         <Alert variant="success" dismissible>
           <p>Categoría de presupuesto agregada con éxito</p>
         </Alert>
-        }
+      )}
 
-        {/* <div>
+      {error && (
+        <Alert variant="danger" dismissible>
+          <p>
+            No se pudo agregar la categoría, posible duplicado o error de
+            servidor
+          </p>
+        </Alert>
+      )}
+
+      {/* <div>
           <h1 className="secondaryTitle">Categoría agregada con éxito</h1>
           <button onClick={newBudgetLine}>Agregar otra</button>
         </div> */}
