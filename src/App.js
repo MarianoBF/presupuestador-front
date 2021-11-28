@@ -1,43 +1,18 @@
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import AddEntry from "./components/AddEntry";
-import AddBudgetLine from "./components/AddBudgetLine";
-import ListEntries from "./components/ListEntries";
-import ListBudget from "./components/ListBudget";
-import Configuration from "./components/Configuration";
-import Home from "./components/Home";
-import { Switch, Route, Link } from "react-router-dom";
-import Navbar from "react-bootstrap/Navbar";
-import Nav from "react-bootstrap/Nav";
+import AddEntry from "./pages/AddEntry";
+import AddBudgetLine from "./pages/AddBudgetLine";
+import ListEntries from "./pages/ListEntries";
+import ListBudget from "./pages/ListBudget";
+import Configuration from "./pages/Configuration";
+import Home from "./pages/Home";
+import Barra from "./components/Navbar"
+import { Switch, Route } from "react-router-dom";
 
 function App() {
   return (
     <div className="App">
-      <Navbar bg="dark" variant="dark" sticky="top" expand="md">
-        <Navbar.Brand>
-          <Link to={"/"}>/Presupuestaré/</Link>
-        </Navbar.Brand>
-        <Navbar.Toggle />
-        <Navbar.Collapse>
-          <Nav className="mr-auto">
-            <Link to={"/entries"} className="nav-link">
-              Listar movimientos
-            </Link>
-            <Link to={"/add"} className="nav-link">
-              Sumar movimiento
-            </Link>
-            <Link to={"/addBudget"} className="nav-link">
-              Sumar categoría de movimiento
-            </Link>
-            <Link to={"/budget"} className="nav-link">
-              Presupuesto
-            </Link>
-            <Link to={"/config"} className="nav-link">
-              Configuración
-            </Link>
-          </Nav>
-        </Navbar.Collapse>
-      </Navbar>
+      <Barra />
 
       <div>
         <Switch>
