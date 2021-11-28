@@ -1,6 +1,7 @@
 import EntryDataService from "../services/entry.service";
 import { useState, useEffect } from "react";
 import Table from "react-bootstrap/Table";
+import Spinner from "react-bootstrap/Spinner";
 import "../App.css";
 import numeral from "numeral";
 // eslint-disable-next-line
@@ -13,6 +14,7 @@ function Home() {
   const [entries, setEntries] = useState([]);
   const [totalExpenses, setTotalExpenses] = useState(0);
   const [totalIncome, setTotalIncome] = useState(0);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     EntryDataService.getAll()
@@ -32,6 +34,7 @@ function Home() {
               return pre + cur.amount;
             }, 0)
         );
+        setLoading(false);
       })
       .catch((error) =>
         console.log(
@@ -41,7 +44,7 @@ function Home() {
       );
   }, []);
 
-  const lastEntriesList = entries
+  const lastEntriesList = entries.filter(item=>item.date!==null)
     .sort((a, b) => (a.createdAt < b.createdAt ? 1 : -1))
     .slice(0, 10)
     .map((item) => {
@@ -55,6 +58,14 @@ function Home() {
         </tr>
       );
     });
+
+  if (loading) {
+    return (
+      <div className="loading">
+        <Spinner animation="grow" variant="success" />
+      </div>
+    );
+  }
 
   return (
     <div className="centeredContainer">
