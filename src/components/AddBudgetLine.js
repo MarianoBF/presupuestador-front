@@ -36,7 +36,7 @@ function AddBudgetLine() {
       })
       .catch(() => {
         setError(true);
-        setTimeout(() => setError(false), 4000);
+        setTimeout(() => setError(false), 15000);
       });
   };
 

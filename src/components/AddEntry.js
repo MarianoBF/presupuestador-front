@@ -18,6 +18,7 @@ const AddEntry = () => {
   const [entry, setEntry] = useState(initialEntryState);
   const [sent, setSent] = useState(false);
   const [error, setError] = useState(false);
+  // const [errorMessage, setErrorMessage] = useState('');
 
   const handleInput = (event) => {
     const { name, value } = event.target;
@@ -50,9 +51,10 @@ const AddEntry = () => {
         setSent(true);
         setTimeout(() => setSent(false), 4000);
       })
-      .catch(() => {
+      .catch((error) => {
         setError(true);
-        setTimeout(() => setError(false), 4000);
+        // setErrorMessage(error.message)
+        setTimeout(() => setError(false), 15000);
       });
   };
 
@@ -77,6 +79,7 @@ const AddEntry = () => {
         <Alert variant="danger" dismissible>
           <p>
             No se pudo agregar el movimiento, error de servidor
+            {/* : {errorMessage} */}
           </p>
         </Alert>
       )}
