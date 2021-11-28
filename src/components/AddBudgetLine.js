@@ -2,6 +2,7 @@ import { useState } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
+import Alert from 'react-bootstrap/Alert'
 import BudgetDataService from "../services/budget.service.js";
 
 function AddBudgetLine() {
@@ -30,15 +31,16 @@ function AddBudgetLine() {
     BudgetDataService.create(data)
       .then((response) => {
         setSent(true);
+        setTimeout(()=>setSent(false),4000)
         console.log(response.data);
       })
       .catch(() => console.log("No se pudo sumar la nueva categoría"));
   };
 
-  const newBudgetLine = () => {
-    setBudget(initialBudgetState);
-    setSent(false);
-  };
+  // const newBudgetLine = () => {
+  //   setBudget(initialBudgetState);
+  //   setSent(false);
+  // };
 
   return (
     <div className="centeredContainer">
@@ -47,12 +49,18 @@ function AddBudgetLine() {
         tus movimientos.
       </h1>
 
-      {sent ? (
-        <div>
+      {sent &&
+        <Alert variant="success" dismissible>
+          <p>Categoría de presupuesto agregada con éxito</p>
+        </Alert>
+        }
+
+        {/* <div>
           <h1 className="secondaryTitle">Categoría agregada con éxito</h1>
           <button onClick={newBudgetLine}>Agregar otra</button>
-        </div>
-      ) : (
+        </div> */}
+
+      {
         <div>
           <p>(Todos los campos son obligatorios)</p>
           <Form onSubmit={saveBudget}>
@@ -93,7 +101,7 @@ function AddBudgetLine() {
             </Button>
           </Form>
         </div>
-      )}
+      }
     </div>
   );
 }
