@@ -1,12 +1,13 @@
 import { Link } from "react-router-dom";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
+import logo from "../assets/logo.svg";
 
 export default function Barra() {
   return (
     <Navbar bg="dark" variant="dark" sticky="top" expand="md">
       <Navbar.Brand>
-        <Link to={"/"}>/Presupuestaré/</Link>
+        <Link to={"/"}>/Presupuestaré/ <img className="logo" src={logo} alt="logo" /></Link>
       </Navbar.Brand>
       <Navbar.Toggle />
       <Navbar.Collapse>
