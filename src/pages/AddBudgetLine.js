@@ -40,11 +40,6 @@ function AddBudgetLine() {
       });
   };
 
-  // const newBudgetLine = () => {
-  //   setBudget(initialBudgetState);
-  //   setSent(false);
-  // };
-
   return (
     <div className="centeredContainer">
       <h1>
@@ -67,14 +62,9 @@ function AddBudgetLine() {
         </Alert>
       )}
 
-      {/* <div>
-          <h1 className="secondaryTitle">Categoría agregada con éxito</h1>
-          <button onClick={newBudgetLine}>Agregar otra</button>
-        </div> */}
-
       {
         <div>
-          <p>(Todos los campos son obligatorios)</p>
+          <p variant="danger">(Todos los campos son obligatorios)</p>
           <Form onSubmit={saveBudget}>
             <Col md={6} className="centeredContainer">
               <Form.Group>

@@ -60,11 +60,6 @@ const AddEntry = () => {
       });
   };  
 
-  // const newEntry = () => {
-  //   setEntry(initialEntryState);
-  //   setSent(false);
-  // };
-
   const categoryList = categories.map((item) => (
     <option key={item}>{item}</option>
   ));
@@ -86,12 +81,6 @@ const AddEntry = () => {
           </p>
         </Alert>
       )}
-      {/* {sent ? (
-        <div>
-          <h1 className="secondaryTitle">Movimiento agregado con éxito</h1>
-          <button onClick={newEntry}>Agregar otro</button>
-        </div>
-      ) : ( */}
       <div>
         <p>(Todos los campos son obligatorios)</p>
         <Form onSubmit={saveEntry}>

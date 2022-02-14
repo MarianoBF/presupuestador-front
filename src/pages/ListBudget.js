@@ -6,6 +6,7 @@ import numeral from "numeral";
 // eslint-disable-next-line
 import es from "numeral/locales/es";
 import Spinner from "react-bootstrap/Spinner";
+import Alert from "react-bootstrap/Alert";
 
 function ListBudget() {
   numeral.locale("es");
@@ -14,6 +15,9 @@ function ListBudget() {
   const [ready, setReady] = useState(0);
 
   const [entries, setEntries] = useState([]);
+  const [sent, setSent] = useState(false);
+  const [error, setError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
     EntryDataService.getAll()
@@ -66,15 +70,24 @@ function ListBudget() {
     if (hasItems.length === 0) {
       BudgetDataService.delete(id)
         .then((response) => {
+          setError(false);
+          setSent(true);
+          setTimeout(() => setSent(false), 4000);
           console.log(response.data);
         })
         .catch(() => console.log("No se ha podido borrar la categoría"));
 
       window.location.reload();
     } else {
-      window.alert(
+      setSent(false)
+      setError(true);
+      setErrorMessage(
         "Esta categoría aún tiene movimientos. Se deben borrar todos los movimientos de la categoría para poder borrarla."
       );
+      setTimeout(() => {
+        setError(false);
+        setErrorMessage("");
+      }, 10000);
     }
   };
 
@@ -120,6 +133,21 @@ function ListBudget() {
   return (
     <>
       <h1>Presupuesto actual</h1>
+
+      {sent && (
+        <Alert variant="success" dismissible>
+          <p>Línea de presupuesto borrada con éxito</p>
+        </Alert>
+      )}
+      {error && (
+        <Alert variant="danger" dismissible>
+          <p>
+            {errorMessage
+              ? errorMessage
+              : "Error de servidor"}
+          </p>
+        </Alert>
+      )}
 
       <Table responsive="md" striped size="sm">
         <thead>
