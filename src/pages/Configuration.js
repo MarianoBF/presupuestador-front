@@ -1,16 +1,18 @@
 import Button from "react-bootstrap/Button";
+import Alert from "react-bootstrap/Alert";
 import { SAMPLEENTRIES, SAMPLEBUDGETCATEGORIES } from "./SampleData";
 import EntryDataService from "../services/entry.service";
 import BudgetDataService from "../services/budget.service";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import Alert from "react-bootstrap/Alert";
+import ConfirmationModal from "../components/ConfirmationModal";
 
 function Configuration() {
   const [loaded, setLoaded] = useState(false);
   const [deleted, setDeleted] = useState(false);
   const [error, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const [modalShow, setModalShow] = useState(false);
 
   const loadSampleData = () => {
     let entryFlag = true;
@@ -57,10 +59,12 @@ function Configuration() {
   };
 
   const deleteData = () => {
-    const checkDelete = window.confirm(
-      "Esto es irreversible, vas a borrar todos los datos y no se puede recuperar, ¿estás seguro?"
-    );
-    if (checkDelete === true) {
+    setModalShow(true);
+  };
+
+  const handleModalResult = (result) => {
+    setModalShow(false);
+    if (result) {
       try {
         BudgetDataService.deleteAll();
         EntryDataService.deleteAll();
@@ -99,7 +103,7 @@ function Configuration() {
       )}
       {deleted && (
         <Alert variant="success" dismissible>
-          <p className="redText">
+          <p>
             {"Se borraron todos los datos exitosamente"}
           </p>
         </Alert>
@@ -109,6 +113,15 @@ function Configuration() {
           <p className="redText">{errorMessage}</p>
         </Alert>
       )}
+      <ConfirmationModal
+        show={modalShow}
+        message={
+          "Esto es irreversible, vas a borrar todos los datos y no se puede recuperar, ¿estás seguro?"
+        }
+        onHide={() => setModalShow(false)}
+        handleCancel={() => handleModalResult(false)}
+        handleOK={() => handleModalResult(true)}
+      />
     </div>
   );
 }
