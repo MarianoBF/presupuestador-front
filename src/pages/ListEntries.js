@@ -66,7 +66,6 @@ function ListEntries() {
     localStorage.setItem("selectedCategory", JSON.stringify(selectedCategory));
     localStorage.setItem("activeFilter", JSON.stringify(activeFilter));
     localStorage.setItem("showIncome", JSON.stringify(showIncome));
-
   };
 
   const [entry, setEntry] = useState();
@@ -139,8 +138,7 @@ function ListEntries() {
           setError(false);
           setErrorMessage("");
         }, 10000);
-      }
-      );
+      });
   }, []);
 
   const [selectedCategory, setSelectedCategory] = useState(
@@ -155,18 +153,22 @@ function ListEntries() {
   );
 
   const handleCategorySelection = (event) => {
-    setActiveFilter(true);
-    setSelectedCategory(event.target.value);
-    localStorage.setItem(
-      "selectedCategory",
-      JSON.stringify(event.target.value)
-    );
-    localStorage.setItem("activeFilter", JSON.stringify(true));
+    if (event.target.value === "Todos") {
+      cancelFilter();
+    } else {
+      setActiveFilter(true);
+      setSelectedCategory(event.target.value);
+      localStorage.setItem(
+        "selectedCategory",
+        JSON.stringify(event.target.value)
+      );
+      localStorage.setItem("activeFilter", JSON.stringify(true));
+    }
   };
 
   const cancelFilter = () => {
     setActiveFilter(false);
-    setSelectedCategory("");
+    setSelectedCategory("Todos");
     localStorage.setItem("selectedCategory", JSON.stringify(""));
     localStorage.setItem("activeFilter", JSON.stringify(false));
   };
@@ -243,9 +245,12 @@ function ListEntries() {
     );
   });
 
-  const categoryList = categories.map((item) => {
-    return <option key={item}>{item}</option>;
-  });
+  const categoryList = [
+    <option key="Todos">Todos</option>,
+    categories.map((item) => {
+      return <option key={item}>{item}</option>;
+    }),
+  ];
 
   if (loading) {
     return (
@@ -305,7 +310,6 @@ function ListEntries() {
               onChange={handleCategorySelection}
               name="category"
             >
-              <option></option>
               {categoryList}
             </Form.Control>
             <Button
