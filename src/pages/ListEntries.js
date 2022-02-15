@@ -46,7 +46,7 @@ function ListEntries() {
           setErrorMessage("");
         }, 10000);
       });
-  }, []);
+  }, [deleted, edited]);
 
   const handleDeleteClick = (id) => {
     EntryDataService.delete(id)
@@ -67,7 +67,6 @@ function ListEntries() {
     localStorage.setItem("activeFilter", JSON.stringify(activeFilter));
     localStorage.setItem("showIncome", JSON.stringify(showIncome));
 
-    window.location.reload();
   };
 
   const [entry, setEntry] = useState();
@@ -113,7 +112,6 @@ function ListEntries() {
     } finally {
       setEditing(false);
       setEntry("");
-      window.location.reload();
     }
   };
 

@@ -33,7 +33,7 @@ function ListBudget() {
           setErrorMessage("");
         }, 10000);
       });
-  }, []);
+  }, [deleted]);
 
   const [budget, setBudget] = useState([]);
   const [categories, setCategories] = useState([]);
@@ -53,7 +53,7 @@ function ListBudget() {
           setErrorMessage("");
         }, 10000);
       });
-  }, []);
+  }, [deleted]);
 
   const [totals, setTotals] = useState([]);
 
@@ -96,8 +96,6 @@ function ListBudget() {
             setErrorMessage("");
           }, 10000);
         });
-
-      window.location.reload();
     } else {
       setDeleted(false);
       setError(true);

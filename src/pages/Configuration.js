@@ -8,8 +8,9 @@ import Alert from "react-bootstrap/Alert";
 
 function Configuration() {
   const [loaded, setLoaded] = useState(false);
+  const [deleted, setDeleted] = useState(false);
   const [error, setError] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('')
+  const [errorMessage, setErrorMessage] = useState("");
 
   const loadSampleData = () => {
     let entryFlag = true;
@@ -38,7 +39,9 @@ function Configuration() {
                 })
                 .catch((error) => {
                   setError(true);
-                  setErrorMessage("No se han podido cargar datos de prueba, ya están cargados o se ha producido un error.");
+                  setErrorMessage(
+                    "No se han podido cargar datos de prueba, ya están cargados o se ha producido un error."
+                  );
                 });
             });
             entryFlag = false;
@@ -46,7 +49,9 @@ function Configuration() {
         })
         .catch((error) => {
           setError(true);
-          setErrorMessage("No se han podido cargar datos de prueba, ya están cargados o se ha producido un error.");
+          setErrorMessage(
+            "No se han podido cargar datos de prueba, ya están cargados o se ha producido un error."
+          );
         });
     });
   };
@@ -59,11 +64,12 @@ function Configuration() {
       try {
         BudgetDataService.deleteAll();
         EntryDataService.deleteAll();
+        setDeleted(true);
       } catch {
         setError(true);
-        setErrorMessage("No se han podido cargar datos de prueba, ya están cargados o se ha producido un error.");
-    } finally {
-        window.location.reload();
+        setErrorMessage(
+          "No se han podido cargar datos de prueba, ya están cargados o se ha producido un error."
+        );
       }
     }
   };
@@ -83,7 +89,7 @@ function Configuration() {
       </Button>
       {loaded && (
         <div>
-          <Alert variant="danger" dismissible>
+          <Alert variant="success" dismissible>
             <p className="blueText">Datos de prueba cargados exitosamente.</p>
             <Link to="/entries">
               <button> Ir al listado </button>
@@ -91,11 +97,16 @@ function Configuration() {
           </Alert>
         </div>
       )}
+      {deleted && (
+        <Alert variant="success" dismissible>
+          <p className="redText">
+            {"Se borraron todos los datos exitosamente"}
+          </p>
+        </Alert>
+      )}
       {error && (
         <Alert variant="danger" dismissible>
-          <p className="redText">
-            {errorMessage}
-          </p>
+          <p className="redText">{errorMessage}</p>
         </Alert>
       )}
     </div>
