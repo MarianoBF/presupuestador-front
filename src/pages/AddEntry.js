@@ -119,7 +119,6 @@ const AddEntry = () => {
                 value={entry.description}
                 onChange={handleInput}
                 name="description"
-                required
               ></Form.Control>
               <Form.Label>Monto del movimiento: </Form.Label>
               <Form.Control

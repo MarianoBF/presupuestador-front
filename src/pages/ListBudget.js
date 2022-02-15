@@ -115,6 +115,7 @@ function ListBudget() {
         <td>{item.category}</td>
         <td>{item.description}</td>
         <td>{numeral(item.limit).format()}</td>
+        <td>{entries.filter((elem) => elem.category === item.category).length}</td>
         <td>{numeral(totals[index]).format()}</td>
         <td className={item.limit - totals[index] < 0 ? "redText" : ""}>
           {totals[index] > 0
@@ -169,6 +170,7 @@ function ListBudget() {
             <th>Rubro</th>
             <th>Descripción</th>
             <th>Monto Previsto</th>
+            <th>Cantidad de Movimientos Registrados</th>
             <th>Movimientos Registrados (ingresos-egreso)</th>
             <th>Diferencia</th>
             <th>Borrar</th>
@@ -180,6 +182,7 @@ function ListBudget() {
             <th>Totales:</th>
             <th></th>
             <th>{totalBudgeted}</th>
+            <th></th>
             <th></th>
             <th>{totalResultsDifference}</th>
             <th></th>
