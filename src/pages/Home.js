@@ -6,6 +6,7 @@ import "../App.css";
 import numeral from "numeral";
 // eslint-disable-next-line
 import es from "numeral/locales/es";
+import Alert from "react-bootstrap/Alert";
 
 function Home() {
   numeral.locale("es");
@@ -15,6 +16,8 @@ function Home() {
   const [totalExpenses, setTotalExpenses] = useState(0);
   const [totalIncome, setTotalIncome] = useState(0);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
     EntryDataService.getAll()
@@ -36,15 +39,20 @@ function Home() {
         );
         setLoading(false);
       })
-      .catch((error) =>
-        console.log(
-          "No se pudo cargar la información de los movimientos",
-          error
-        )
-      );
+      .catch((error) => {
+        setError(true);
+        setErrorMessage(
+          "No se pudo recuperar la información, problemas de conexión con el servidor."
+        );
+        setTimeout(() => {
+          setError(false);
+          setErrorMessage("");
+        }, 15000);
+      });
   }, []);
 
-  const lastEntriesList = entries.filter(item=>item.date!==null)
+  const lastEntriesList = entries
+    .filter((item) => item.date !== null)
     .sort((a, b) => (a.createdAt < b.createdAt ? 1 : -1))
     .slice(0, 10)
     .map((item) => {
@@ -70,6 +78,12 @@ function Home() {
   return (
     <div className="centeredContainer">
       <h1>Posición consolidada</h1>
+
+      {error && (
+        <Alert variant="danger" dismissible>
+          <p>{errorMessage}</p>
+        </Alert>
+      )}
 
       <div className="budgetSummary">
         <p>Total de ingresos: {numeral(totalIncome).format()}</p>

@@ -11,6 +11,7 @@ import numeral from "numeral";
 import es from "numeral/locales/es";
 import { Link } from "react-router-dom";
 import Spinner from "react-bootstrap/Spinner";
+import Alert from "react-bootstrap/Alert";
 
 numeral.locale("es");
 numeral.defaultFormat("$0,0.00");
@@ -25,6 +26,10 @@ function ListEntries() {
       : false
   );
   const [editing, setEditing] = useState(false);
+  const [error, setError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [deleted, setDeleted] = useState(false);
+  const [edited, setEdited] = useState(false);
 
   useEffect(() => {
     EntryDataService.getAll()
@@ -33,17 +38,31 @@ function ListEntries() {
         setIncomes(entryList.filter((item) => item.kind === "Ingreso"));
         setLoading(false);
       })
-      .catch(() =>
-        console.log("No se han podido recuperar los movimientos del servidor")
-      );
+      .catch(() => {
+        setError(true);
+        setErrorMessage("No se ha podido conectar con el servidor");
+        setTimeout(() => {
+          setError(false);
+          setErrorMessage("");
+        }, 10000);
+      });
   }, []);
 
   const handleDeleteClick = (id) => {
     EntryDataService.delete(id)
       .then((response) => {
-        console.log(response.data);
+        setError(false);
+        setDeleted(true);
+        setTimeout(() => setDeleted(false), 4000);
       })
-      .catch(() => console.log("No se ha podido borrar el movimiento"));
+      .catch(() => {
+        setError(true);
+        setErrorMessage("No se ha podido borrar el movimiento");
+        setTimeout(() => {
+          setError(false);
+          setErrorMessage("");
+        }, 10000);
+      });
     localStorage.setItem("selectedCategory", JSON.stringify(selectedCategory));
     localStorage.setItem("activeFilter", JSON.stringify(activeFilter));
     localStorage.setItem("showIncome", JSON.stringify(showIncome));
@@ -79,9 +98,18 @@ function ListEntries() {
       EntryDataService.update(data.id, data)
         .then((response) => {
           setEditing(false);
-          console.log(response.data);
+          setError(false);
+          setEdited(true);
+          setTimeout(() => setEdited(false), 4000);
         })
-        .catch(() => console.log("No se ha podido editar el movimiento"));
+        .catch(() => {
+          setError(true);
+          setErrorMessage("No se ha podido editar el movimiento");
+          setTimeout(() => {
+            setError(false);
+            setErrorMessage("");
+          }, 10000);
+        });
     } finally {
       setEditing(false);
       setEntry("");
@@ -106,8 +134,14 @@ function ListEntries() {
       .then(({ data: budget }) => {
         setCategories(budget.map((item) => item.category));
       })
-      .catch(() =>
-        console.log("No se han podido recuperar los datos del servidor")
+      .catch(() => {
+        setError(true);
+        setErrorMessage("No se ha podido borrar el movimiento");
+        setTimeout(() => {
+          setError(false);
+          setErrorMessage("");
+        }, 10000);
+      }
       );
   }, []);
 
@@ -240,6 +274,21 @@ function ListEntries() {
       {!editing ? (
         <header className="centeredHeader">
           <h1>Listado de {showIncome ? "ingresos" : "gastos"} cargados</h1>
+          {deleted && (
+            <Alert variant="success" dismissible>
+              <p>Movimiento borrado con éxito</p>
+            </Alert>
+          )}
+          {edited && (
+            <Alert variant="success" dismissible>
+              <p>Movimiento editado con éxito</p>
+            </Alert>
+          )}
+          {error && (
+            <Alert variant="danger" dismissible>
+              <p>{errorMessage ? errorMessage : "Error de servidor"}</p>
+            </Alert>
+          )}
           <Button
             className="spacedButton"
             onClick={changeKind}

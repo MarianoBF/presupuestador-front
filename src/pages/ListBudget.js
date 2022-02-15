@@ -15,7 +15,7 @@ function ListBudget() {
   const [ready, setReady] = useState(0);
 
   const [entries, setEntries] = useState([]);
-  const [sent, setSent] = useState(false);
+  const [deleted, setDeleted] = useState(false);
   const [error, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
@@ -25,7 +25,14 @@ function ListBudget() {
         setEntries(entries);
         setReady((ready) => ready + 1);
       })
-      .catch(() => console.log("No se ha podido conectar al servidor"));
+      .catch(() => {
+        setError(true);
+        setErrorMessage("No se ha podido conectar con el servidor");
+        setTimeout(() => {
+          setError(false);
+          setErrorMessage("");
+        }, 10000);
+      });
   }, []);
 
   const [budget, setBudget] = useState([]);
@@ -38,7 +45,14 @@ function ListBudget() {
         setCategories(budget.map((item) => item.category));
         setReady((ready) => ready + 1);
       })
-      .catch(() => console.log("No se ha podido conectar al servidor"));
+      .catch(() => {
+        setError(true);
+        setErrorMessage("No se ha podido conectar con el servidor");
+        setTimeout(() => {
+          setError(false);
+          setErrorMessage("");
+        }, 10000);
+      });
   }, []);
 
   const [totals, setTotals] = useState([]);
@@ -71,15 +85,21 @@ function ListBudget() {
       BudgetDataService.delete(id)
         .then((response) => {
           setError(false);
-          setSent(true);
-          setTimeout(() => setSent(false), 4000);
-          console.log(response.data);
+          setDeleted(true);
+          setTimeout(() => setDeleted(false), 4000);
         })
-        .catch(() => console.log("No se ha podido borrar la categoría"));
+        .catch(() => {
+          setError(true);
+          setErrorMessage("No se ha podido borrar la categoría");
+          setTimeout(() => {
+            setError(false);
+            setErrorMessage("");
+          }, 10000);
+        });
 
       window.location.reload();
     } else {
-      setSent(false)
+      setDeleted(false);
       setError(true);
       setErrorMessage(
         "Esta categoría aún tiene movimientos. Se deben borrar todos los movimientos de la categoría para poder borrarla."
@@ -134,18 +154,14 @@ function ListBudget() {
     <>
       <h1>Presupuesto actual</h1>
 
-      {sent && (
+      {deleted && (
         <Alert variant="success" dismissible>
           <p>Línea de presupuesto borrada con éxito</p>
         </Alert>
       )}
       {error && (
         <Alert variant="danger" dismissible>
-          <p>
-            {errorMessage
-              ? errorMessage
-              : "Error de servidor"}
-          </p>
+          <p>{errorMessage ? errorMessage : "Error de servidor"}</p>
         </Alert>
       )}
 

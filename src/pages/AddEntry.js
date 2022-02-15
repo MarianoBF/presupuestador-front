@@ -32,9 +32,14 @@ const AddEntry = () => {
       .then(({ data: budget }) => {
         setCategories(budget.map((item) => item.category));
       })
-      .catch(() =>
-        console.log("No se pudo recuperar el listado de categorías")
-      );
+      .catch((error) => {
+        setError(true);
+        setErrorMessage("No se pudo recuperar el listado de categorías, problemas de conexión con el servidor.");
+        setTimeout(() => {
+          setError(false);
+          setErrorMessage("");
+        }, 15000);
+      });
   }, []);
 
   const saveEntry = (e) => {
@@ -56,9 +61,12 @@ const AddEntry = () => {
         if (error.response.data.message) {
           setErrorMessage(error.response.data.message);
         }
-        setTimeout(() => setError(false), 15000);
+        setTimeout(() => {
+          setError(false);
+          setErrorMessage("");
+        }, 15000);
       });
-  };  
+  };
 
   const categoryList = categories.map((item) => (
     <option key={item}>{item}</option>

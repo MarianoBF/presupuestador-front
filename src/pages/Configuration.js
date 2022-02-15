@@ -8,7 +8,8 @@ import Alert from "react-bootstrap/Alert";
 
 function Configuration() {
   const [loaded, setLoaded] = useState(false);
-  const [notLoaded, setNotLoaded] = useState(false);
+  const [error, setError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('')
 
   const loadSampleData = () => {
     let entryFlag = true;
@@ -21,7 +22,6 @@ function Configuration() {
       BudgetDataService.create(category)
         // eslint-disable-next-line no-loop-func
         .then((res) => {
-          console.log("OK");
           if (entryFlag === true) {
             SAMPLEENTRIES.forEach((sampleEntry) => {
               const entry = {
@@ -34,20 +34,19 @@ function Configuration() {
 
               EntryDataService.create(entry)
                 .then((res) => {
-                  console.log("OK");
                   setLoaded(true);
                 })
                 .catch((error) => {
-                  console.log(error);
-                  setNotLoaded(true);
+                  setError(true);
+                  setErrorMessage("No se han podido cargar datos de prueba, ya están cargados o se ha producido un error.");
                 });
             });
             entryFlag = false;
           }
         })
         .catch((error) => {
-          console.log(error);
-          setNotLoaded(true);
+          setError(true);
+          setErrorMessage("No se han podido cargar datos de prueba, ya están cargados o se ha producido un error.");
         });
     });
   };
@@ -61,8 +60,9 @@ function Configuration() {
         BudgetDataService.deleteAll();
         EntryDataService.deleteAll();
       } catch {
-        console.log("No se pudieron borrar los datos");
-      } finally {
+        setError(true);
+        setErrorMessage("No se han podido cargar datos de prueba, ya están cargados o se ha producido un error.");
+    } finally {
         window.location.reload();
       }
     }
@@ -91,11 +91,10 @@ function Configuration() {
           </Alert>
         </div>
       )}
-      {notLoaded && (
+      {error && (
         <Alert variant="danger" dismissible>
           <p className="redText">
-            No se han podido cargar datos de prueba, ya están cargados o se ha
-            producido un error.
+            {errorMessage}
           </p>
         </Alert>
       )}
