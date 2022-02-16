@@ -31,6 +31,8 @@ function ListEntries() {
   const [deleted, setDeleted] = useState(false);
   const [edited, setEdited] = useState(false);
 
+  const noDataLabel = <td colspan="6"><Alert variant="info">No existen datos para la opción elegida</Alert></td>
+
   useEffect(() => {
     EntryDataService.getAll()
       .then(({ data: entryList }) => {
@@ -397,11 +399,11 @@ function ListEntries() {
             <tbody className="tableText">
               {activeFilter === true
                 ? showIncome
-                  ? filteredIncomes
-                  : filteredExpenses
+                  ? filteredIncomes && filteredIncomes.length > 0 ? filteredIncomes : noDataLabel
+                  : filteredExpenses && filteredExpenses.length > 0 ? filteredExpenses : noDataLabel
                 : showIncome
-                ? unfilteredIncomes
-                : unfilteredExpenses}
+                ? unfilteredIncomes && unfilteredIncomes.length > 0 ? unfilteredIncomes : noDataLabel
+                : unfilteredExpenses && unfilteredExpenses.length > 0 ? unfilteredExpenses : noDataLabel}
             </tbody>
           </Table>
         </>
