@@ -80,7 +80,7 @@ function Home() {
       <h1>Posición consolidada</h1>
 
       {error && (
-        <Alert variant="danger" dismissible>
+        <Alert variant="danger" onClose={() => setError(false)}  dismissible>
           <p>{errorMessage}</p>
         </Alert>
       )}

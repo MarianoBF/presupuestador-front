@@ -280,17 +280,17 @@ function ListEntries() {
         <header className="centeredHeader">
           <h1>Listado de {showIncome ? "ingresos" : "gastos"} cargados</h1>
           {deleted && (
-            <Alert variant="success" dismissible>
+            <Alert variant="success" onClose={() => setDeleted(false)} dismissible>
               <p>Movimiento borrado con éxito</p>
             </Alert>
           )}
           {edited && (
-            <Alert variant="success" dismissible>
+            <Alert variant="success" onClose={() => setEdited(false)} dismissible>
               <p>Movimiento editado con éxito</p>
             </Alert>
           )}
           {error && (
-            <Alert variant="danger" dismissible>
+            <Alert variant="danger" onClose={() => setError(false)} dismissible>
               <p>{errorMessage ? errorMessage : "Error de servidor"}</p>
             </Alert>
           )}

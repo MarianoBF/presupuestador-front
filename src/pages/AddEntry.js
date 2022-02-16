@@ -76,12 +76,12 @@ const AddEntry = () => {
     <div className="centeredContainer">
       <h1>Desde esta sección podes cargar los nuevos movimientos</h1>
       {sent && (
-        <Alert variant="success" dismissible>
+        <Alert variant="success" onClose={() => setSent(false)}  dismissible>
           <p>Movimiento agregado con éxito</p>
         </Alert>
       )}
       {error && (
-        <Alert variant="danger" dismissible>
+        <Alert variant="danger" onClose={() => setError(false)}  dismissible>
           <p>
             {errorMessage
               ? errorMessage

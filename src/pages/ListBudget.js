@@ -154,12 +154,12 @@ function ListBudget() {
       <h1>Presupuesto actual</h1>
 
       {deleted && (
-        <Alert variant="success" dismissible>
+        <Alert variant="success" onClose={() => setDeleted(false)} dismissible>
           <p>Línea de presupuesto borrada con éxito</p>
         </Alert>
       )}
       {error && (
-        <Alert variant="danger" dismissible>
+        <Alert variant="danger" onClose={() => setError(false)} dismissible>
           <p>{errorMessage ? errorMessage : "Error de servidor"}</p>
         </Alert>
       )}

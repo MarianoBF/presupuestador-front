@@ -48,16 +48,15 @@ function AddBudgetLine() {
       </h1>
 
       {sent && (
-        <Alert variant="success" dismissible>
-          <p>Categoría de presupuesto agregada con éxito</p>
+        <Alert variant="success" onClose={() => setSent(false)} dismissible>
+          <p>Categoría de presupuesto agregada con éxito.</p>
         </Alert>
       )}
 
       {error && (
-        <Alert variant="danger" dismissible>
+        <Alert variant="danger" onClose={() => setError(false)} dismissible>
           <p>
-            No se pudo agregar la categoría, posible duplicado o error de
-            servidor
+            No se pudo agregar la categoría, posible nombre duplicado.
           </p>
         </Alert>
       )}

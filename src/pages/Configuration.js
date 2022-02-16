@@ -93,7 +93,7 @@ function Configuration() {
       </Button>
       {loaded && (
         <div>
-          <Alert variant="success" dismissible>
+          <Alert variant="success" onClose={() => setLoaded(false)}  dismissible>
             <p className="blueText">Datos de prueba cargados exitosamente.</p>
             <Link to="/entries">
               <button> Ir al listado </button>
@@ -102,14 +102,14 @@ function Configuration() {
         </div>
       )}
       {deleted && (
-        <Alert variant="success" dismissible>
+        <Alert variant="success" onClose={() => setDeleted(false)} dismissible>
           <p>
             {"Se borraron todos los datos exitosamente"}
           </p>
         </Alert>
       )}
       {error && (
-        <Alert variant="danger" dismissible>
+        <Alert variant="danger" onClose={() => setError(false)}  dismissible>
           <p className="redText">{errorMessage}</p>
         </Alert>
       )}
