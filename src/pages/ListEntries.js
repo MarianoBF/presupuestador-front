@@ -54,10 +54,13 @@ function ListEntries() {
     EntryDataService.delete(id)
       .then((response) => {
         setError(false);
+        setEdited(false);
         setDeleted(true);
         setTimeout(() => setDeleted(false), 4000);
       })
       .catch(() => {
+        setEdited(false);
+        setDeleted(false);
         setError(true);
         setErrorMessage("No se ha podido borrar el movimiento");
         setTimeout(() => {
@@ -99,10 +102,13 @@ function ListEntries() {
         .then((response) => {
           setEditing(false);
           setError(false);
+          setDeleted(false);
           setEdited(true);
           setTimeout(() => setEdited(false), 4000);
         })
         .catch(() => {
+          setEdited(false);
+          setDeleted(false);
           setError(true);
           setErrorMessage("No se ha podido editar el movimiento");
           setTimeout(() => {
@@ -134,6 +140,8 @@ function ListEntries() {
         setCategories(budget.map((item) => item.category));
       })
       .catch(() => {
+        setEdited(false);
+        setDeleted(false);
         setError(true);
         setErrorMessage("No se ha podido borrar el movimiento");
         setTimeout(() => {

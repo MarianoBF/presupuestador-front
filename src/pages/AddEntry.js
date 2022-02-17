@@ -53,10 +53,12 @@ const AddEntry = () => {
     };
     EntryDataService.create(data)
       .then(() => {
+        setError(false);
         setSent(true);
         setTimeout(() => setSent(false), 4000);
       })
       .catch((error) => {
+        setSent(false);
         setError(true);
         if (error.response.data.message) {
           setErrorMessage(error.response.data.message);

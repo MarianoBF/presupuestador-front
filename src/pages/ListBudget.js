@@ -89,6 +89,7 @@ function ListBudget() {
           setTimeout(() => setDeleted(false), 4000);
         })
         .catch(() => {
+          setDeleted(false);
           setError(true);
           setErrorMessage("No se ha podido borrar la categoría");
           setTimeout(() => {

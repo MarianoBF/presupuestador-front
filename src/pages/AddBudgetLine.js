@@ -31,10 +31,12 @@ function AddBudgetLine() {
 
     BudgetDataService.create(data)
       .then(() => {
+        setError(false);
         setSent(true);
         setTimeout(() => setSent(false), 4000);
       })
       .catch(() => {
+        setSent(false);
         setError(true);
         setTimeout(() => setError(false), 15000);
       });

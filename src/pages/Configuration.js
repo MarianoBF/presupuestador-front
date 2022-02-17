@@ -37,9 +37,13 @@ function Configuration() {
 
               EntryDataService.create(entry)
                 .then((res) => {
+                  setError(false);
+                  setDeleted(false);         
                   setLoaded(true);
                 })
                 .catch((error) => {
+                  setLoaded(false);
+                  setDeleted(false);         
                   setError(true);
                   setErrorMessage(
                     "No se han podido cargar datos de prueba, ya están cargados o se ha producido un error."
@@ -50,6 +54,8 @@ function Configuration() {
           }
         })
         .catch((error) => {
+          setLoaded(false);
+          setDeleted(false); 
           setError(true);
           setErrorMessage(
             "No se han podido cargar datos de prueba, ya están cargados o se ha producido un error."
@@ -68,11 +74,15 @@ function Configuration() {
       try {
         BudgetDataService.deleteAll();
         EntryDataService.deleteAll();
+        setError(false);
+        setLoaded(false);     
         setDeleted(true);
       } catch {
+        setLoaded(false);
+        setDeleted(false);
         setError(true);
         setErrorMessage(
-          "No se han podido cargar datos de prueba, ya están cargados o se ha producido un error."
+          "No se han podido borrar los datos."
         );
       }
     }
@@ -96,7 +106,7 @@ function Configuration() {
           <Alert variant="success" onClose={() => setLoaded(false)}  dismissible>
             <p className="blueText">Datos de prueba cargados exitosamente.</p>
             <Link to="/entries">
-              <button> Ir al listado </button>
+              <Button variant="primary"> Ir al listado </Button>
             </Link>
           </Alert>
         </div>
