@@ -1,10 +1,10 @@
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 
-export default function ConfirmationModal(props) {
+export default function ConfirmationModal({show, message, handleCancel, handleOK}) {
   return (
     <Modal
-      {...props}
+      show={show}
       size="lg"
       aria-labelledby="contained-modal-title-vcenter"
       centered
@@ -15,13 +15,13 @@ export default function ConfirmationModal(props) {
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <p>{props.message}</p>
+        <p>{message}</p>
       </Modal.Body>
       <Modal.Footer>
-        <Button variant="secondary" onClick={props.handleCancel}>
+        <Button variant="secondary" onClick={handleCancel}>
           Cancelar
         </Button>
-        <Button variant="primary" onClick={props.handleOK}>
+        <Button variant="primary" onClick={handleOK}>
           Confirmar
         </Button>{" "}
       </Modal.Footer>
