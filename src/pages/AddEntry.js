@@ -1,10 +1,11 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
 import Alert from "react-bootstrap/Alert";
 import EntryDataService from "../services/entry.service";
 import BudgetDataService from "../services/budget.service";
+import useMounted from "../hooks/useMounted";
 
 const AddEntry = () => {
   const initialEntryState = {
@@ -27,20 +28,29 @@ const AddEntry = () => {
 
   const [categories, setCategories] = useState([]);
 
+  const isMounted = useMounted();
+  const timer = useRef(true);
+
   useEffect(() => {
     BudgetDataService.getAll()
       .then(({ data: budget }) => {
-        setCategories(budget.map((item) => item.category));
+        if (isMounted.current) {
+          setCategories(budget.map((item) => item.category));
+        }
       })
       .catch((error) => {
-        setError(true);
-        setErrorMessage("No se pudo recuperar el listado de categorías, problemas de conexión con el servidor.");
-        setTimeout(() => {
-          setError(false);
-          setErrorMessage("");
-        }, 15000);
+        if (isMounted.current) {
+          setError(true);
+          setErrorMessage(
+            "No se pudo recuperar el listado de categorías, problemas de conexión con el servidor."
+          );
+          timer.current = setTimeout(() => {
+            setError(false);
+            setErrorMessage("");
+          }, 15000);
+        }
       });
-  }, []);
+  }, [isMounted]);
 
   const saveEntry = (e) => {
     e.preventDefault();
@@ -53,20 +63,24 @@ const AddEntry = () => {
     };
     EntryDataService.create(data)
       .then(() => {
-        setError(false);
-        setSent(true);
-        setTimeout(() => setSent(false), 4000);
+        if (isMounted.current) {
+          setError(false);
+          setSent(true);
+          timer.current = setTimeout(() => setSent(false), 4000);
+        }
       })
       .catch((error) => {
-        setSent(false);
-        setError(true);
-        if (error.response.data.message) {
-          setErrorMessage(error.response.data.message);
+        if (isMounted.current) {
+          setSent(false);
+          setError(true);
+          if (error.response.data.message) {
+            setErrorMessage(error.response.data.message);
+          }
+          timer.current = setTimeout(() => {
+            setError(false);
+            setErrorMessage("");
+          }, 15000);
         }
-        setTimeout(() => {
-          setError(false);
-          setErrorMessage("");
-        }, 15000);
       });
   };
 
@@ -78,12 +92,12 @@ const AddEntry = () => {
     <div className="centeredContainer">
       <h1>Desde esta sección podes cargar los nuevos movimientos</h1>
       {sent && (
-        <Alert variant="success" onClose={() => setSent(false)}  dismissible>
+        <Alert variant="success" onClose={() => setSent(false)} dismissible>
           <p>Movimiento agregado con éxito</p>
         </Alert>
       )}
       {error && (
-        <Alert variant="danger" onClose={() => setError(false)}  dismissible>
+        <Alert variant="danger" onClose={() => setError(false)} dismissible>
           <p>
             {errorMessage
               ? errorMessage

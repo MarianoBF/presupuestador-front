@@ -1,5 +1,5 @@
 import Table from "react-bootstrap/Table";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import EntryDataService from "../services/entry.service";
 import BudgetDataService from "../services/budget.service";
 import numeral from "numeral";
@@ -7,6 +7,7 @@ import numeral from "numeral";
 import es from "numeral/locales/es";
 import Spinner from "react-bootstrap/Spinner";
 import Alert from "react-bootstrap/Alert";
+import useMounted from "../hooks/useMounted";
 
 function ListBudget() {
   numeral.locale("es");
@@ -38,22 +39,29 @@ function ListBudget() {
   const [budget, setBudget] = useState([]);
   const [categories, setCategories] = useState([]);
 
+  const isMounted = useMounted();
+  const timer = useRef(true);
+
   useEffect(() => {
     BudgetDataService.getAll()
       .then(({ data: budget }) => {
-        setBudget(budget);
-        setCategories(budget.map((item) => item.category));
-        setReady((ready) => ready + 1);
+        if (isMounted.current) {
+          setBudget(budget);
+          setCategories(budget.map((item) => item.category));
+          setReady((ready) => ready + 1);
+        }
       })
       .catch(() => {
-        setError(true);
-        setErrorMessage("No se ha podido conectar con el servidor");
-        setTimeout(() => {
-          setError(false);
-          setErrorMessage("");
-        }, 10000);
+        if (isMounted.current) {
+          setError(true);
+          setErrorMessage("No se ha podido conectar con el servidor");
+          timer.current = setTimeout(() => {
+            setError(false);
+            setErrorMessage("");
+          }, 10000);
+        }
       });
-  }, [deleted]);
+  }, [deleted, isMounted]);
 
   const [totals, setTotals] = useState([]);
 
@@ -84,29 +92,35 @@ function ListBudget() {
     if (hasItems.length === 0) {
       BudgetDataService.delete(id)
         .then((response) => {
-          setError(false);
-          setDeleted(true);
-          setTimeout(() => setDeleted(false), 4000);
+          if (isMounted.current) {
+            setError(false);
+            setDeleted(true);
+            timer.current = setTimeout(() => setDeleted(false), 4000);
+          }
         })
         .catch(() => {
-          setDeleted(false);
-          setError(true);
-          setErrorMessage("No se ha podido borrar la categoría");
-          setTimeout(() => {
-            setError(false);
-            setErrorMessage("");
-          }, 10000);
+          if (isMounted.current) {
+            setDeleted(false);
+            setError(true);
+            setErrorMessage("No se ha podido borrar la categoría");
+            timer.current = setTimeout(() => {
+              setError(false);
+              setErrorMessage("");
+            }, 10000);
+          }
         });
     } else {
-      setDeleted(false);
-      setError(true);
-      setErrorMessage(
-        "Esta categoría aún tiene movimientos. Se deben borrar todos los movimientos de la categoría para poder borrarla."
-      );
-      setTimeout(() => {
-        setError(false);
-        setErrorMessage("");
-      }, 10000);
+      if (isMounted.current) {
+        setDeleted(false);
+        setError(true);
+        setErrorMessage(
+          "Esta categoría aún tiene movimientos. Se deben borrar todos los movimientos de la categoría para poder borrarla."
+        );
+        timer.current = setTimeout(() => {
+          setError(false);
+          setErrorMessage("");
+        }, 10000);
+      }
     }
   };
 
@@ -116,7 +130,9 @@ function ListBudget() {
         <td>{item.category}</td>
         <td>{item.description}</td>
         <td>{numeral(item.limit).format()}</td>
-        <td>{entries.filter((elem) => elem.category === item.category).length}</td>
+        <td>
+          {entries.filter((elem) => elem.category === item.category).length}
+        </td>
         <td>{numeral(totals[index]).format()}</td>
         <td className={item.limit - totals[index] < 0 ? "redText" : ""}>
           {totals[index] > 0

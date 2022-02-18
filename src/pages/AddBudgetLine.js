@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
 import Alert from "react-bootstrap/Alert";
 import BudgetDataService from "../services/budget.service.js";
+import useMounted from "../hooks/useMounted";
 
 function AddBudgetLine() {
   const initialBudgetState = {
@@ -15,6 +16,9 @@ function AddBudgetLine() {
   const [budget, setBudget] = useState(initialBudgetState);
   const [sent, setSent] = useState(false);
   const [error, setError] = useState(false);
+
+  const isMounted = useMounted();
+  const timer = useRef(true);
 
   const handleInput = (event) => {
     const { name, value } = event.target;
@@ -31,14 +35,18 @@ function AddBudgetLine() {
 
     BudgetDataService.create(data)
       .then(() => {
-        setError(false);
-        setSent(true);
-        setTimeout(() => setSent(false), 4000);
+        if (isMounted.current) {
+          setError(false);
+          setSent(true);
+          timer.current = setTimeout(() => setSent(false), 4000);
+        }
       })
       .catch(() => {
-        setSent(false);
-        setError(true);
-        setTimeout(() => setError(false), 15000);
+        if (isMounted.current) {
+          setSent(false);
+          setError(true);
+          timer.current = setTimeout(() => setError(false), 15000);
+        }
       });
   };
 
@@ -57,9 +65,7 @@ function AddBudgetLine() {
 
       {error && (
         <Alert variant="danger" onClose={() => setError(false)} dismissible>
-          <p>
-            No se pudo agregar la categoría, posible nombre duplicado.
-          </p>
+          <p>No se pudo agregar la categoría, posible nombre duplicado.</p>
         </Alert>
       )}
 

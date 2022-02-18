@@ -1,11 +1,12 @@
 import Button from "react-bootstrap/Button";
 import Alert from "react-bootstrap/Alert";
-import { SAMPLEENTRIES, SAMPLEBUDGETCATEGORIES } from "./SampleData";
+import { SAMPLEENTRIES, SAMPLEBUDGETCATEGORIES } from "../assets/SampleData";
 import EntryDataService from "../services/entry.service";
 import BudgetDataService from "../services/budget.service";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import ConfirmationModal from "../components/ConfirmationModal";
+import useMounted from "../hooks/useMounted";
 
 function Configuration() {
   const [loaded, setLoaded] = useState(false);
@@ -13,6 +14,8 @@ function Configuration() {
   const [error, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [modalShow, setModalShow] = useState(false);
+
+  const isMounted = useMounted();
 
   const loadSampleData = () => {
     let entryFlag = true;
@@ -37,29 +40,35 @@ function Configuration() {
 
               EntryDataService.create(entry)
                 .then((res) => {
-                  setError(false);
-                  setDeleted(false);         
-                  setLoaded(true);
+                  if (isMounted.current) {
+                    setError(false);
+                    setDeleted(false);
+                    setLoaded(true);
+                  }
                 })
                 .catch((error) => {
-                  setLoaded(false);
-                  setDeleted(false);         
-                  setError(true);
-                  setErrorMessage(
-                    "No se han podido cargar datos de prueba, ya están cargados o se ha producido un error."
-                  );
+                  if (isMounted.current) {
+                    setLoaded(false);
+                    setDeleted(false);
+                    setError(true);
+                    setErrorMessage(
+                      "No se han podido cargar datos de prueba, ya están cargados o se ha producido un error."
+                    );
+                  }
                 });
             });
             entryFlag = false;
           }
         })
         .catch((error) => {
-          setLoaded(false);
-          setDeleted(false); 
-          setError(true);
-          setErrorMessage(
-            "No se han podido cargar datos de prueba, ya están cargados o se ha producido un error."
-          );
+          if (isMounted.current) {
+            setLoaded(false);
+            setDeleted(false);
+            setError(true);
+            setErrorMessage(
+              "No se han podido cargar datos de prueba, ya están cargados o se ha producido un error."
+            );
+          }
         });
     });
   };
@@ -72,18 +81,20 @@ function Configuration() {
     setModalShow(false);
     if (result) {
       try {
-        BudgetDataService.deleteAll();
-        EntryDataService.deleteAll();
-        setError(false);
-        setLoaded(false);     
-        setDeleted(true);
+        if (isMounted.current) {
+          BudgetDataService.deleteAll();
+          EntryDataService.deleteAll();
+          setError(false);
+          setLoaded(false);
+          setDeleted(true);
+        }
       } catch {
-        setLoaded(false);
-        setDeleted(false);
-        setError(true);
-        setErrorMessage(
-          "No se han podido borrar los datos."
-        );
+        if (isMounted.current) {
+          setLoaded(false);
+          setDeleted(false);
+          setError(true);
+          setErrorMessage("No se han podido borrar los datos.");
+        }
       }
     }
   };
@@ -103,7 +114,7 @@ function Configuration() {
       </Button>
       {loaded && (
         <div>
-          <Alert variant="success" onClose={() => setLoaded(false)}  dismissible>
+          <Alert variant="success" onClose={() => setLoaded(false)} dismissible>
             <p className="blueText">Datos de prueba cargados exitosamente.</p>
             <Link to="/entries">
               <Button variant="primary"> Ir al listado </Button>
@@ -113,13 +124,11 @@ function Configuration() {
       )}
       {deleted && (
         <Alert variant="success" onClose={() => setDeleted(false)} dismissible>
-          <p>
-            {"Se borraron todos los datos exitosamente"}
-          </p>
+          <p>{"Se borraron todos los datos exitosamente"}</p>
         </Alert>
       )}
       {error && (
-        <Alert variant="danger" onClose={() => setError(false)}  dismissible>
+        <Alert variant="danger" onClose={() => setError(false)} dismissible>
           <p className="redText">{errorMessage}</p>
         </Alert>
       )}

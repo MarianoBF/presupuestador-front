@@ -1,6 +1,6 @@
 import EntryDataService from "../services/entry.service";
 import BudgetDataService from "../services/budget.service";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
@@ -12,6 +12,7 @@ import es from "numeral/locales/es";
 import { Link } from "react-router-dom";
 import Spinner from "react-bootstrap/Spinner";
 import Alert from "react-bootstrap/Alert";
+import useMounted from "../hooks/useMounted";
 
 numeral.locale("es");
 numeral.defaultFormat("$0,0.00");
@@ -31,42 +32,68 @@ function ListEntries() {
   const [deleted, setDeleted] = useState(false);
   const [edited, setEdited] = useState(false);
 
-  const noDataLabel = <td colspan="6"><Alert variant="info">No existen datos para la opción elegida</Alert></td>
+  const noDataLabel = (
+    <td colspan="6">
+      <Alert variant="info">No existen datos para la opción elegida</Alert>
+    </td>
+  );
+
+  const isMounted = useMounted();
+  const timer = useRef(true);
 
   useEffect(() => {
     EntryDataService.getAll()
       .then(({ data: entryList }) => {
-        setExpenses(entryList.filter((item) => item.kind === "Egreso"));
-        setIncomes(entryList.filter((item) => item.kind === "Ingreso"));
-        setLoading(false);
+        if (isMounted.current) {
+          setExpenses(entryList.filter((item) => item.kind === "Egreso"));
+          setIncomes(entryList.filter((item) => item.kind === "Ingreso"));
+          setLoading(false);
+        }
       })
       .catch(() => {
-        setError(true);
-        setErrorMessage("No se ha podido conectar con el servidor");
-        setTimeout(() => {
-          setError(false);
-          setErrorMessage("");
-        }, 10000);
+        if (isMounted.current) {
+          setError(true);
+          setErrorMessage("No se ha podido conectar con el servidor");
+          timer.current = setTimeout(() => {
+            setError(false);
+            setErrorMessage("");
+          }, 10000);
+        }
       });
-  }, [deleted, edited]);
+  }, [deleted, edited, isMounted]);
+
+  useEffect(() => {
+    return () => {
+      setError(false);
+      setErrorMessage(false);
+      setEdited(false);
+      setDeleted(false);
+      setEditing(false);
+      clearTimeout(timer.current);
+    };
+  }, []);
 
   const handleDeleteClick = (id) => {
     EntryDataService.delete(id)
       .then((response) => {
-        setError(false);
-        setEdited(false);
-        setDeleted(true);
-        setTimeout(() => setDeleted(false), 4000);
+        if (isMounted.current) {
+          setError(false);
+          setEdited(false);
+          setDeleted(true);
+          timer.current = setTimeout(() => setDeleted(false), 4000);
+        }
       })
       .catch(() => {
-        setEdited(false);
-        setDeleted(false);
-        setError(true);
-        setErrorMessage("No se ha podido borrar el movimiento");
-        setTimeout(() => {
-          setError(false);
-          setErrorMessage("");
-        }, 10000);
+        if (isMounted.current) {
+          setEdited(false);
+          setDeleted(false);
+          setError(true);
+          setErrorMessage("No se ha podido borrar el movimiento");
+          timer.current = setTimeout(() => {
+            setError(false);
+            setErrorMessage("");
+          }, 10000);
+        }
       });
     localStorage.setItem("selectedCategory", JSON.stringify(selectedCategory));
     localStorage.setItem("activeFilter", JSON.stringify(activeFilter));
@@ -100,21 +127,25 @@ function ListEntries() {
       };
       EntryDataService.update(data.id, data)
         .then((response) => {
-          setEditing(false);
-          setError(false);
-          setDeleted(false);
-          setEdited(true);
-          setTimeout(() => setEdited(false), 4000);
+          if (isMounted.current) {
+            setEditing(false);
+            setError(false);
+            setDeleted(false);
+            setEdited(true);
+            timer.current = setTimeout(() => setEdited(false), 4000);
+          }
         })
         .catch(() => {
-          setEdited(false);
-          setDeleted(false);
-          setError(true);
-          setErrorMessage("No se ha podido editar el movimiento");
-          setTimeout(() => {
-            setError(false);
-            setErrorMessage("");
-          }, 10000);
+          if (isMounted.current) {
+            setEdited(false);
+            setDeleted(false);
+            setError(true);
+            setErrorMessage("No se ha podido editar el movimiento");
+            timer.current = setTimeout(() => {
+              setError(false);
+              setErrorMessage("");
+            }, 10000);
+          }
         });
     } finally {
       setEditing(false);
@@ -137,19 +168,23 @@ function ListEntries() {
   useEffect(() => {
     BudgetDataService.getAll()
       .then(({ data: budget }) => {
-        setCategories(budget.map((item) => item.category));
+        if (isMounted.current) {
+          setCategories(budget.map((item) => item.category));
+        }
       })
       .catch(() => {
-        setEdited(false);
-        setDeleted(false);
-        setError(true);
-        setErrorMessage("No se ha podido borrar el movimiento");
-        setTimeout(() => {
-          setError(false);
-          setErrorMessage("");
-        }, 10000);
+        if (isMounted.current) {
+          setEdited(false);
+          setDeleted(false);
+          setError(true);
+          setErrorMessage("No se ha podido borrar el movimiento");
+          timer.current = setTimeout(() => {
+            setError(false);
+            setErrorMessage("");
+          }, 10000);
+        }
       });
-  }, []);
+  }, [isMounted]);
 
   const [selectedCategory, setSelectedCategory] = useState(
     JSON.parse(localStorage.getItem("selectedCategory"))
@@ -288,12 +323,20 @@ function ListEntries() {
         <header className="centeredHeader">
           <h1>Listado de {showIncome ? "ingresos" : "gastos"} cargados</h1>
           {deleted && (
-            <Alert variant="success" onClose={() => setDeleted(false)} dismissible>
+            <Alert
+              variant="success"
+              onClose={() => setDeleted(false)}
+              dismissible
+            >
               <p>Movimiento borrado con éxito</p>
             </Alert>
           )}
           {edited && (
-            <Alert variant="success" onClose={() => setEdited(false)} dismissible>
+            <Alert
+              variant="success"
+              onClose={() => setEdited(false)}
+              dismissible
+            >
               <p>Movimiento editado con éxito</p>
             </Alert>
           )}
@@ -407,11 +450,19 @@ function ListEntries() {
             <tbody className="tableText">
               {activeFilter === true
                 ? showIncome
-                  ? filteredIncomes && filteredIncomes.length > 0 ? filteredIncomes : noDataLabel
-                  : filteredExpenses && filteredExpenses.length > 0 ? filteredExpenses : noDataLabel
+                  ? filteredIncomes && filteredIncomes.length > 0
+                    ? filteredIncomes
+                    : noDataLabel
+                  : filteredExpenses && filteredExpenses.length > 0
+                  ? filteredExpenses
+                  : noDataLabel
                 : showIncome
-                ? unfilteredIncomes && unfilteredIncomes.length > 0 ? unfilteredIncomes : noDataLabel
-                : unfilteredExpenses && unfilteredExpenses.length > 0 ? unfilteredExpenses : noDataLabel}
+                ? unfilteredIncomes && unfilteredIncomes.length > 0
+                  ? unfilteredIncomes
+                  : noDataLabel
+                : unfilteredExpenses && unfilteredExpenses.length > 0
+                ? unfilteredExpenses
+                : noDataLabel}
             </tbody>
           </Table>
         </>

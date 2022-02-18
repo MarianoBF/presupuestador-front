@@ -1,5 +1,5 @@
 import EntryDataService from "../services/entry.service";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Table from "react-bootstrap/Table";
 import Spinner from "react-bootstrap/Spinner";
 import "../App.css";
@@ -7,6 +7,7 @@ import numeral from "numeral";
 // eslint-disable-next-line
 import es from "numeral/locales/es";
 import Alert from "react-bootstrap/Alert";
+import useMounted from "../hooks/useMounted";
 
 function Home() {
   numeral.locale("es");
@@ -19,37 +20,44 @@ function Home() {
   const [error, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
+  const isMounted = useMounted();
+  const timer = useRef(true);
+
   useEffect(() => {
     EntryDataService.getAll()
       .then(({ data: entryList }) => {
-        setEntries(entryList);
-        setTotalExpenses(
-          entryList
-            .filter((item) => item.kind === "Egreso")
-            .reduce((pre, cur) => {
-              return pre + cur.amount;
-            }, 0)
-        );
-        setTotalIncome(
-          entryList
-            .filter((item) => item.kind === "Ingreso")
-            .reduce((pre, cur) => {
-              return pre + cur.amount;
-            }, 0)
-        );
-        setLoading(false);
+        if (isMounted.current) {
+          setEntries(entryList);
+          setTotalExpenses(
+            entryList
+              .filter((item) => item.kind === "Egreso")
+              .reduce((pre, cur) => {
+                return pre + cur.amount;
+              }, 0)
+          );
+          setTotalIncome(
+            entryList
+              .filter((item) => item.kind === "Ingreso")
+              .reduce((pre, cur) => {
+                return pre + cur.amount;
+              }, 0)
+          );
+          setLoading(false);
+        }
       })
       .catch((error) => {
-        setError(true);
-        setErrorMessage(
-          "No se pudo recuperar la información, problemas de conexión con el servidor."
-        );
-        setTimeout(() => {
-          setError(false);
-          setErrorMessage("");
-        }, 15000);
+        if (isMounted.current) {
+          setError(true);
+          setErrorMessage(
+            "No se pudo recuperar la información, problemas de conexión con el servidor."
+          );
+          timer.current = setTimeout(() => {
+            setError(false);
+            setErrorMessage("");
+          }, 15000);
+        }
       });
-  }, []);
+  }, [isMounted]);
 
   const lastEntriesList = entries
     .filter((item) => item.date !== null)
@@ -80,7 +88,7 @@ function Home() {
       <h1>Posición consolidada</h1>
 
       {error && (
-        <Alert variant="danger" onClose={() => setError(false)}  dismissible>
+        <Alert variant="danger" onClose={() => setError(false)} dismissible>
           <p>{errorMessage}</p>
         </Alert>
       )}
