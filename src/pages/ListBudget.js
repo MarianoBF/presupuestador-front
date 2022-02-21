@@ -188,7 +188,7 @@ function ListBudget() {
             <th>Descripción</th>
             <th>Monto Previsto</th>
             <th>Cantidad de Movimientos Registrados</th>
-            <th>Movimientos Registrados (ingresos-egreso)</th>
+            <th>Movimientos Registrados (ingresos-egresos)</th>
             <th>Diferencia</th>
             <th>Borrar</th>
           </tr>
