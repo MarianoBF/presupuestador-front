@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
-import logo from "../assets/logo.svg";
+import logo from "../assets/logo.png";
 
 export default function Barra() {
   return (
