@@ -52,6 +52,7 @@ function ListEntries() {
       })
       .catch(() => {
         if (isMounted.current) {
+          setLoading(false);
           setError(true);
           setErrorMessage("No se ha podido conectar con el servidor");
           timer.current = setTimeout(() => {

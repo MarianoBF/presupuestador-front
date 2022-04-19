@@ -47,6 +47,7 @@ function Home() {
       })
       .catch((error) => {
         if (isMounted.current) {
+          setLoading(false);
           setError(true);
           setErrorMessage(
             "No se pudo recuperar la información, problemas de conexión con el servidor."
