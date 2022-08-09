@@ -8,6 +8,7 @@ import Configuration from "./pages/Configuration";
 import Home from "./pages/Home";
 import Barra from "./components/Navbar"
 import { Switch, Route } from "react-router-dom";
+import Login from "./pages/Login";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
 
       <div>
         <Switch>
+          <Route exact path="/login" component={Login} />
           <Route exact path="/budget" component={ListBudget} />
           <Route exact path="/entries" component={ListEntries} />
           <Route exact path="/add" component={AddEntry} />
