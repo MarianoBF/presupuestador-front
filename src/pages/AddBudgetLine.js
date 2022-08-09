@@ -16,6 +16,7 @@ function AddBudgetLine() {
   const [budget, setBudget] = useState(initialBudgetState);
   const [sent, setSent] = useState(false);
   const [error, setError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
   const isMounted = useMounted();
   const timer = useRef(true);
@@ -41,10 +42,11 @@ function AddBudgetLine() {
           timer.current = setTimeout(() => setSent(false), 4000);
         }
       })
-      .catch(() => {
+      .catch((error) => {
         if (isMounted.current) {
           setSent(false);
           setError(true);
+          setErrorMessage(error.response.data.message || '')
           timer.current = setTimeout(() => setError(false), 15000);
         }
       });
@@ -65,7 +67,7 @@ function AddBudgetLine() {
 
       {error && (
         <Alert variant="danger" onClose={() => setError(false)} dismissible>
-          <p>No se pudo agregar la categoría, posible nombre duplicado.</p>
+          <p>{errorMessage || "No se pudo agregar la categoría, posible nombre duplicado."}</p>
         </Alert>
       )}
 
