@@ -6,6 +6,7 @@ import { Form } from "react-bootstrap";
 import Col from "react-bootstrap/Col";
 import authService from "../services/auth.service";
 import useMounted from "../hooks/useMounted";
+import {setAuthToken} from "../http-common";
 
 function Login() {
   const [error, setError] = useState(false);
@@ -33,9 +34,10 @@ function Login() {
     };
     authService
       .login(data)
-      .then(() => {
+      .then((res) => {
         if (isMounted.current) {
           setError(false);
+          setAuthToken(res.data)
         }
       })
       .catch((error) => {
