@@ -12,6 +12,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 
 import { Switch, Route } from "react-router-dom";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 
 function App() {
@@ -21,14 +22,15 @@ function App() {
 
       <div>
         <Switch>
+          <ProtectedRoute exact path="/budget" component={ListBudget} />
+          <ProtectedRoute exact path="/entries" component={ListEntries} />
+          <ProtectedRoute exact path="/add" component={AddEntry} />
+          <ProtectedRoute exact path="/addBudget" component={AddBudgetLine} />
+          <ProtectedRoute exact path="/config" component={Configuration} />
+          <ProtectedRoute exact path="/" component={Home} />
           <Route exact path="/register" component={Register} />
           <Route exact path="/login" component={Login} />
-          <Route exact path="/budget" component={ListBudget} />
-          <Route exact path="/entries" component={ListEntries} />
-          <Route exact path="/add" component={AddEntry} />
-          <Route exact path="/addBudget" component={AddBudgetLine} />
-          <Route exact path="/config" component={Configuration} />
-          <Route exact path="/" component={Home} />
+          <Route path="" component={Login} />
         </Switch>
       </div>
     </div>
