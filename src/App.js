@@ -1,14 +1,18 @@
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
+
+import Barra from "./components/Navbar"
 import AddEntry from "./pages/AddEntry";
 import AddBudgetLine from "./pages/AddBudgetLine";
 import ListEntries from "./pages/ListEntries";
 import ListBudget from "./pages/ListBudget";
 import Configuration from "./pages/Configuration";
 import Home from "./pages/Home";
-import Barra from "./components/Navbar"
-import { Switch, Route } from "react-router-dom";
 import Login from "./pages/Login";
+import Register from "./pages/Register";
+
+import { Switch, Route } from "react-router-dom";
+
 
 function App() {
   return (
@@ -17,6 +21,7 @@ function App() {
 
       <div>
         <Switch>
+          <Route exact path="/register" component={Register} />
           <Route exact path="/login" component={Login} />
           <Route exact path="/budget" component={ListBudget} />
           <Route exact path="/entries" component={ListEntries} />

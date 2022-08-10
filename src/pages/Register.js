@@ -10,6 +10,8 @@ import useMounted from "../hooks/useMounted";
 function Register() {
   const [error, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const [success, setSuccess] = useState(false);
+  const [successMessage, setSuccessMessage] = useState(''); 
   const timer = useRef(true);
   const isMounted = useMounted();
 
@@ -27,7 +29,6 @@ function Register() {
   };
 
   const startRegister = (e) => {
-    console.log("aa", user.password, user.passwordConfirm)
     e.preventDefault();
 
     if (user.password !== user.passwordConfirm) {
@@ -42,8 +43,11 @@ function Register() {
     };
     authService
       .register(data)
-      .then(() => {
+      .then((res) => {
+        console.log("res", res)
         if (isMounted.current) {
+          setSuccess(true)
+          setSuccessMessage(res.data)
           setError(false);
         }
       })
@@ -68,6 +72,12 @@ function Register() {
       {error && (
         <Alert variant="danger" onClose={() => setError(false)} dismissible>
           {<p>{errorMessage}</p>}
+        </Alert>
+      )}
+
+    {success && (
+        <Alert variant="success" onClose={() => setSuccessMessage(false)} dismissible>
+          {<p>{successMessage}</p>}
         </Alert>
       )}
 
