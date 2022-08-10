@@ -7,7 +7,7 @@ import Col from "react-bootstrap/Col";
 import authService from "../services/auth.service";
 import useMounted from "../hooks/useMounted";
 
-function Login() {
+function Register() {
   const [error, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const timer = useRef(true);
@@ -16,6 +16,7 @@ function Login() {
   const initialUserState = {
     email: "",
     password: "",
+    passwordConfirm: "",
   };
 
   const [user, setUser] = useState(initialUserState);
@@ -25,14 +26,22 @@ function Login() {
     setUser({ ...user, [name]: value });
   };
 
-  const login = (e) => {
+  const startRegister = (e) => {
+    console.log("aa", user.password, user.passwordConfirm)
     e.preventDefault();
+
+    if (user.password !== user.passwordConfirm) {
+      setError(true)
+      setErrorMessage("Password y Confirmación de Password no coinciden")
+      return;
+    }
+
     const data = {
       email: user.email,
       password: user.password,
     };
     authService
-      .login(data)
+      .register(data)
       .then(() => {
         if (isMounted.current) {
           setError(false);
@@ -54,7 +63,7 @@ function Login() {
 
   return (
     <div className="centeredContainer">
-      <h1>Login</h1>
+      <h1>Registrar usuario</h1>
 
       {error && (
         <Alert variant="danger" onClose={() => setError(false)} dismissible>
@@ -62,7 +71,7 @@ function Login() {
         </Alert>
       )}
 
-      <Form onSubmit={login}>
+      <Form onSubmit={startRegister}>
         <Col md={6} className="centeredContainer">
           <Form.Group>
             <Form.Label>Email</Form.Label>
@@ -82,14 +91,24 @@ function Login() {
               name="password"
               required
             ></Form.Control>
+
+            <Form.Label>Confirmar Password</Form.Label>
+
+            <Form.Control
+              type="password"
+              value={user.passwordConfirm}
+              onChange={handleInput}
+              name="passwordConfirm"
+              required
+            ></Form.Control>
           </Form.Group>
         </Col>
         <Button type="submit" className="spacedButton">
-          Ingresar
+          Registrarse
         </Button>
       </Form>
     </div>
   );
 }
 
-export default Login;
+export default Register;
