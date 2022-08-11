@@ -1,4 +1,5 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
+import {useHistory} from "react-router-dom";
 import "../App.css";
 import Alert from "react-bootstrap/Alert";
 import Button from "react-bootstrap/Button";
@@ -6,7 +7,7 @@ import { Form } from "react-bootstrap";
 import Col from "react-bootstrap/Col";
 import authService from "../services/auth.service";
 import useMounted from "../hooks/useMounted";
-import {setAuthToken} from "../http-common";
+import jwt_decode from "jwt-decode";
 
 function Login() {
   const [error, setError] = useState(false);
@@ -19,12 +20,26 @@ function Login() {
     password: "",
   };
 
+  const history = useHistory();
+
   const [user, setUser] = useState(initialUserState);
 
   const handleInput = (event) => {
     const { name, value } = event.target;
     setUser({ ...user, [name]: value });
   };
+
+  useEffect(() => {
+    try {
+      let token = JSON.parse(sessionStorage.getItem("pre_ejisao"));
+      token = jwt_decode(token);
+      if (token.exp > new Date().getTime() / 1000) {
+        history.push("/home")
+      }
+    } catch {
+      console.log("Debe loguearse");
+    }
+  }, [history]);
 
   const login = (e) => {
     e.preventDefault();
@@ -37,7 +52,8 @@ function Login() {
       .then((res) => {
         if (isMounted.current) {
           setError(false);
-          setAuthToken(res.data)
+          sessionStorage.setItem("pre_ejisao", (res.data));
+          history.push("/home")
         }
       })
       .catch((error) => {

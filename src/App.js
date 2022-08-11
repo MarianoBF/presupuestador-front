@@ -27,10 +27,10 @@ function App() {
           <ProtectedRoute exact path="/add" component={AddEntry} />
           <ProtectedRoute exact path="/addBudget" component={AddBudgetLine} />
           <ProtectedRoute exact path="/config" component={Configuration} />
-          <ProtectedRoute exact path="/" component={Home} />
+          <ProtectedRoute exact path="/home" component={Home} />
           <Route exact path="/register" component={Register} />
           <Route exact path="/login" component={Login} />
-          <Route path="" component={Login} />
+          <Route path="/" component={Login} />
         </Switch>
       </div>
     </div>

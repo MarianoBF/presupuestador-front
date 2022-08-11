@@ -44,7 +44,6 @@ function Register() {
     authService
       .register(data)
       .then((res) => {
-        console.log("res", res)
         if (isMounted.current) {
           setSuccess(true)
           setSuccessMessage(res.data)
