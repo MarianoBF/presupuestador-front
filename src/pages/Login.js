@@ -37,7 +37,6 @@ function Login() {
         history.push("/home")
       }
     } catch {
-      console.log("Debe loguearse");
     }
   }, [history]);
 
