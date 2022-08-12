@@ -7,7 +7,7 @@ export default function Barra() {
   return (
     <Navbar bg="dark" variant="dark" sticky="top" expand="md">
       <Navbar.Brand>
-        <Link to={"/"}>/Presupuestaré/ <img className="logo" src={logo} alt="logo" /></Link>
+        <Link to={"/home"}>/Presupuestaré/ <img className="logo" src={logo} alt="logo" /></Link>
       </Navbar.Brand>
       <Navbar.Toggle />
       <Navbar.Collapse>
