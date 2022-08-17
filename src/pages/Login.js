@@ -40,6 +40,10 @@ function Login() {
     }
   }, [history]);
 
+  const handleRegister = () => {
+    history.push("/register")
+  }
+
   const login = (e) => {
     e.preventDefault();
     const data = {
@@ -58,7 +62,7 @@ function Login() {
       .catch((error) => {
         if (isMounted.current) {
           setError(true);
-          if (error.response.data.message) {
+          if (error?.response?.data?.message) {
             setErrorMessage(error.response.data.message);
           }
           timer.current = setTimeout(() => {
@@ -105,6 +109,9 @@ function Login() {
           Ingresar
         </Button>
       </Form>
+        <Button onClick={handleRegister} variant="secondary" className="spacedButton">
+          No tengo cuenta, registrarme
+        </Button>
     </div>
   );
 }
