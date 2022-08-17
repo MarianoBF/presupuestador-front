@@ -1,4 +1,5 @@
 import { useState, useRef } from "react";
+import {useHistory} from "react-router-dom";
 import "../App.css";
 import Alert from "react-bootstrap/Alert";
 import Button from "react-bootstrap/Button";
@@ -14,6 +15,7 @@ function Register() {
   const [successMessage, setSuccessMessage] = useState(''); 
   const timer = useRef(true);
   const isMounted = useMounted();
+  const history = useHistory();
 
   const initialUserState = {
     email: "",
@@ -27,6 +29,10 @@ function Register() {
     const { name, value } = event.target;
     setUser({ ...user, [name]: value });
   };
+
+  const handleLogin = () => {
+    history.push("/login")
+  }
 
   const startRegister = (e) => {
     e.preventDefault();
@@ -77,6 +83,7 @@ function Register() {
     {success && (
         <Alert variant="success" onClose={() => setSuccessMessage(false)} dismissible>
           {<p>{successMessage}</p>}
+          <Button onClick={handleLogin}>Ir al login </Button>
         </Alert>
       )}
 
